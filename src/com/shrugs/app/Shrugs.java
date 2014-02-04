@@ -24,7 +24,7 @@ public class Shrugs {
         });
         
         Container cPane = jFrame.getContentPane();
-        cPane.add(new DrawableView());
+        cPane.add(new DrawableView());	// Add the drawable view, canvas, to the content pane
         jFrame.setVisible(true);
     }
 }

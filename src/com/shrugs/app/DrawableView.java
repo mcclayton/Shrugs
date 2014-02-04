@@ -7,7 +7,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
 
 public class DrawableView extends JPanel implements MouseMotionListener {
@@ -38,7 +37,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             public void mouseReleased(MouseEvent evt) {
             	if (isDragging) {
             		isDragging = false;
-            		boxList.add(new Box(startX, startY, endX, endY)); // Add a new box to the boxList
+            		boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY))); // Add a new box to the boxList
             		repaint();
             	}
             }
@@ -70,13 +69,13 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         // If the user is drawing a rectangle, draw it with a dashed stroke
         if (isDragging) {
         	g2.setStroke(dashedStroke);
-        	g2.drawRect(startX, startY, endX-startX, endY-startY);
+        	g2.drawRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY));
         }
         
         // Draw all the box objects
         for(Box b : boxList) {
         	g2.setStroke(solidStroke);
-        	g2.drawRect(b.getStartX(), b.getStartY(), b.getEndX()-b.getStartX(), b.getEndY()-b.getStartY());
+        	g2.drawRect(b.getStartX(), b.getStartY(), b.getEndX(), b.getEndY());
         }
     }
 }
