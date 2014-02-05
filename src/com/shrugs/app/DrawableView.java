@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
+
 public class DrawableView extends JPanel implements MouseMotionListener {
 	private static final long serialVersionUID = 1L;
 	final static float dash[] = {5.0f};

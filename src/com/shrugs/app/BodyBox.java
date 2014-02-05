@@ -1,5 +1,7 @@
 package com.shrugs.app;
 
+
+
 public class BodyBox extends DivBox {
 
 	public BodyBox(int startX, int startY, int endX, int endY) {

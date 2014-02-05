@@ -7,6 +7,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+
 public class Shrugs {
     
     public static void main(String[] args) {  
@@ -25,6 +26,8 @@ public class Shrugs {
         
         Container cPane = jFrame.getContentPane();
         cPane.add(new DrawableView());	// Add the drawable view, canvas, to the content pane
+        
+        jFrame.setJMenuBar(MainMenuBar.getMenuBar());	// Add the menu bar to the JFrame
         jFrame.setVisible(true);
     }
 }

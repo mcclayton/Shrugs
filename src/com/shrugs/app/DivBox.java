@@ -2,6 +2,8 @@ package com.shrugs.app;
 
 import java.util.LinkedList;
 
+
+
 public class DivBox extends Box {
 
 	protected LinkedList<Box> children;
