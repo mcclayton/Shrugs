@@ -4,24 +4,18 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-public class MainMenuBar {
+public class MainMenuBar extends JMenuBar {
+	private static final long serialVersionUID = 1L;
 
-	/*
-	 * Call this static method to build and return the main JMenuBar
-	 */
-	public static JMenuBar getMenuBar()
+	public MainMenuBar()
 	{
-		JMenuBar menuBar;
 		JMenu fileMenu, editMenu;
 		JMenuItem openMenuItem, saveMenuItem, exportMenuItem;
 
 
-		//Create the menu bar.
-		menuBar = new JMenuBar();
-
 		//Build the file menu.
 		fileMenu = new JMenu("File");
-		menuBar.add(fileMenu);
+		this.add(fileMenu);
 
 		//Build the group of file menu's JMenuItems
 		openMenuItem = new JMenuItem("Open Project");
@@ -34,9 +28,7 @@ public class MainMenuBar {
 		
 		//Build the edit menu.
 		editMenu = new JMenu("Edit");
-		menuBar.add(editMenu);
-		
-		return menuBar;
+		this.add(editMenu);
 	}
 
 }
