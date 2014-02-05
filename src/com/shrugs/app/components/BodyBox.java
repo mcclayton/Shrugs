@@ -1,4 +1,5 @@
-package com.shrugs.app;
+package com.shrugs.app.components;
+
 
 
 

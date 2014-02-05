@@ -1,4 +1,4 @@
-package com.shrugs.app;
+package com.shrugs.app.gui;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;

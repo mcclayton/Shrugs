@@ -7,6 +7,9 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
+import com.shrugs.app.gui.DrawableView;
+import com.shrugs.app.gui.MainMenuBar;
+
 
 public class Shrugs {
     

@@ -1,4 +1,4 @@
-package com.shrugs.app;
+package com.shrugs.app.gui;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics;
@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+
+import com.shrugs.app.components.Box;
 
 
 public class DrawableView extends JPanel implements MouseMotionListener {
