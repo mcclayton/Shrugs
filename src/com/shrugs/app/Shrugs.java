@@ -40,7 +40,7 @@ public class Shrugs {
 		
 		// Create a split pane that contains a scrollable options pane on the left and a DrawableView on the right
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new OptionsPane(), new DrawableView());
-		splitPane.setOneTouchExpandable(true);
+		splitPane.setOneTouchExpandable(false);
 		splitPane.setDividerLocation(150);
 		// Add the splitPane to the content pane
 		cPane.add(splitPane);
