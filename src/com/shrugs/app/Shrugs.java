@@ -5,6 +5,7 @@ import java.awt.Container;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+import javax.swing.SwingUtilities;
 
 import com.shrugs.app.gui.DrawableView;
 import com.shrugs.app.gui.MainMenuBar;
@@ -15,7 +16,13 @@ public class Shrugs {
 
 	public static void main(String[] args) {  
 		// Build the Shrugs GUI and then set it
-		buildAndShowGUI();
+		SwingUtilities.invokeLater(new Runnable() 
+	    {
+	        public void run() 
+	        {
+	        	buildAndShowGUI();
+	        }
+	    });
 	}
 	
 	public static void buildAndShowGUI() {
