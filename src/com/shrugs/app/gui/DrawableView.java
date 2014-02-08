@@ -1,12 +1,14 @@
 package com.shrugs.app.gui;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
+
 import javax.swing.JPanel;
 
 import com.shrugs.app.components.Box;
@@ -58,7 +60,14 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		// highlight all relative boxes
+        for(Box b : boxList) {
+        	if(b.coordinatesInsideBox(arg0.getX(), arg0.getY()))
+        		b.setHighlight(true);
+        	else
+        		b.setHighlight(false);
+        }
+        repaint();
 	}
 	
 	/*
@@ -75,9 +84,15 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         	g2.drawRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY));
         }
         
-        // Draw all the box objects
+        // Draw all the box objects based on the values in the box object
         for(Box b : boxList) {
         	g2.setStroke(solidStroke);
+        	if (b.gethighlight()) {
+        		g2.setColor(Color.red);
+        	} else {
+        		g2.setColor(Color.black);
+        		
+        	}
         	g2.drawRect(b.getStartX(), b.getStartY(), b.getEndX(), b.getEndY());
         }
     }
