@@ -21,8 +21,11 @@ public class DrawableView extends JPanel implements MouseMotionListener {
     final static BasicStroke solidStroke = new BasicStroke();
 	
 	private int startX, startY, endX, endY = 0;	// Coordinates of box that is currently being drawn
-	private Box parent = null;
+	private Box parent, child;
 	boolean isDragging = false;	// Used to tell if the user is currently drawing/dragging a box
+	boolean cord1, cord2; // Used to tell if the coordinates of the object are inside another object
+	boolean make; // Used to tell if the object should be made or not 
+
     
 	// Lists of drawable objects
 	ArrayList<Box> boxList = new ArrayList<Box>();
@@ -43,18 +46,29 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             public void mouseReleased(MouseEvent evt) {
             	if (isDragging) {
             		isDragging = false;
+            		make = true;
+            		parent = null;
+            		child = null;
 
-            		//check to see if it is a child of any boxes based on the top right corner of the new box
+            		//Find the closest relative parent if the coordinates exists inside any objects
+                    //prevent any object that break the borders of another box object from being created
                     for(Box b : boxList) {
-                    	if(b.coordinatesInsideBox(startX, startY))
-                    			if (parent == null)
-                    				parent = b;
-                    			else if (parent.getStartX() <= b.getStartX())
-                    				parent = b;
+                    	cord1 = b.coordinatesInsideBox(startX, startY);
+                    	cord2 = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY)+Math.abs(startY - endY));
+                    	
+                    	//Find if the object is crossing any boarders of another object
+                    	if ((!cord1&&cord2)||(cord1&&!cord2))
+                    		make = false;
+                    	
+                    	//
+                    	if(b.coordinatesInsideBox(startX,startY))
+                    		if (parent == null || (parent.getStartX() <= b.getStartX()))
+                    			parent = b;
                     }
-            		
+
                     //make the new box
-                    boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY), parent));
+                    if (make)
+                    	boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY), parent));
 
             		repaint();
             	}
@@ -79,10 +93,10 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         	{
         		b.setHighlight(true);
         		//Debugging text, will be removed 
-        		/*if (b.getParent() == null)
+        		if (b.getParent() == null)
         			System.out.println("box # " + b.getStartX() + " :: no parent");
         		else
-        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());*/
+        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());
         	}
         	else
         		b.setHighlight(false);
@@ -109,12 +123,10 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         // Draw all the box objects based on the values in the box object
         for(Box b : boxList) {
         	g2.setStroke(solidStroke);
-        	if (b.gethighlight()) {
+        	if (b.gethighlight())
         		g2.setColor(Color.red);
-        	} else {
+        	else
         		g2.setColor(Color.black);
-        		
-        	}
         	g2.drawRect(b.getStartX(), b.getStartY(), b.getEndX(), b.getEndY());
         }
     }
