@@ -47,7 +47,10 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             		//check to see if it is a child of any boxes based on the top right corner of the new box
                     for(Box b : boxList) {
                     	if(b.coordinatesInsideBox(startX, startY))
-                    		parent = b;
+                    			if (parent == null)
+                    				parent = b;
+                    			else if (parent.getStartX() <= b.getStartX())
+                    				parent = b;
                     }
             		
                     //make the new box
@@ -75,11 +78,11 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         	if(b.coordinatesInsideBox(arg0.getX(), arg0.getY()))
         	{
         		b.setHighlight(true);
-        		//Debugging text
-        		if (b.getParent() == null)
+        		//Debugging text, will be removed 
+        		/*if (b.getParent() == null)
         			System.out.println("box # " + b.getStartX() + " :: no parent");
         		else
-        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());
+        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());*/
         	}
         	else
         		b.setHighlight(false);
