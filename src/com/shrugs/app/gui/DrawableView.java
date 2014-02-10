@@ -21,9 +21,9 @@ public class DrawableView extends JPanel implements MouseMotionListener {
     final static BasicStroke solidStroke = new BasicStroke();
 	
 	private int startX, startY, endX, endY = 0;	// Coordinates of box that is currently being drawn
-	private Box parent, child;
+	private Box parent;
 	boolean isDragging = false;	// Used to tell if the user is currently drawing/dragging a box
-	boolean cord1, cord2; // Used to tell if the coordinates of the object are inside another object
+	boolean tlcord, trcord, blcord, brcord; // Used to tell if the coordinates of the object are inside another object
 	boolean make; // Used to tell if the object should be made or not 
 
     
@@ -48,19 +48,23 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             		isDragging = false;
             		make = true;
             		parent = null;
-            		child = null;
 
             		//Find the closest relative parent if the coordinates exists inside any objects
                     //prevent any object that break the borders of another box object from being created
                     for(Box b : boxList) {
-                    	cord1 = b.coordinatesInsideBox(startX, startY);
-                    	cord2 = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY)+Math.abs(startY - endY));
+                    	tlcord = b.coordinatesInsideBox(Math.min(startX, endX), Math.min(startY, endY));
+                    	trcord = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY));
+                    	blcord = b.coordinatesInsideBox(Math.min(startX, endX), Math.min(startY, endY)+Math.abs(startY - endY));
+                    	brcord = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY)+Math.abs(startY - endY));
+                    	
                     	
                     	//Find if the object is crossing any boarders of another object
-                    	if ((!cord1&&cord2)||(cord1&&!cord2))
+                    	if (!(tlcord && trcord && blcord && brcord)
+                    			&&!(!tlcord && !trcord && !blcord && !brcord))
                     		make = false;
+                    	//debuging System.out.println(tlcord+":"+trcord+":"+blcord+":"+brcord);
                     	
-                    	//
+                    	
                     	if(b.coordinatesInsideBox(startX,startY))
                     		if (parent == null || (parent.getStartX() <= b.getStartX()))
                     			parent = b;
@@ -93,10 +97,10 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         	{
         		b.setHighlight(true);
         		//Debugging text, will be removed 
-        		if (b.getParent() == null)
+        		/*if (b.getParent() == null)
         			System.out.println("box # " + b.getStartX() + " :: no parent");
         		else
-        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());
+        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());*/
         	}
         	else
         		b.setHighlight(false);
