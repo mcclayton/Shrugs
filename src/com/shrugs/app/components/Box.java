@@ -10,6 +10,7 @@ public class Box {
 	protected int endX;
 	protected int endY = 0;
 	protected Box parent;
+    protected boolean highlight;
 	
 	public Box(int startX, int startY, int endX, int endY) {
 		this(startX, startY, endX, endY, null);
@@ -21,6 +22,7 @@ public class Box {
     	this.endX = endX;
     	this.endY = endY;
     	this.parent = parent;
+    	this.highlight = false;
     }
 	
 	public LinkedList<Box> getChildren() {
@@ -32,12 +34,15 @@ public class Box {
     public int getEndX() {return this.endX;}
     public int getEndY() {return this.endY;}
     public Box getParent() {return this.parent;}
-    
+    public boolean gethighlight() {return this.highlight;}
+
     public void setStartX(int startX) {this.startX = startX;}
     public void setStartY(int startY) {this.startY = startY;}
     public void setEndX(int endX) {this.endX = endX;}
     public void setEndY(int endY) {this.endY = endY;}
     public void setParent(Box parent) {this.parent = parent;}
+    public void setHighlight(boolean toggle) {this.highlight = toggle;} 
+    
     
     public int getXOffset() {
     	return startX-parent.getStartX();
@@ -46,4 +51,12 @@ public class Box {
     public int getYOffset() {
     	return startY-parent.getStartX();
     }
+    
+    public boolean coordinatesInsideBox(int x, int y) {
+    	if(x >= startX && x <= (startX+endX) && y >= startY && y <= (startY+endY))
+    		return true;
+    	else
+    		return false;
+    }
+
 }

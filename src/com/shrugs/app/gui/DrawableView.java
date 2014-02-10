@@ -21,6 +21,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
     final static BasicStroke solidStroke = new BasicStroke();
 	
 	private int startX, startY, endX, endY = 0;	// Coordinates of box that is currently being drawn
+	private Box parent = null;
 	boolean isDragging = false;	// Used to tell if the user is currently drawing/dragging a box
     
 	// Lists of drawable objects
@@ -42,7 +43,16 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             public void mouseReleased(MouseEvent evt) {
             	if (isDragging) {
             		isDragging = false;
-            		boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY))); // Add a new box to the boxList
+
+            		//check to see if it is a child of any boxes based on the top right corner of the new box
+                    for(Box b : boxList) {
+                    	if(b.coordinatesInsideBox(startX, startY))
+                    		parent = b;
+                    }
+            		
+                    //make the new box
+                    boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY), parent));
+
             		repaint();
             	}
             }
@@ -63,12 +73,21 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		// highlight all relative boxes
         for(Box b : boxList) {
         	if(b.coordinatesInsideBox(arg0.getX(), arg0.getY()))
+        	{
         		b.setHighlight(true);
+        		//Debugging text
+        		if (b.getParent() == null)
+        			System.out.println("box # " + b.getStartX() + " :: no parent");
+        		else
+        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());
+        	}
         	else
         		b.setHighlight(false);
         }
         repaint();
 	}
+	
+	
 	
 	/*
 	 * Everything that needs to be drawn on a repaint() call goes here.
