@@ -27,22 +27,43 @@ public class BoxStyle implements Comparable<BoxStyle>{
 		}
 	}
 	
-	public void setBoxColor(Color c){
+	public void setTextColor(Color c){
 		this.attr.put("color", "rgb("+c.getRed()+","+c.getGreen()+","+c.getBlue()+")");
 		return;
 	}
 	
-	public void setBoxColorViaHex(int r, int g, int b){
+	public void setTextColor(int r, int g, int b){
 		this.attr.put("color", "rgb("+r+","+g+","+b+")");
 	}
 
-	public String getColor(){
+	public String getTextColor(){
 		return this.attr.get("color");
+	}
+	
+	public void setBoxColor(Color c){
+		this.attr.put("background-color", "rgb("+c.getRed()+","+c.getGreen()+","+c.getBlue()+")");
+		return;
+	}
+	
+	public void setBoxColor(int r, int g, int b){
+		this.attr.put("background-color", "rgb("+r+","+g+","+b+")");
+	}
+
+	public String getBoxColor(){
+		return this.attr.get("background-color");
 	}
 
 	@Override
 	public int compareTo(BoxStyle o) {
 		return (this.attr.equals(o.attr)) ? 1 : 0;
+	}
+	
+	public String toString() {
+		String out = "";
+		for( String key : attr.keySet()) {
+			out+=key+":"+attr.get(key);
+		}
+		return out;
 	}
 
 }
