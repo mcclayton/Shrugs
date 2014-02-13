@@ -8,6 +8,15 @@ import java.util.Map;
 //some stuff is unsafe, should add exceptions when necessary
 
 public class BoxStyle implements Comparable<BoxStyle>{
+	
+	public static void main(String[] args) {
+		BoxStyle style = new BoxStyle();
+		style.setBoxColor(Color.cyan);
+		style.setTextColor(Color.white);
+		style.setAttribute("border", "1px solid #000");
+		System.out.println(style.toString());
+	}
+	
 	private Map<String, String> attr;
 	public BoxStyle(){
 		attr = new HashMap<String,String>();
@@ -61,9 +70,9 @@ public class BoxStyle implements Comparable<BoxStyle>{
 	public String toString() {
 		String out = "";
 		for( String key : attr.keySet()) {
-			out+=key+":"+attr.get(key);
+			out+=key+":"+attr.get(key)+";";
 		}
 		return out;
 	}
-
+	
 }
