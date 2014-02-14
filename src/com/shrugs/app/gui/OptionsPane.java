@@ -9,7 +9,7 @@ public class OptionsPane extends Panel {
 
 	public OptionsPane()
 	{
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.LIGHT_GRAY);
 		this.add(new Label("OPTIONS PANE"));
 		for (int i=0; i<10; i++) {
 			this.add(new Label("Test Label "+i));
