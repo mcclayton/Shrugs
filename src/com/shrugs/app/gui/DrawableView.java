@@ -23,7 +23,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	private int startX, startY, endX, endY = 0;	// Coordinates of box that is currently being drawn
 	private Box parent;
 	boolean isDragging = false;	// Used to tell if the user is currently drawing/dragging a box
-	boolean tlcord, trcord, blcord, brcord; // Used to tell if the coordinates of the object are inside another object
+	boolean tl_cord, tr_cord, bl_cord, br_cord; // Used to tell if the coordinates of the object are inside another object
+	boolean l_line, r_line, t_line, b_line; //used to tell if a line object intersects with another object
 	boolean make; // Used to tell if the object should be made or not 
 
     
@@ -49,22 +50,35 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             		make = true;
             		parent = null;
 
+            		// coordinates of the new object
+            		int l_x = Math.min(startX, endX);
+            		int r_x = Math.min(startX, endX) + Math.abs(startX - endX);
+            		int t_y = Math.min(startY, endY);
+            		int b_y = Math.min(startY, endY) + Math.abs(startY - endY);
+            		
             		//Find the closest relative parent if the coordinates exists inside any objects
                     //prevent any object that break the borders of another box object from being created
                     for(Box b : boxList) {
-                    	tlcord = b.coordinatesInsideBox(Math.min(startX, endX), Math.min(startY, endY));
-                    	trcord = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY));
-                    	blcord = b.coordinatesInsideBox(Math.min(startX, endX), Math.min(startY, endY)+Math.abs(startY - endY));
-                    	brcord = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY)+Math.abs(startY - endY));
+                    	//Check if the coordinates are inside the object; TRUE if inside
+                    	tl_cord = b.coordinatesInsideBox(l_x, t_y);
+                    	tr_cord = b.coordinatesInsideBox(r_x, t_y);
+                    	bl_cord = b.coordinatesInsideBox(l_x, b_y);
+                    	br_cord = b.coordinatesInsideBox(r_x, b_y);
                     	
+                    	//Check to see if the lines of the make object intersect with any other object
+                    	t_line = b.lineIntersectsBox(l_x, t_y, r_x, t_y);
+                    	b_line = b.lineIntersectsBox(l_x, b_y, r_x, b_y); 
+                    	l_line = b.lineIntersectsBox(l_x, t_y, l_x, b_y);
+                    	r_line = b.lineIntersectsBox(r_x, t_y, r_x, b_y);
                     	
-                    	//Find if the object is crossing any boarders of another object
-                    	if (!(tlcord && trcord && blcord && brcord)
-                    			&&!(!tlcord && !trcord && !blcord && !brcord))
+                    	//Find if the object is crossing any boarders of another object VIA points inside/outside object
+                    	if (!(tl_cord && tr_cord && bl_cord && br_cord) && !(!tl_cord && !tr_cord && !bl_cord && !br_cord))
                     		make = false;
-                    	//debuging System.out.println(tlcord+":"+trcord+":"+blcord+":"+brcord);
                     	
-                    	
+                    	//Find if the object is crossing any boarders of another object VIA intersecting lines
+                    	if (t_line || b_line || l_line || r_line)
+                    		make = false;
+
                     	if(b.coordinatesInsideBox(startX,startY))
                     		if (parent == null || (parent.getStartX() <= b.getStartX()))
                     			parent = b;

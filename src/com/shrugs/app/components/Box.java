@@ -2,8 +2,6 @@ package com.shrugs.app.components;
 
 import java.util.LinkedList;
 
-
-
 public class Box {
 	protected int startX;	// Coordinates of box that is currently being drawn
 	protected int startY;
@@ -57,6 +55,44 @@ public class Box {
     		return true;
     	else
     		return false;
+    }
+    
+    public boolean lineIntersectsBox(int x1, int y1, int x2, int y2){
+    	//(x1, y1) (x2, y2)
+    	int rl1, rl2;	//coordinate loaction relative to the box; 0 inside, 1 top right, 2 top middle, 3 top left,
+    					//4 left middle, 5 bottom left, 6 bottom middle, 7 bottom middle, 8 middle right
+    					//rl1 = relative location 1
+    	rl1 = locationRelativeToBox(x1, y1);
+    	rl2 = locationRelativeToBox(x2, y2);
+    	// debugging System.out.println("(" + rl1 + ":" + rl2 + ")");
+    	if (   (rl1==1 && rl2==5 || rl1==5 && rl2==1)
+    		|| (rl1==2 && rl2==6 || rl1==6 && rl2==2)
+    		|| (rl1==3 && rl2==7 || rl1==7 && rl2==3)
+    		|| (rl1==4 && rl2==8 || rl1==4 && rl2==8))
+    		return true;
+    	else
+    		return false;
+    }
+
+    public int locationRelativeToBox(int x, int y) {    	
+    	if (x >= (startX + endX) && y <= startY)
+    		return 1;
+    	else if (x <= (startX + endX) && x >= startX && y <= startY)
+    		return 2;
+    	else if (x <= startX && y <= startY)
+    		return 3;
+    	else if (x <= startX && y >= startY && y <= (startY+endY))
+    		return 4;
+    	else if (x <= startX && y >= (startY+endY))
+    		return 5;
+    	else if (x <= (startX + endX) && x >= startX && y >= (startY+endY))
+    		return 6;
+    	else if (x >= (startX + endX) && y >= (startY+endY))
+    		return 7;
+    	else if (x >= (startX + endX) && y >= startY && y <= (startY+endY))
+    		return 8;
+    	else
+    		return 0;
     }
 
 }
