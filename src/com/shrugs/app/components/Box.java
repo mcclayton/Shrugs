@@ -39,9 +39,8 @@ public class Box {
     public Box getParent() {return this.parent;}
     public boolean gethighlight() {return this.highlight;}
     public BoxStyle getStyle() {return this.style;}
-    public int width() {return this.endX-this.startX;}
-    public int height() {return this.endY-this.startY;}
-
+    public int width() {return this.endX;}
+    public int height() {return this.endY;}
     public void setStartX(int startX) {this.startX = startX;}
     public void setStartY(int startY) {this.startY = startY;}
     public void setEndX(int endX) {this.endX = endX;}
