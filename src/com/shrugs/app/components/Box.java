@@ -25,6 +25,7 @@ public class Box {
     	this.endY = endY;
     	this.parent = parent;
     	this.highlight = false;
+    	this.style = new BoxStyle();
     }
 	
 	public LinkedList<Box> getChildren() {

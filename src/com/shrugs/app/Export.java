@@ -67,19 +67,12 @@ public class Export {
 				"position:absolute;"
 				+ "left:"+box.getXOffset()+"px;"
 				+ "top:"+box.getYOffset()+"px;"
-				+ "width:"+(box.getEndX()-box.getStartX())+"px;"
-				+ "height:" +(box.getEndY()-box.getStartY())+"px;"
-				+ "background:"+randomColor()+";"
+				+ "width:"+(box.width())+"px;"
+				+ "height:" +(box.height())+"px;"
 				+ "margin:0;padding:0;";
+		if(box.getStyle()!=null)
+			style+=box.getStyle();
 		return style;
-	}
-	
-	private static String randomColor() {
-		String out = "rgb(";
-		for(int i=0;i<3;i++)
-			out+=(int)Math.floor(Math.random()*256)+",";
-		out = out.substring(0, out.length()-1) + ")";
-		return out;
 	}
 
 }
