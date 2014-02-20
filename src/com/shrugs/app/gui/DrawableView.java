@@ -81,7 +81,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
                     //make the new box
                     if (make)
-                    	boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY), parent));
+                    	boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.max(startX, endX), Math.max(startY, endY), parent));
 
             		repaint();
             	}
