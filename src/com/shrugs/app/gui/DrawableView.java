@@ -36,6 +36,15 @@ public class DrawableView extends JPanel implements MouseMotionListener {
                 public void mousePressed(MouseEvent evt) {
                 startX = evt.getX();        
                 startY = evt.getY();
+                
+                // Snap the initial coordinates to the grid
+                for(Box b : boxList) {
+                	if(b.coordinatesInsideBox(startX, startY)) {
+                		startX = b.getNearestHSnap(startX);
+                		startY = b.getNearestVSnap(startY);
+                	}
+                }
+                
                 endX = startX;
                 endY = startY;
                 isDragging = true;	
@@ -86,6 +95,14 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	public void mouseDragged(MouseEvent evt) {
         endX = evt.getX();        
         endY = evt.getY();
+        
+        // Snap the end coordinates to the grid
+        for(Box b : boxList) {
+        	if(b.coordinatesInsideBox(endX, endY)) {
+        		endX = b.getNearestHSnap(endX);
+        		endY = b.getNearestVSnap(endY);
+        	}
+        }
         repaint();
 	}
 

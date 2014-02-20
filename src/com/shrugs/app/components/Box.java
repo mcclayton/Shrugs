@@ -74,6 +74,46 @@ public class Box {
     	return snaps;
     }
     
+    /* Finds the nearestHSnap to the given x coordinate.
+     * 
+     * @param  xCoord  The X coordinate to find the nearest hSnap to.
+     * @return         The nearest hSnap.
+     */
+    public Integer getNearestHSnap(int xCoord) {
+		int minDistance = Integer.MAX_VALUE;
+		int closestHSnap = 0;
+    	int distance;
+    	
+    	for(Integer hSnap : this.getHSnaps()) {
+			distance = Math.max(hSnap, xCoord) - Math.min(hSnap, xCoord);
+			if (distance < minDistance) {
+				minDistance = distance;
+				closestHSnap = hSnap.intValue();
+			}
+		}
+    	return closestHSnap;
+    }
+    
+    /* Finds the nearestVSnap to the given y coordinate.
+     * 
+     * @param  yCoord  The Y coordinate to find the nearest vSnap to.
+     * @return         The nearest vSnap.
+     */
+    public Integer getNearestVSnap(int yCoord) {
+		int minDistance = Integer.MAX_VALUE;
+		int closestVSnap = 0;
+    	int distance;
+    	
+    	for(Integer vSnap : this.getVSnaps()) {
+			distance = Math.max(vSnap, yCoord) - Math.min(vSnap, yCoord);
+			if (distance < minDistance) {
+				minDistance = distance;
+				closestVSnap = vSnap.intValue();
+			}
+		}
+    	return closestVSnap;
+    }
+    
     public boolean coordinatesInsideBox(int x, int y) {
     	if(x >= startX && x <= (startX+endX) && y >= startY && y <= (startY+endY))
     		return true;
