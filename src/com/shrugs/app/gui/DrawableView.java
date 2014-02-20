@@ -118,20 +118,44 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         super.paintComponent(g);
         Graphics2D g2 = ((Graphics2D) g);
         
-        // If the user is drawing a rectangle, draw it with a dashed stroke
-        if (isDragging) {
-        	g2.setStroke(dashedStroke);
-        	g2.drawRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY));
-        }
-        
         // Draw all the box objects based on the values in the box object
         for(Box b : boxList) {
+        	// Draw Box Background
         	g2.setStroke(solidStroke);
-        	if (b.gethighlight())
+        	g2.setColor(Color.white);
+        	g2.fillRect(b.getStartX(), b.getStartY(), b.getEndX(), b.getEndY());
+        	
+        	if (b.gethighlight()) {
+        		
+        		// Draw the grid on mouseover
+        		g2.setColor(Color.LIGHT_GRAY);
+        		for(Integer vSnap : b.getVSnaps()) {
+        			g2.drawLine(b.getStartX(), vSnap, b.getStartX()+b.width(), vSnap);
+        		}
+        		for(Integer hSnap : b.getHSnaps()) {
+        			g2.drawLine(hSnap, b.getStartY(), hSnap, b.getStartY()+b.height());
+        		}
+        		
         		g2.setColor(Color.red);
-        	else
+        	} else {
         		g2.setColor(Color.black);
+        	}
+        	
+        	// Draw Box foreground
         	g2.drawRect(b.getStartX(), b.getStartY(), b.getEndX(), b.getEndY());
+        }
+        
+        // If the user is drawing a rectangle, draw it with a dashed stroke
+        if (isDragging) {
+        	// Draw Box Background
+        	g2.setStroke(solidStroke);
+        	g2.setColor(Color.white);
+        	g2.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY));
+        	
+        	//Draw Box foreground
+        	g2.setColor(Color.black);
+        	g2.setStroke(dashedStroke);
+        	g2.drawRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY));
         }
     }
 }
