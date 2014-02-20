@@ -90,11 +90,16 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	}
 
 	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// highlight all relative boxes
+	public void mouseMoved(MouseEvent mvEvt) {
+		// Highlight the innermost box that the mouse is inside
         for(Box b : boxList) {
-        	if(b.coordinatesInsideBox(arg0.getX(), arg0.getY()))
+        	if(b.coordinatesInsideBox(mvEvt.getX(), mvEvt.getY()))
         	{
+        		if (b.getParent() != null) {
+        			if (b.getParent().gethighlight()) {
+            			b.getParent().setHighlight(false);        				
+        			}
+        		}
         		b.setHighlight(true);
         		//Debugging text, will be removed 
         		/*if (b.getParent() == null)
@@ -107,7 +112,6 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         }
         repaint();
 	}
-	
 	
 	
 	/*
