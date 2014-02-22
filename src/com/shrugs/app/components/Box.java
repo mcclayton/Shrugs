@@ -115,7 +115,7 @@ public class Box {
     }
     
     public boolean coordinatesInsideBox(int x, int y) {
-    	if(x >= startX && x <= (startX+endX) && y >= startY && y <= (startY+endY))
+    	if(x >= startX && x <= (startX+this.width()) && y >= startY && y <= (startY+this.height()))
     		return true;
     	else
     		return false;
