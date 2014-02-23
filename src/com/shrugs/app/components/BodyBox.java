@@ -6,6 +6,7 @@ public class BodyBox extends DivBox {
 
 	public BodyBox(int startX, int startY, int endX, int endY) {
 		super(startX, startY, endX, endY);
+		this.highlight = true;
 	}
 
 	public int getXOffset() {

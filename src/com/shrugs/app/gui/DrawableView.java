@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.Box;
 
 
@@ -26,18 +27,27 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	boolean tlcord, trcord, blcord, brcord; // Used to tell if the coordinates of the object are inside another object
 	boolean make; // Used to tell if the object should be made or not 
 
+	private BodyBox bodyBox; // The main body box of the web page 
     
 	// Lists of drawable objects
 	ArrayList<Box> boxList = new ArrayList<Box>();
 	
-    public DrawableView() {
+    public DrawableView(int width, int height) {
+    	bodyBox = new BodyBox(0, 0, width-1, height-1);
+    	
         addMouseListener(new MouseAdapter() {
             @Override
                 public void mousePressed(MouseEvent evt) {
                 startX = evt.getX();        
                 startY = evt.getY();
                 
-                // Snap the initial coordinates to the grid
+                // Snap the initial coordinates to the body box grid if necessary
+                if(bodyBox.coordinatesInsideBox(startX, startY) && bodyBox.gethighlight()) {
+                	startX = bodyBox.getNearestHSnap(startX);
+                	startY = bodyBox.getNearestVSnap(startY);
+                }
+                
+                // Snap the initial coordinates to a box grid if necessary
                 for(Box b : boxList) {
                 	if(b.coordinatesInsideBox(startX, startY) && b.gethighlight()) {
                 		startX = b.getNearestHSnap(startX);
@@ -78,7 +88,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
                     	}
                     	//debuging System.out.println(tlcord+":"+trcord+":"+blcord+":"+brcord);
                     	
-                    	
+                    	// Set the box's, who is about to be created, parent
                     	if(b.coordinatesInsideBox(startX,startY)) {
                     		if (parent == null || (parent.getStartX() <= b.getStartX())) {
                     			parent = b;
@@ -103,7 +113,13 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         endX = evt.getX();        
         endY = evt.getY();
         
-        // Snap the end coordinates to the grid
+        // Snap the end coordinates to the body box grid if necessary
+       	if(bodyBox.coordinatesInsideBox(endX, endY) && bodyBox.gethighlight()) {
+       		endX = bodyBox.getNearestHSnap(endX);
+       		endY = bodyBox.getNearestVSnap(endY);
+        }
+        
+        // Snap the end coordinates to a box grid if necessary
         for(Box b : boxList) {
         	if(b.coordinatesInsideBox(endX, endY) && b.gethighlight()) {
         		endX = b.getNearestHSnap(endX);
@@ -115,6 +131,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent mvEvt) {
+		bodyBox.setHighlight(true);
+		
 		// Highlight the innermost box that the mouse is inside
         for(Box b : boxList) {
         	if(b.coordinatesInsideBox(mvEvt.getX(), mvEvt.getY()))
@@ -124,16 +142,13 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             			b.getParent().setHighlight(false);        				
         			}
         		}
+        		bodyBox.setHighlight(false);
         		b.setHighlight(true);
-        		//Debugging text, will be removed 
-        		/*if (b.getParent() == null)
-        			System.out.println("box # " + b.getStartX() + " :: no parent");
-        		else
-        			System.out.println("box # " + b.getStartX() + " :: parent box # " + b.getParent().getStartX());*/
-        	}
-        	else
+        	} else {
         		b.setHighlight(false);
+        	}
         }
+        
         repaint();
 	}
 	
@@ -146,6 +161,19 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         super.paintComponent(g);
         Graphics2D g2 = ((Graphics2D) g);
         
+        // Draw the body box's grid
+    	if (bodyBox.gethighlight()) {
+    		// Draw the grid on mouseover
+    		g2.setColor(new Color(222, 222, 222));
+    		g2.setStroke(dashedStroke);
+    		for(Integer vSnap : bodyBox.getVSnaps()) {
+    			g2.drawLine(bodyBox.getStartX(), vSnap, bodyBox.getStartX()+bodyBox.width(), vSnap);
+    		}
+    		for(Integer hSnap : bodyBox.getHSnaps()) {
+    			g2.drawLine(hSnap, bodyBox.getStartY(), hSnap, bodyBox.getStartY()+bodyBox.height());
+    		}
+    	}
+        
         // Draw all the box objects based on the values in the box object
         for(Box b : boxList) {
         	// Draw Box Background
@@ -154,7 +182,6 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         	g2.fillRect(b.getStartX(), b.getStartY(), b.width(), b.height());
         	
         	if (b.gethighlight()) {
-        		
         		// Draw the grid on mouseover
         		g2.setColor(Color.LIGHT_GRAY);
         		g2.setStroke(dashedStroke);
@@ -174,6 +201,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         	// Draw Box foreground
         	g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
         }
+        
         
         // If the user is drawing a rectangle, draw it with a dashed stroke
         if (isDragging) {

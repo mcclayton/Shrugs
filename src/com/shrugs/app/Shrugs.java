@@ -44,7 +44,7 @@ public class Shrugs {
 		cPane.setLayout(new BorderLayout());
 		
 		// Add the components to the content pane
-		cPane.add(new DrawableView(), BorderLayout.CENTER);
+		cPane.add(new DrawableView(WINDOW_WIDTH, WINDOW_HEIGHT), BorderLayout.CENTER);
 		cPane.add(new OptionsToolBar(jFrame), BorderLayout.NORTH);
 
 		// Add the menu bar to the JFrame
