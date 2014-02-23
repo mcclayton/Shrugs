@@ -1,19 +1,21 @@
 package com.shrugs.app;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.JFrame;
-import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
 import com.shrugs.app.gui.DrawableView;
 import com.shrugs.app.gui.MainMenuBar;
-import com.shrugs.app.gui.OptionsPane;
+import com.shrugs.app.gui.OptionsToolBar;
 
 
 public class Shrugs {
-
+	private static final int WINDOW_WIDTH = 612;
+	private static final int WINDOW_HEIGHT = 792;
+	
 	public static void main(String[] args) {  
 		// Build the Shrugs GUI and then set it
 		SwingUtilities.invokeLater(new Runnable() 
@@ -30,7 +32,7 @@ public class Shrugs {
 		JFrame jFrame = new JFrame();
 		jFrame.setTitle("Shrugs");
 		jFrame.setResizable(false);
-		jFrame.setSize(792, 792);
+		jFrame.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 		jFrame.setBackground(Color.WHITE);
 
 		// Define how the JFrame should exit
@@ -38,13 +40,12 @@ public class Shrugs {
 
 		// Get the JFrame's content pane
 		Container cPane = jFrame.getContentPane();
+		// Set the content pane's layout
+		cPane.setLayout(new BorderLayout());
 		
-		// Create a split pane that contains a scrollable options pane on the left and a DrawableView on the right
-		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new OptionsPane(), new DrawableView());
-		splitPane.setOneTouchExpandable(false);
-		splitPane.setDividerLocation(180);
-		// Add the splitPane to the content pane
-		cPane.add(splitPane);
+		// Add the components to the content pane
+		cPane.add(new DrawableView(), BorderLayout.CENTER);
+		cPane.add(new OptionsToolBar(jFrame), BorderLayout.NORTH);
 
 		// Add the menu bar to the JFrame
 		jFrame.setJMenuBar(new MainMenuBar());
