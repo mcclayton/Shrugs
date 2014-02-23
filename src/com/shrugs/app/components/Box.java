@@ -2,6 +2,8 @@ package com.shrugs.app.components;
 
 import java.util.LinkedList;
 
+import javax.swing.JOptionPane;
+
 public class Box {
 	protected int startX;	// Coordinates of box that is currently being drawn
 	protected int startY;
@@ -157,6 +159,11 @@ public class Box {
     		return 8;
     	else
     		return 0;
+    }
+    
+    public void showAttributesMenu() {
+    	//TODO: This method needs to display a dialogue of attributes.
+    	JOptionPane.showMessageDialog(null, this.toString()+"\nTODO: This will be an attributes setting dialogue.");
     }
 
 }
