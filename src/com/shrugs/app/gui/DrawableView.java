@@ -39,7 +39,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
                 
                 // Snap the initial coordinates to the grid
                 for(Box b : boxList) {
-                	if(b.coordinatesInsideBox(startX, startY)) {
+                	if(b.coordinatesInsideBox(startX, startY) && b.gethighlight()) {
                 		startX = b.getNearestHSnap(startX);
                 		startY = b.getNearestVSnap(startY);
                 	}
@@ -98,7 +98,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
         
         // Snap the end coordinates to the grid
         for(Box b : boxList) {
-        	if(b.coordinatesInsideBox(endX, endY)) {
+        	if(b.coordinatesInsideBox(endX, endY) && b.gethighlight()) {
         		endX = b.getNearestHSnap(endX);
         		endY = b.getNearestVSnap(endY);
         	}
