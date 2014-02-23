@@ -57,6 +57,11 @@ public class DrawableView extends JPanel implements MouseMotionListener {
             		isDragging = false;
             		make = true;
             		parent = null;
+            		
+            		// Don't allow the box to be made if width or height is 0.
+                	if (((endX - startX) == 0) || ((endY - startY) == 0)) {
+                		make = false;
+                	}
 
             		//Find the closest relative parent if the coordinates exists inside any objects
                     //prevent any object that break the borders of another box object from being created
@@ -68,15 +73,17 @@ public class DrawableView extends JPanel implements MouseMotionListener {
                     	
                     	
                     	//Find if the object is crossing any boarders of another object
-                    	if (!(tlcord && trcord && blcord && brcord)
-                    			&&!(!tlcord && !trcord && !blcord && !brcord))
+                    	if (!(tlcord && trcord && blcord && brcord) && !(!tlcord && !trcord && !blcord && !brcord)) {
                     		make = false;
+                    	}
                     	//debuging System.out.println(tlcord+":"+trcord+":"+blcord+":"+brcord);
                     	
                     	
-                    	if(b.coordinatesInsideBox(startX,startY))
-                    		if (parent == null || (parent.getStartX() <= b.getStartX()))
+                    	if(b.coordinatesInsideBox(startX,startY)) {
+                    		if (parent == null || (parent.getStartX() <= b.getStartX())) {
                     			parent = b;
+                    		}
+                    	}
                     }
 
                     //make the new box
