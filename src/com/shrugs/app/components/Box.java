@@ -179,5 +179,18 @@ public class Box {
     	//TODO: This method needs to display a dialogue of attributes.
     	JOptionPane.showMessageDialog(null, this.toString()+"\nTODO: This will be an attributes setting dialogue.");
     }
+    
+    public boolean containsPoint(int x, int y) {
+    	return !(this.startX > x || this.endX < x || this.startY > y || this.endY < y);
+    }
+    
+    /**
+     * Checks if the box overlaps with another box
+     * @param b the box to check against
+     * @return true if the boxes overlap; false otherwise
+     */
+    public boolean collidesWith(Box b) {
+    	return !(this.startX > b.endX || this.endX < b.startX || this.startY > b.endY || this.endY < b.startY);
+    }
 
 }

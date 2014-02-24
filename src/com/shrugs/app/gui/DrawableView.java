@@ -78,12 +78,12 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					//prevent any object that break the borders of another box object from being created
 					for(Box b : boxList) {
 						tlcord = b.coordinatesInsideBox(Math.min(startX, endX), Math.min(startY, endY));
-						trcord = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY));
+						trcord = b.coordinatesInsideBox(Math.max(startX, endX), Math.min(startY, endY));
 						blcord = b.coordinatesInsideBox(Math.min(startX, endX), Math.min(startY, endY)+Math.abs(startY - endY));
-						brcord = b.coordinatesInsideBox(Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY)+Math.abs(startY - endY));
+						brcord = b.coordinatesInsideBox(Math.max(startX, endX), Math.min(startY, endY)+Math.abs(startY - endY));
 
 
-						make = b.lineIntersectsBox(Math.min(startX, endX), Math.min(startY, endY), Math.min(startX, endX)+Math.abs(startX - endX), Math.min(startY, endY)+Math.abs(startY - endY));
+						make = b.lineIntersectsBox(Math.min(startX, endX), Math.min(startY, endY), Math.max(startX, endX), Math.max(startY, endY));
 						
 						//Find if the object is crossing any boarders of another object
 						if (!(tlcord && trcord && blcord && brcord) && !(!tlcord && !trcord && !blcord && !brcord)) {
