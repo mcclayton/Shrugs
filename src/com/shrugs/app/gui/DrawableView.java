@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 
 import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.Box;
+import com.shrugs.app.components.BoxStyle;
 
 
 public class DrawableView extends JPanel implements MouseMotionListener {
@@ -97,8 +98,13 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					}
 
 					//make the new box
-					if (make)
-						boxList.add(new Box(Math.min(startX, endX), Math.min(startY, endY), Math.max(startX, endX), Math.max(startY, endY), parent));
+					if (make) {
+						Box newBox = new Box(Math.min(startX, endX), Math.min(startY, endY), Math.max(startX, endX), Math.max(startY, endY), parent);
+						BoxStyle newStyle = new BoxStyle();
+						newStyle.setBoxColor(OptionsToolBar.getBoxBackgroundColor());
+						newBox.setStyle(newStyle);
+						boxList.add(newBox);
+					}
 
 					repaint();
 				}
@@ -192,15 +198,25 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		}
 
 		// Draw all the box objects based on the values in the box object
+		Color boxBackground;
 		for(Box b : boxList) {
 			// Draw Box Background
 			g2.setStroke(solidStroke);
-			g2.setColor(Color.white);
+			boxBackground = b.getStyle().getBoxColorValue();
+			g2.setColor(boxBackground);
 			g2.fillRect(b.getStartX(), b.getStartY(), b.width(), b.height());
 
 			if (b.gethighlight()) {
+				
+				// Make sure the grid is a color that won't blend in with the boxes background color
+				double luminance = 0.2126*boxBackground.getRed() + 0.7152*boxBackground.getGreen() + 0.0722*boxBackground.getBlue();
+				if (luminance > 128) {
+					g2.setColor(Color.GRAY);
+				} else {
+					g2.setColor(Color.LIGHT_GRAY);
+				}
+				
 				// Draw the grid on mouseover
-				g2.setColor(Color.LIGHT_GRAY);
 				g2.setStroke(dashedStroke);
 				for(Integer vSnap : b.getVSnaps()) {
 					g2.drawLine(b.getStartX(), vSnap, b.getStartX()+b.width(), vSnap);
@@ -224,7 +240,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		if (isDragging) {
 			// Draw Box Background
 			g2.setStroke(solidStroke);
-			g2.setColor(Color.white);
+			g2.setColor(OptionsToolBar.getBoxBackgroundColor());
 			g2.fillRect(Math.min(startX, endX), Math.min(startY, endY), Math.abs(startX - endX), Math.abs(startY - endY));
 
 			//Draw Box foreground

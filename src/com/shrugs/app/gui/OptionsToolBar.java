@@ -7,17 +7,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
 public class OptionsToolBar extends JToolBar {
 
 	private static final long serialVersionUID = 1L;
-	// Main JFrame, used to attach a color chooser to it
-	private static JFrame mainFrame;
-	// Color used to remember last chosen color from color picker
-	private static Color newColor = null;
+	private static JFrame mainFrame; // Main JFrame, used to attach a color chooser to it
+	private static Color boxBackgroundColor = Color.WHITE; // Color used to remember last chosen color from color picker
 	
 	public OptionsToolBar(JFrame jFrame) {
 		this.setFloatable(true);
@@ -29,38 +25,21 @@ public class OptionsToolBar extends JToolBar {
 	public void addButtons(JToolBar jtbToolBar) {
 
 		// Test Button
-		JButton testButton = new JButton("Test");
+		JButton backgroundColorButton = new JButton("Paint Color");
 		
-		testButton.addActionListener(new ActionListener() {
+		backgroundColorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Test Button Pressed");
+				boxBackgroundColor = JColorChooser.showDialog(mainFrame, "Choose Location Color", (boxBackgroundColor==null)?Color.BLACK:boxBackgroundColor);
 			}
 		});
-		jtbToolBar.add(testButton);
-		
-		// Test Button
-		JButton testButton2 = new JButton("Color Chooser");
-		
-		testButton2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				newColor = JColorChooser.showDialog(mainFrame, "Choose Location Color", (newColor==null)?Color.BLACK:newColor);
-			}
-		});
-		jtbToolBar.add(testButton2);
+		jtbToolBar.add(backgroundColorButton);
 		
 
-		jtbToolBar.addSeparator();
-		
-		// Test Text Field
-		JTextField testTextField = new JTextField("Enter Text Here");
-		testTextField.setEditable(true);
-		testTextField.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, "Text Field Event");
-			}
-		});
-		jtbToolBar.add(testTextField);
+		//jtbToolBar.addSeparator();
+	}
+	
+	public static Color getBoxBackgroundColor() {
+		return boxBackgroundColor;
 	}
 
 }

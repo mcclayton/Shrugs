@@ -3,19 +3,21 @@ package com.shrugs.app.components;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 //some stuff is unsafe, should add exceptions when necessary
 
 public class BoxStyle implements Comparable<BoxStyle>{
 	
-	public static void main(String[] args) {
-		BoxStyle style = new BoxStyle();
-		style.setBoxColor(Color.cyan);
-		style.setTextColor(Color.white);
-		style.setAttribute("border", "1px solid #000");
-		System.out.println(style.toString());
-	}
+//	public static void main(String[] args) {
+//		BoxStyle style = new BoxStyle();
+//		style.setBoxColor(Color.cyan);
+//		style.setTextColor(Color.white);
+//		style.setAttribute("border", "1px solid #000");
+//		System.out.println(style.toString());
+//	}
 	
 	private Map<String, String> attr;
 	public BoxStyle(){
@@ -60,6 +62,20 @@ public class BoxStyle implements Comparable<BoxStyle>{
 
 	public String getBoxColor(){
 		return this.attr.get("background-color");
+	}
+	
+	public Color getBoxColorValue() {
+	    Pattern c = Pattern.compile("rgb *\\( *([0-9]+), *([0-9]+), *([0-9]+) *\\)");
+	    Matcher m = c.matcher(this.getBoxColor());
+
+	    if (m.matches()) 
+	    {
+	        return new Color(Integer.valueOf(m.group(1)),  // r
+	                         Integer.valueOf(m.group(2)),  // g
+	                         Integer.valueOf(m.group(3))); // b 
+	    }
+	    // Default to white if no color can be found
+	    return Color.WHITE;
 	}
 
 	@Override
