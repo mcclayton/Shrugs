@@ -117,7 +117,7 @@ public class Box {
     }
     
     public boolean coordinatesInsideBox(int x, int y) {
-    	if(x >= startX && x <= (startX+this.width()) && y >= startY && y <= (startY+this.height()))
+    	if(x > startX && x < (startX+this.width()) && y > startY && y < (startY+this.height()))
     		return true;
     	else
     		return false;
@@ -130,14 +130,22 @@ public class Box {
     					//rl1 = relative location 1
     	rl1 = locationRelativeToBox(x1, y1);
     	rl2 = locationRelativeToBox(x2, y2);
-    	// debugging System.out.println("(" + rl1 + ":" + rl2 + ")");
-    	if (   (rl1==1 && rl2==5 || rl1==5 && rl2==1)
+    	// debugging 
+    	System.out.println("(" + rl1 + ":" + rl2 + ")");
+    	
+    	if (rl1==3 && (rl2 == 6||rl2 == 7||rl2 == 8))
+    		return false;
+    	else 
+    		return true;
+    	
+    	/*if (   (rl1==1 && rl2==5 || rl1==5 && rl2==1)
     		|| (rl1==2 && rl2==6 || rl1==6 && rl2==2)
     		|| (rl1==3 && rl2==7 || rl1==7 && rl2==3)
     		|| (rl1==4 && rl2==8 || rl1==4 && rl2==8))
     		return true;
     	else
     		return false;
+    		*/
     }
 
     public int locationRelativeToBox(int x, int y) {    	
