@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
 public class OptionsToolBar extends JToolBar {
@@ -22,10 +25,10 @@ public class OptionsToolBar extends JToolBar {
 		this.setVisible(true);
 	}
 	
-	public void addButtons(JToolBar jtbToolBar) {
+	public void addButtons(final JToolBar jtbToolBar) {
 
-		// Test Button
-		JButton backgroundColorButton = new JButton("Paint Color");
+		// Box background selector
+		final JButton backgroundColorButton = new JButton("Paint Color");
 		
 		backgroundColorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -33,9 +36,40 @@ public class OptionsToolBar extends JToolBar {
 			}
 		});
 		jtbToolBar.add(backgroundColorButton);
+				
+		// Box type selector
+		final String[] boxTypes = { "Div", "Text", "Image"}; 
+        //Create the combo box, select the item at index 0 by default
+        final JComboBox boxTypeCombo = new JComboBox(boxTypes);
+        boxTypeCombo.setSelectedIndex(0);
+        boxTypeCombo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	JComboBox cb = (JComboBox) e.getSource();
+                String boxType = (String) cb.getSelectedItem();
+                
+                if (boxType.equals("Div")) {
+                	jtbToolBar.removeAll();
+                	jtbToolBar.add(backgroundColorButton);
+                	jtbToolBar.add(boxTypeCombo);
+                    jtbToolBar.repaint();
+                } else if (boxType.equals("Text")) {
+                	jtbToolBar.removeAll();
+                	jtbToolBar.add(backgroundColorButton);
+                	jtbToolBar.add(new JTextField("Enter text..."));
+                	jtbToolBar.add(boxTypeCombo);
+                    jtbToolBar.repaint();
+                } else if (boxType.equals("Image")) {
+                	jtbToolBar.removeAll();
+                	jtbToolBar.add(new JButton("Upload"));
+                	jtbToolBar.add(boxTypeCombo);
+                    jtbToolBar.repaint();
+                } 
+            }
+        });
+        jtbToolBar.add(boxTypeCombo);
 		
 
-		//jtbToolBar.addSeparator();
 	}
 	
 	public static Color getBoxBackgroundColor() {
