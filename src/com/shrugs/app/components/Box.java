@@ -149,21 +149,21 @@ public class Box {
     }
 
     public int locationRelativeToBox(int x, int y) {    	
-    	if (x >= (startX + endX) && y <= startY)
+    	if (x >= (endX) && y <= startY)
     		return 1;
-    	else if (x <= (startX + endX) && x >= startX && y <= startY)
+    	else if (x <= endX && x >= startX && y <= startY)
     		return 2;
     	else if (x <= startX && y <= startY)
     		return 3;
-    	else if (x <= startX && y >= startY && y <= (startY+endY))
+    	else if (x <= startX && y >= startY && y <= endY)
     		return 4;
-    	else if (x <= startX && y >= (startY+endY))
+    	else if (x <= startX && y >= endY)
     		return 5;
-    	else if (x <= (startX + endX) && x >= startX && y >= (startY+endY))
+    	else if (x <= endX && x >= startX && y >= endY)
     		return 6;
-    	else if (x >= (startX + endX) && y >= (startY+endY))
+    	else if (x >= endX && y >= endY)
     		return 7;
-    	else if (x >= (startX + endX) && y >= startY && y <= (startY+endY))
+    	else if (x >= endX && y >= startY && y <= endY)
     		return 8;
     	else
     		return 0;
