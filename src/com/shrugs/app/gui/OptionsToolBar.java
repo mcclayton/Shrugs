@@ -32,7 +32,11 @@ public class OptionsToolBar extends JToolBar {
 		
 		backgroundColorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boxBackgroundColor = JColorChooser.showDialog(mainFrame, "Choose Location Color", (boxBackgroundColor==null)?Color.BLACK:boxBackgroundColor);
+				Color newColor = null;
+				newColor = JColorChooser.showDialog(mainFrame, "Choose Location Color", (boxBackgroundColor==null)?Color.BLACK:boxBackgroundColor);
+				if (newColor != null) {
+					boxBackgroundColor = newColor;
+				}
 			}
 		});
 		jtbToolBar.add(backgroundColorButton);
