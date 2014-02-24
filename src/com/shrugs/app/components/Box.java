@@ -130,10 +130,16 @@ public class Box {
     					//rl1 = relative location 1
     	rl1 = locationRelativeToBox(x1, y1);
     	rl2 = locationRelativeToBox(x2, y2);
-    	// debugging 
-    	System.out.println("(" + rl1 + ":" + rl2 + ")");
+    	// debugging System.out.println("(" + rl1 + ":" + rl2 + ")");
     	
-    	if (rl1==3 && (rl2 == 6||rl2 == 7||rl2 == 8))
+    	if (	   (rl1==1 && (rl2 == 4||rl2 == 5||rl2 == 6))
+    			|| (rl1==2 && (rl2 == 4||rl2 == 5||rl2 == 6||rl2 == 7||rl2 == 8))
+    			|| (rl1==3 && (rl2 == 6||rl2 == 7||rl2 == 8)) 
+    			|| (rl1==4 && (rl2 == 1||rl2 == 2||rl2 == 6||rl2 == 7||rl2 == 8)) 
+    			|| (rl1==5 && (rl2 == 1||rl2 == 2||rl2 == 8)) 
+    			|| (rl1==6 && (rl2 == 1||rl2 == 2||rl2 == 3||rl2 == 4||rl2 == 8)) 
+    			|| (rl1==7 && (rl2 == 2||rl2 == 3||rl2 == 4)) 
+    			|| (rl1==8 && (rl2 == 2||rl2 == 3||rl2 == 4||rl2 == 5||rl2 == 6)))
     		return false;
     	else 
     		return true;
