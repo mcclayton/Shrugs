@@ -2,8 +2,11 @@ package com.shrugs.app.components;
 
 import java.util.LinkedList;
 
+import com.google.gson.annotations.Expose;
+
 public class DivBox extends Box {
 
+	@Expose
 	protected LinkedList<Box> children;
 
 	public DivBox(int startX, int startY, int endX, int endY) {
@@ -79,5 +82,10 @@ public class DivBox extends Box {
 				return true;
 		}
 		return false;
+	}
+	
+	public void reassociateChildren() {
+		for(Box b : children)
+			b.setParent(this);
 	}
 }

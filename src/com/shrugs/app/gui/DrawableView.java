@@ -274,4 +274,9 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					Math.abs(startX - endX), Math.abs(startY - endY));
 		}
 	}
+	
+	public static void Load(BodyBox b) {
+		bodyBox = b;
+		//TODO repaint
+	}
 }

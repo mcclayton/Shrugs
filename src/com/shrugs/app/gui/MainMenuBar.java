@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import com.shrugs.app.Export;
+import com.shrugs.app.IOManager;
 
 public class MainMenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -50,9 +51,19 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		if (source instanceof JMenuItem){  //checks to see if a menu item was pressed
 			JMenuItem itemClicked = (JMenuItem) source;
 			if (itemClicked==openMenuItem){
-				JOptionPane.showMessageDialog(null, "Open Menu Item Pressed.");
+				try {
+					DrawableView.Load(IOManager.Load("output.shrug"));
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "Error during load.");
+					e1.printStackTrace();
+				}
 			} else if (itemClicked==saveMenuItem){
-				JOptionPane.showMessageDialog(null, "Save Menu Item Pressed.");
+				try {
+					IOManager.Save("output.shrug");
+				} catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, "Error during save.");
+					e1.printStackTrace();
+				}
 			} else if (itemClicked==exportMenuItem){
 				try {
 					Export.export(DrawableView.bodyBox);

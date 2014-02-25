@@ -5,15 +5,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.Box;
-import com.shrugs.app.components.DivBox;
 
 
 
 public class Export {
 	
-	public static void main(String[] args) {
+	/* public static void main(String[] args) {
 		try {
 			BodyBox body = new BodyBox(0,0,900,1000);
 			DivBox box1 = new DivBox(10,10,300,300);
@@ -28,7 +26,7 @@ public class Export {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
+	} */
 	
 	private static BufferedWriter writer;
 	
@@ -36,6 +34,7 @@ public class Export {
 		export(box, "output");
 	}
 	
+	//TODO: tags should be generated as <[tag] id=[id]>[content/children]</[tag]>
 	public static void export(Box box, String outputDir) throws IOException {
 		File path = new File(outputDir);
 		path.mkdir();
