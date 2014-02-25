@@ -31,8 +31,9 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 											// object
 	boolean make; // Used to tell if the object should be made or not
 
-	private BodyBox bodyBox; // The main body box of the web page
-	private Box targetBox; // The box to draw new boxes into (set on mousePressed)
+	public static BodyBox bodyBox; // The main body box of the web page
+	private Box targetBox; // The box to draw new boxes into (set on
+							// mousePressed)
 
 	// Lists of drawable objects
 	ArrayList<Box> boxList = new ArrayList<Box>();
@@ -47,7 +48,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				startY = evt.getY();
 
 				targetBox = bodyBox.youngestBoxContainingPoint(startX, startY);
-				
+
 				startX = targetBox.getNearestHSnap(startX);
 				startY = targetBox.getNearestVSnap(startY);
 
@@ -75,29 +76,28 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 				endX = targetBox.getNearestHSnap(evt.getX());
 				endY = targetBox.getNearestVSnap(evt.getY());
-				
 
 				if ((endX == startX) || (endY == startY)) { // REQ3: Box must
 															// not be 0x0
 					repaint();
 					return;
 				}
-				
-				//swap endX/startX if necessary
-				if(endX<startX) {
+
+				// swap endX/startX if necessary
+				if (endX < startX) {
 					int swap = endX;
 					endX = startX;
 					startX = swap;
 				}
-				
-				//swap endY/startY if necessary
-				if(endY<startY) {
+
+				// swap endY/startY if necessary
+				if (endY < startY) {
 					int swap = endY;
 					endY = startY;
 					startY = swap;
 				}
-				
-				//Reduce endX/endY to prevent collision errors
+
+				// Reduce endX/endY to prevent collision errors
 				endX--;
 				endY--;
 
@@ -129,9 +129,10 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					repaint();
 					return;
 				}
-				newBox.getStyle().setBoxColor(OptionsToolBar.getBoxBackgroundColor());
+				newBox.getStyle().setBoxColor(
+						OptionsToolBar.getBoxBackgroundColor());
 				boxList.add(newBox);
-				((DivBox)targetBox).addChild(newBox);
+				((DivBox) targetBox).addChild(newBox);
 
 			}
 

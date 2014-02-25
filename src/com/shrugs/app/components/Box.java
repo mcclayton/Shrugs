@@ -57,7 +57,7 @@ public class Box {
     }
     
     public int getYOffset() {
-    	return startY-parent.getStartX();
+    	return startY-parent.getStartY();
     }
     
     public LinkedList<Integer> getHSnaps() {

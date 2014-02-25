@@ -2,11 +2,14 @@ package com.shrugs.app.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+
+import com.shrugs.app.Export;
 
 public class MainMenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -51,7 +54,12 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			} else if (itemClicked==saveMenuItem){
 				JOptionPane.showMessageDialog(null, "Save Menu Item Pressed.");
 			} else if (itemClicked==exportMenuItem){
-				JOptionPane.showMessageDialog(null, "Export Menu Item Pressed.");
+				try {
+					Export.export(DrawableView.bodyBox);
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "Error during export.");
+					e1.printStackTrace();
+				}
 			}
 		}
 	}
