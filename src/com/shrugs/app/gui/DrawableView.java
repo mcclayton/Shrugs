@@ -35,9 +35,6 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	private Box targetBox; // The box to draw new boxes into (set on
 							// mousePressed)
 
-	// Lists of drawable objects
-	ArrayList<Box> boxList = new ArrayList<Box>();
-
 	public DrawableView(int width, int height) {
 		bodyBox = new BodyBox(0, 0, width - 1, height - 1);
 
@@ -131,7 +128,6 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				}
 				newBox.getStyle().setBoxColor(
 						OptionsToolBar.getBoxBackgroundColor());
-				boxList.add(newBox);
 				((DivBox) targetBox).addChild(newBox);
 
 			}
@@ -166,7 +162,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		}
 
 		// Snap the end coordinates to a box grid if necessary
-		for (Box b : boxList) {
+		for (Box b : bodyBox.flatten()) {
 			if (b.containsPoint(endX, endY) && b.gethighlight()) {
 				endX = b.getNearestHSnap(endX);
 				endY = b.getNearestVSnap(endY);
@@ -180,7 +176,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		bodyBox.setHighlight(true);
 
 		// Highlight the innermost box that the mouse is inside
-		for (Box b : boxList) {
+		for (Box b : bodyBox.flatten()) {
 			if (b.containsPoint(mvEvt.getX(), mvEvt.getY())) {
 				if (b.getParent() != null) {
 					if (b.getParent().gethighlight()) {
@@ -222,7 +218,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 		// Draw all the box objects based on the values in the box object
 		Color boxBackground;
-		for (Box b : boxList) {
+		for (Box b : bodyBox.flatten()) {
 			// Draw Box Background
 			g2.setStroke(solidStroke);
 			boxBackground = b.getStyle().getBoxColorValue();

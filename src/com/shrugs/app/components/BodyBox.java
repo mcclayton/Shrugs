@@ -37,4 +37,18 @@ public class BodyBox extends DivBox {
 		}
 		return this;
 	}
+	
+	public LinkedList<Box> flatten() {
+		LinkedList<Box> lst = new LinkedList<Box>();
+		LinkedList<Box> queue = new LinkedList<Box>();
+		lst.add(this);
+		queue.addAll(this.getChildren());
+		while(!queue.isEmpty()) {
+			Box b = queue.removeFirst();
+			if(b instanceof DivBox)
+				queue.addAll(((DivBox)b).getChildren());
+			lst.add(b);
+		}
+		return lst;
+	}
 }
