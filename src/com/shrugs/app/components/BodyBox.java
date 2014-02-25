@@ -22,6 +22,7 @@ public class BodyBox extends DivBox {
 		LinkedList<Integer> snaps = new LinkedList<Integer>();
 		for (int i = 0; i < this.height(); i += 50)
 			snaps.add(i);
+    	snaps.set(snaps.size()-1,snaps.get(snaps.size()-1)+1);
 		return snaps;
 	}
 	

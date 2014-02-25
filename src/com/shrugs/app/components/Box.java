@@ -21,10 +21,10 @@ public class Box {
 	}
 	
     public Box(int startX, int startY, int endX, int endY, Box parent) {
-    	this.startX = startX;
-    	this.startY = startY;
-    	this.endX = endX;
-    	this.endY = endY;
+    	this.startX = Math.min(startX,endX);
+    	this.startY = Math.min(startY,endY);
+    	this.endX = Math.max(startX, endX);
+    	this.endY = Math.max(startY, endY);
     	this.parent = parent;
     	this.highlight = false;
     	this.style = new BoxStyle();
@@ -65,6 +65,7 @@ public class Box {
     	int width = this.width();
     	for(float f : snapRatios)
     		snaps.add((int)(f*width)+this.startX);
+    	snaps.set(snapRatios.length-1,snaps.get(snapRatios.length-1)+1);
     	return snaps;
     }
     
@@ -73,6 +74,7 @@ public class Box {
     	int height = this.height();
     	for(float f : snapRatios)
     		snaps.add((int)(f*height)+this.startY);
+    	snaps.set(snapRatios.length-1,snaps.get(snapRatios.length-1)+1);
     	return snaps;
     }
     
@@ -115,44 +117,6 @@ public class Box {
 		}
     	return closestVSnap;
     }
-    
-    public boolean coordinatesInsideBox(int x, int y) {
-    	if(x > startX && x < (startX+this.width()) && y > startY && y < (startY+this.height()))
-    		return true;
-    	else
-    		return false;
-    }
-    
-    public boolean lineIntersectsBox(int x1, int y1, int x2, int y2){
-    	//(x1, y1) (x2, y2)
-    	int rl1, rl2;	//coordinate loaction relative to the box; 0 inside, 1 top right, 2 top middle, 3 top left,
-    					//4 left middle, 5 bottom left, 6 bottom middle, 7 bottom middle, 8 middle right
-    					//rl1 = relative location 1
-    	rl1 = locationRelativeToBox(x1, y1);
-    	rl2 = locationRelativeToBox(x2, y2);
-    	// debugging System.out.println("(" + rl1 + ":" + rl2 + ")");
-    	
-    	if (	   (rl1==1 && (rl2 == 4||rl2 == 5||rl2 == 6))
-    			|| (rl1==2 && (rl2 == 4||rl2 == 5||rl2 == 6||rl2 == 7||rl2 == 8))
-    			|| (rl1==3 && (rl2 == 6||rl2 == 7||rl2 == 8)) 
-    			|| (rl1==4 && (rl2 == 1||rl2 == 2||rl2 == 6||rl2 == 7||rl2 == 8)) 
-    			|| (rl1==5 && (rl2 == 1||rl2 == 2||rl2 == 8)) 
-    			|| (rl1==6 && (rl2 == 1||rl2 == 2||rl2 == 3||rl2 == 4||rl2 == 8)) 
-    			|| (rl1==7 && (rl2 == 2||rl2 == 3||rl2 == 4)) 
-    			|| (rl1==8 && (rl2 == 2||rl2 == 3||rl2 == 4||rl2 == 5||rl2 == 6)))
-    		return false;
-    	else 
-    		return true;
-    	
-    	/*if (   (rl1==1 && rl2==5 || rl1==5 && rl2==1)
-    		|| (rl1==2 && rl2==6 || rl1==6 && rl2==2)
-    		|| (rl1==3 && rl2==7 || rl1==7 && rl2==3)
-    		|| (rl1==4 && rl2==8 || rl1==4 && rl2==8))
-    		return true;
-    	else
-    		return false;
-    		*/
-    }
 
     public int locationRelativeToBox(int x, int y) {    	
     	if (x >= (endX) && y <= startY)
@@ -190,7 +154,7 @@ public class Box {
      * @return true if the boxes overlap; false otherwise
      */
     public boolean collidesWith(Box b) {
-    	return !(this.startX > b.endX || this.endX < b.startX || this.startY > b.endY || this.endY < b.startY);
+    	return !(this.startX >= b.endX || this.endX <= b.startX || this.startY >= b.endY || this.endY <= b.startY);
     }
 
 }

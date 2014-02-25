@@ -22,6 +22,7 @@ public class BoxStyle implements Comparable<BoxStyle>{
 	private Map<String, String> attr;
 	public BoxStyle(){
 		attr = new HashMap<String,String>();
+		attr.put("background-color", "rgb(255,255,255)");
 	}
 
 	public void setAttribute(String name, String value){
