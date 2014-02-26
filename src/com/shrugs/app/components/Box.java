@@ -21,7 +21,7 @@ public class Box {
 	protected BoxStyle style;
 	protected String tagName = "div";
 
-	protected static float[] snapRatios = { 0, .25f, .33f, .50f, .67f, .75f, 1 };
+	protected static float[] snapRatios = { 0, .15f, .25f, .33f, .50f, .67f, .75f, .85f, 1 };
 
 	public Box(int startX, int startY, int endX, int endY) {
 		this(startX, startY, endX, endY, null);

@@ -3,36 +3,11 @@
     {
       "children": [
         {
-          "children": [
-            {
-              "children": [],
-              "startX": 228,
-              "startY": 236,
-              "endX": 379,
-              "endY": 255,
-              "style": {
-                "attr": {
-                  "background-color": "rgb(255,0,0)"
-                }
-              }
-            },
-            {
-              "children": [],
-              "startX": 228,
-              "startY": 340,
-              "endX": 379,
-              "endY": 359,
-              "style": {
-                "attr": {
-                  "background-color": "rgb(255,0,0)"
-                }
-              }
-            }
-          ],
-          "startX": 228,
-          "startY": 174,
-          "endX": 379,
-          "endY": 423,
+          "children": [],
+          "startX": 211,
+          "startY": 231,
+          "endX": 335,
+          "endY": 460,
           "style": {
             "attr": {
               "background-color": "rgb(255,255,255)"
@@ -40,10 +15,34 @@
           }
         }
       ],
-      "startX": 152,
+      "startX": 91,
       "startY": 50,
       "endX": 457,
-      "endY": 549,
+      "endY": 599,
+      "style": {
+        "attr": {
+          "background-color": "rgb(255,255,255)"
+        }
+      }
+    },
+    {
+      "children": [],
+      "startX": 0,
+      "startY": 0,
+      "endX": 90,
+      "endY": 399,
+      "style": {
+        "attr": {
+          "background-color": "rgb(255,255,255)"
+        }
+      }
+    },
+    {
+      "boxImage": {},
+      "startX": 458,
+      "startY": 50,
+      "endX": 611,
+      "endY": 349,
       "style": {
         "attr": {
           "background-color": "rgb(255,255,255)"
