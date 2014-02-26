@@ -2,6 +2,8 @@ package com.shrugs.app.components;
 
 import java.util.LinkedList;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
 public class DivBox extends Box {
@@ -83,9 +85,22 @@ public class DivBox extends Box {
 		}
 		return false;
 	}
-	
+
 	public void reassociateChildren() {
-		for(Box b : children)
+		for (Box b : children)
 			b.setParent(this);
+	}
+
+	@Override
+	public JsonObject toJsonObj() {
+		JsonObject obj = super.toJsonObj();
+		JsonArray children = new JsonArray();
+		for (Box b : this.children) {
+			children.add(b.toJsonObj());
+		}
+		
+		obj.add("children", children);
+
+		return obj;
 	}
 }

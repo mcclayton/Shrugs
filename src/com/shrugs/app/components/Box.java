@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
 public class Box {
@@ -216,6 +217,15 @@ public class Box {
 	public boolean collidesWith(Box b) {
 		return !(this.startX >= b.endX || this.endX <= b.startX
 				|| this.startY >= b.endY || this.endY <= b.startY);
+	}
+	
+	public JsonObject toJsonObj() {
+		JsonObject obj = new JsonObject();
+		obj.addProperty("x1", startX);
+		obj.addProperty("x2", endX);
+		obj.addProperty("y1", startY);
+		obj.addProperty("y2", endY);
+		return obj;
 	}
 
 }

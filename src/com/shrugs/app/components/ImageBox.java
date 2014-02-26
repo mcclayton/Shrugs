@@ -1,8 +1,8 @@
 package com.shrugs.app.components;
 
 import java.awt.Image;
-import java.util.LinkedList;
 
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
 public class ImageBox extends Box {
@@ -21,5 +21,13 @@ public class ImageBox extends Box {
 
 	public Image getImage() {
 		return this.boxImage;
+	}
+	
+	@Override
+	public JsonObject toJsonObj() {
+		JsonObject obj = super.toJsonObj();
+		obj.addProperty("img", "michael.png"); //TODO: get image name
+		
+		return obj;
 	}
 }
