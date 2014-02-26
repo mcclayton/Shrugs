@@ -25,7 +25,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		this.add(fileMenu);
 
 		//Build the group of file menu's JMenuItems
-		openMenuItem = new JMenuItem("Open Project");
+		openMenuItem = new JMenuItem("Load Project");
 		fileMenu.add(openMenuItem);
 		saveMenuItem = new JMenuItem("Save Project");
 		fileMenu.add(saveMenuItem);
@@ -50,14 +50,14 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 
 		if (source instanceof JMenuItem){  //checks to see if a menu item was pressed
 			JMenuItem itemClicked = (JMenuItem) source;
-			if (itemClicked==openMenuItem){
+			if (itemClicked==openMenuItem){ //TODO: Add "Loading File" popup and disable input
 				try {
 					DrawableView.Load(IOManager.Load("output.shrug"));
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "Error during load.");
 					e1.printStackTrace();
 				}
-			} else if (itemClicked==saveMenuItem){
+			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
 				try {
 					IOManager.Save("output.shrug");
 				} catch(Exception e1) {

@@ -22,7 +22,12 @@ public class Box {
 	protected BoxStyle style;
 	protected String tagName = "div";
 
-	protected static float[] snapRatios = { 0, .15f, .25f, .33f, .50f, .67f, .75f, .85f, 1 };
+	protected static float[] snapRatios = { 0, .15f, .25f, .33f, .50f, .67f,
+			.75f, .85f, 1 };
+
+	public Box() {
+		this(0, 0, 0, 0, null);
+	}
 
 	public Box(int startX, int startY, int endX, int endY) {
 		this(startX, startY, endX, endY, null);
@@ -218,14 +223,25 @@ public class Box {
 		return !(this.startX >= b.endX || this.endX <= b.startX
 				|| this.startY >= b.endY || this.endY <= b.startY);
 	}
-	
+
 	public JsonObject toJsonObj() {
 		JsonObject obj = new JsonObject();
+		obj.addProperty("type", getClass().getName());
 		obj.addProperty("x1", startX);
 		obj.addProperty("x2", endX);
 		obj.addProperty("y1", startY);
 		obj.addProperty("y2", endY);
+		obj.add("style", style.toJsonObj());
 		return obj;
+	}
+	
+	public void fromJsonObj(JsonObject obj) {
+		this.startX = obj.get("x1").getAsInt();
+		this.endX = obj.get("x2").getAsInt();
+		this.startY = obj.get("y1").getAsInt();
+		this.endY = obj.get("y2").getAsInt();
+		this.style = new BoxStyle();
+		this.style.fromJsonObj(obj.get("style").getAsJsonObject());
 	}
 
 }

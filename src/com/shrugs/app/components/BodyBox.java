@@ -9,6 +9,10 @@ public class BodyBox extends DivBox {
 		this.highlight = true;
 	}
 
+	public BodyBox() {
+		super();
+	}
+
 	public int getXOffset() {
 		return startX;
 	}

@@ -3,6 +3,7 @@ package com.shrugs.app.components;
 import java.util.LinkedList;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
@@ -13,6 +14,11 @@ public class DivBox extends Box {
 
 	public DivBox(int startX, int startY, int endX, int endY) {
 		super(startX, startY, endX, endY);
+		children = new LinkedList<Box>();
+	}
+
+	public DivBox() {
+		super();
 		children = new LinkedList<Box>();
 	}
 
@@ -98,9 +104,26 @@ public class DivBox extends Box {
 		for (Box b : this.children) {
 			children.add(b.toJsonObj());
 		}
-		
 		obj.add("children", children);
 
 		return obj;
+	}
+	
+	@Override
+	public void fromJsonObj(JsonObject obj) {
+		super.fromJsonObj(obj);
+		JsonArray children = obj.get("children").getAsJsonArray();
+		for(JsonElement el : children) {
+			JsonObject childObj = el.getAsJsonObject();
+			try {
+				Class<?> type = Class.forName(childObj.get("type").getAsString());
+				Box childBox = (Box) type.newInstance();
+				childBox.fromJsonObj(childObj);
+				this.addChild(childBox);
+			} catch (Exception e) {
+				System.err.println("Error parsing JSON");
+				e.printStackTrace();
+			}
+		}
 	}
 }

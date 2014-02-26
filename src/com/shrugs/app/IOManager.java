@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.shrugs.app.adapters.BodyBoxAdapter;
 import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.gui.DrawableView;
 
@@ -20,7 +21,7 @@ public class IOManager {
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
 		
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+		Gson gson = new GsonBuilder().registerTypeAdapter(BodyBox.class, new BodyBoxAdapter()).setPrettyPrinting().create();
 		String json = gson.toJson(DrawableView.bodyBox);
 		bw.write(json);
 		bw.close();
@@ -32,9 +33,8 @@ public class IOManager {
 			throw new IOException();
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder().registerTypeAdapter(BodyBox.class, new BodyBoxAdapter()).setPrettyPrinting().create();
 		BodyBox b = gson.fromJson(br, BodyBox.class);
-		b.reassociateAllChildren();
 		return b;
 	}
 

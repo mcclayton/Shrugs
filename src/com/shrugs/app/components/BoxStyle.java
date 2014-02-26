@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
 
 //some stuff is unsafe, should add exceptions when necessary
@@ -95,6 +97,20 @@ public class BoxStyle implements Comparable<BoxStyle> {
 			out += key + ":" + attr.get(key) + ";";
 		}
 		return out;
+	}
+	
+	public JsonObject toJsonObj() {
+		JsonObject obj = new JsonObject();
+		for(String key : attr.keySet())
+			obj.addProperty(key, attr.get(key));
+		
+		return obj;
+	}
+	
+	public void fromJsonObj(JsonObject obj) {
+		for( Map.Entry<String, JsonElement> ent : obj.entrySet() ) {
+			attr.put(ent.getKey(), ent.getValue().getAsString());
+		}
 	}
 
 }

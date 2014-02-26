@@ -37,6 +37,7 @@ public class OptionsToolBar extends JToolBar {
 		this.setVisible(true);
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addButtons(final JToolBar jtbToolBar) {
 
 		// Image selector
