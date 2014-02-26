@@ -68,10 +68,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 				if (!(targetBox instanceof DivBox)) { // REQ2: target must be
 					// DivBox
-					startX = 0;
-					startY = 0;
-					endX = 0;
-					endY = 0;
+					isDragging = false;
 					repaint();
 					return;
 				}
