@@ -4,16 +4,20 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.Box;
 import com.shrugs.app.components.DivBox;
+import com.shrugs.app.components.ImageBox;
 
 public class DrawableView extends JPanel implements MouseMotionListener {
 	private static final long serialVersionUID = 1L;
@@ -23,17 +27,17 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	final static BasicStroke solidStroke = new BasicStroke();
 
 	private int startX, startY, endX, endY = 0; // Coordinates of box that is
-												// currently being drawn
+	// currently being drawn
 	boolean isDragging = false; // Used to tell if the user is currently
-								// drawing/dragging a box
+	// drawing/dragging a box
 	boolean tlcord, trcord, blcord, brcord; // Used to tell if the coordinates
-											// of the object are inside another
-											// object
+	// of the object are inside another
+	// object
 	boolean make; // Used to tell if the object should be made or not
 
 	public static BodyBox bodyBox; // The main body box of the web page
 	private Box targetBox; // The box to draw new boxes into (set on
-							// mousePressed)
+	// mousePressed)
 
 	public DrawableView(int width, int height) {
 		bodyBox = new BodyBox(0, 0, width - 1, height - 1);
@@ -63,7 +67,11 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				}
 
 				if (!(targetBox instanceof DivBox)) { // REQ2: target must be
-														// DivBox
+					// DivBox
+					startX = 0;
+					startY = 0;
+					endX = 0;
+					endY = 0;
 					repaint();
 					return;
 				}
@@ -75,7 +83,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				endY = targetBox.getNearestVSnap(evt.getY());
 
 				if ((endX == startX) || (endY == startY)) { // REQ3: Box must
-															// not be 0x0
+					// not be 0x0
 					repaint();
 					return;
 				}
@@ -99,37 +107,57 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				endY--;
 
 				if (bodyBox.youngestBoxContainingPoint(endX, endY) != targetBox) { // REQ4:
-																					// Both
-																					// primary
-																					// corners
-																					// must
-																					// be
-																					// in
-																					// the
-																					// same
-																					// box
+					// Both
+					// primary
+					// corners
+					// must
+					// be
+					// in
+					// the
+					// same
+					// box
 					repaint();
 					return;
 				}
 
-				// TODO: Allow box type to be chosen using toolbox
-				DivBox newBox = new DivBox(startX, startY, endX, endY);
-				if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
-																		// new
-																		// box
-																		// must
-																		// not
-																		// overlap
-																		// with
-																		// pre-existing
-																		// children
-					repaint();
-					return;
-				}
-				newBox.getStyle().setBoxColor(
-						OptionsToolBar.getBoxBackgroundColor());
-				((DivBox) targetBox).addChild(newBox);
+				// Allow box type to be chosen using toolbox
+				if (OptionsToolBar.getBoxMode().equals("div")) {
+					DivBox newBox = new DivBox(startX, startY, endX, endY);
 
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
+						// new
+						// box
+						// must
+						// not
+						// overlap
+						// with
+						// pre-existing
+						// children
+						repaint();
+						return;
+					}
+					newBox.getStyle().setBoxColor(
+							OptionsToolBar.getBoxBackgroundColor());
+					((DivBox) targetBox).addChild(newBox);
+				} else if (OptionsToolBar.getBoxMode().equals("image")) {
+					ImageBox newBox = new ImageBox(startX, startY, endX, endY);
+
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
+						// new
+						// box
+						// must
+						// not
+						// overlap
+						// with
+						// pre-existing
+						// children
+						repaint();
+						return;
+					}
+					newBox.getStyle().setBoxColor(
+							OptionsToolBar.getBoxBackgroundColor());
+					((DivBox) targetBox).addChild(newBox);
+				}
 			}
 
 			@Override
@@ -140,7 +168,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					startY = evt.getY();
 
 					bodyBox.youngestBoxContainingPoint(startX, startY)
-							.showAttributesMenu();
+					.showAttributesMenu();
 				}
 
 				repaint();
@@ -219,53 +247,72 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		// Draw all the box objects based on the values in the box object
 		Color boxBackground;
 		for (Box b : bodyBox.flatten()) {
-			// Draw Box Background
-			g2.setStroke(solidStroke);
-			boxBackground = b.getStyle().getBoxColorValue();
-			g2.setColor(boxBackground);
-			g2.fillRect(b.getStartX(), b.getStartY(), b.width(), b.height());
 
-			if (b.gethighlight()) {
-
-				// Make sure the grid is a color that won't blend in with the
-				// boxes background color
-				double luminance = 0.2126 * boxBackground.getRed() + 0.7152
-						* boxBackground.getGreen() + 0.0722
-						* boxBackground.getBlue();
-				if (luminance > 128) {
-					g2.setColor(Color.GRAY);
-				} else {
-					g2.setColor(Color.LIGHT_GRAY);
+			if (b instanceof ImageBox) {	// Case 1: Box is ImageBox
+				try {                
+					//TODO: Allow user to specify what image to show
+					Image image = ImageIO.read(new File("./img/placeholder.png"));
+					g2.drawImage(image, b.getStartX(), b.getStartY(), b.width(), b.height(), null);
+				} catch (IOException ex) {
+					System.out.println(ex);
 				}
-
-				// Draw the grid on mouseover
-				g2.setStroke(dashedStroke);
-				for (Integer vSnap : b.getVSnaps()) {
-					g2.drawLine(b.getStartX(), vSnap,
-							b.getStartX() + b.width(), vSnap);
-				}
-				for (Integer hSnap : b.getHSnaps()) {
-					g2.drawLine(hSnap, b.getStartY(), hSnap,
-							b.getStartY() + b.height());
-				}
-
+			} else if (b instanceof DivBox) {	// Case 2: Box is DivBox
+				// Draw Box Background
 				g2.setStroke(solidStroke);
-				g2.setColor(Color.red);
-			} else {
-				g2.setColor(Color.black);
-			}
+				boxBackground = b.getStyle().getBoxColorValue();
+				g2.setColor(boxBackground);
+				g2.fillRect(b.getStartX(), b.getStartY(), b.width(), b.height());
 
-			// Draw Box foreground
-			g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
+				if (b.gethighlight()) {
+
+					// Make sure the grid is a color that won't blend in with the
+					// boxes background color
+					double luminance = 0.2126 * boxBackground.getRed() + 0.7152
+							* boxBackground.getGreen() + 0.0722
+							* boxBackground.getBlue();
+					if (luminance > 128) {
+						g2.setColor(Color.GRAY);
+					} else {
+						g2.setColor(Color.LIGHT_GRAY);
+					}
+
+					// Draw the grid on mouseover
+					g2.setStroke(dashedStroke);
+					for (Integer vSnap : b.getVSnaps()) {
+						g2.drawLine(b.getStartX(), vSnap,
+								b.getStartX() + b.width(), vSnap);
+					}
+					for (Integer hSnap : b.getHSnaps()) {
+						g2.drawLine(hSnap, b.getStartY(), hSnap,
+								b.getStartY() + b.height());
+					}
+
+					g2.setStroke(solidStroke);
+					g2.setColor(Color.red);
+				} else {
+					g2.setColor(Color.black);
+				}
+
+				// Draw Box foreground
+				g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
+			}
 		}
 
 		// If the user is drawing a rectangle, draw it with a dashed stroke
 		if (isDragging) {
-			// Draw Box Background
+			
 			g2.setStroke(solidStroke);
-			g2.setColor(OptionsToolBar.getBoxBackgroundColor());
+			if (OptionsToolBar.getBoxMode().equals("image")) {
+				// Set background color to white for an image
+				g2.setColor(Color.white);
+			} else {
+				// Set background color based on choice
+				g2.setStroke(solidStroke);
+				g2.setColor(OptionsToolBar.getBoxBackgroundColor());
+			}
+			// Draw Box Background
 			g2.fillRect(Math.min(startX, endX), Math.min(startY, endY),
-					Math.abs(startX - endX), Math.abs(startY - endY));
+			Math.abs(startX - endX), Math.abs(startY - endY));
 
 			// Draw Box foreground
 			g2.setColor(Color.black);
@@ -274,7 +321,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					Math.abs(startX - endX), Math.abs(startY - endY));
 		}
 	}
-	
+
 	public static void Load(BodyBox b) {
 		bodyBox = b;
 		//TODO repaint
