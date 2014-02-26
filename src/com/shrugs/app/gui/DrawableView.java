@@ -121,7 +121,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				}
 
 				// Allow box type to be chosen using toolbox
-				if (OptionsToolBar.getBoxMode().equals("div")) {
+				if (OptionsToolBar.getBoxMode().equals("Div")) {
 					DivBox newBox = new DivBox(startX, startY, endX, endY);
 
 					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
@@ -139,24 +139,29 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					newBox.getStyle().setBoxColor(
 							OptionsToolBar.getBoxBackgroundColor());
 					((DivBox) targetBox).addChild(newBox);
-				} else if (OptionsToolBar.getBoxMode().equals("image")) {
-					ImageBox newBox = new ImageBox(startX, startY, endX, endY);
+				} else if (OptionsToolBar.getBoxMode().equals("Image")) {
+					ImageBox newBox;
+					try {
+						newBox = new ImageBox(ImageIO.read(new File(OptionsToolBar.getBoxImagePath())), startX, startY, endX, endY);
 
-					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
-						// new
-						// box
-						// must
-						// not
-						// overlap
-						// with
-						// pre-existing
-						// children
-						repaint();
-						return;
+						if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
+							// new
+							// box
+							// must
+							// not
+							// overlap
+							// with
+							// pre-existing
+							// children
+							repaint();
+							return;
+						}
+						newBox.getStyle().setBoxColor(
+								OptionsToolBar.getBoxBackgroundColor());
+						((DivBox) targetBox).addChild(newBox);
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
-					newBox.getStyle().setBoxColor(
-							OptionsToolBar.getBoxBackgroundColor());
-					((DivBox) targetBox).addChild(newBox);
 				}
 			}
 
@@ -249,13 +254,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		for (Box b : bodyBox.flatten()) {
 
 			if (b instanceof ImageBox) {	// Case 1: Box is ImageBox
-				try {                
-					//TODO: Allow user to specify what image to show
-					Image image = ImageIO.read(new File("./img/placeholder.png"));
-					g2.drawImage(image, b.getStartX(), b.getStartY(), b.width(), b.height(), null);
-				} catch (IOException ex) {
-					System.out.println(ex);
-				}
+				// Draw the image
+				g2.drawImage(((ImageBox) b).getImage(), b.getStartX(), b.getStartY(), b.width(), b.height(), null);
 			} else if (b instanceof DivBox) {	// Case 2: Box is DivBox
 				// Draw Box Background
 				g2.setStroke(solidStroke);
@@ -300,19 +300,26 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 		// If the user is drawing a rectangle, draw it with a dashed stroke
 		if (isDragging) {
-			
+
 			g2.setStroke(solidStroke);
-			if (OptionsToolBar.getBoxMode().equals("image")) {
-				// Set background color to white for an image
-				g2.setColor(Color.white);
+			if (OptionsToolBar.getBoxMode().equals("Image")) {
+				// Draw the image
+				Image image;
+				try {
+					image = ImageIO.read(new File(OptionsToolBar.getBoxImagePath()));
+					g2.drawImage(image, Math.min(startX, endX), Math.min(startY, endY),
+							Math.abs(startX - endX), Math.abs(startY - endY), null);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			} else {
-				// Set background color based on choice
+				// Drawn Box Background
 				g2.setStroke(solidStroke);
 				g2.setColor(OptionsToolBar.getBoxBackgroundColor());
+				g2.fillRect(Math.min(startX, endX), Math.min(startY, endY),
+						Math.abs(startX - endX), Math.abs(startY - endY));
 			}
-			// Draw Box Background
-			g2.fillRect(Math.min(startX, endX), Math.min(startY, endY),
-			Math.abs(startX - endX), Math.abs(startY - endY));
 
 			// Draw Box foreground
 			g2.setColor(Color.black);

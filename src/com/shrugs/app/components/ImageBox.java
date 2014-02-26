@@ -1,16 +1,20 @@
 package com.shrugs.app.components;
 
+import java.awt.Image;
 import java.util.LinkedList;
 
 import com.google.gson.annotations.Expose;
 
 public class ImageBox extends Box {
 
+	private Image boxImage = null;
+	
 	@Expose
 	protected LinkedList<Box> children;
 
-	public ImageBox(int startX, int startY, int endX, int endY) {
+	public ImageBox(Image image, int startX, int startY, int endX, int endY) {
 		super(startX, startY, endX, endY);
+		this.boxImage = image;
 		children = new LinkedList<Box>();
 	}
 
@@ -87,5 +91,9 @@ public class ImageBox extends Box {
 	public void reassociateChildren() {
 		for(Box b : children)
 			b.setParent(this);
+	}
+	
+	public Image getImage() {
+		return this.boxImage;
 	}
 }
