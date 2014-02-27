@@ -22,9 +22,6 @@ public class Box {
 	protected BoxStyle style;
 	protected String tagName = "div";
 
-	protected static float[] snapRatios = { 0, .15f, .25f, .33f, .50f, .67f,
-			.75f, .85f, 1 };
-
 	public Box() {
 		this(0, 0, 0, 0, null);
 	}
@@ -122,18 +119,26 @@ public class Box {
 	public LinkedList<Integer> getHSnaps() {
 		LinkedList<Integer> snaps = new LinkedList<Integer>();
 		int width = this.width();
-		for (float f : snapRatios)
-			snaps.add((int) (f * width) + this.startX);
-		snaps.set(snapRatios.length - 1, snaps.get(snapRatios.length - 1) + 1);
+		int limit = 20;
+		float f;
+		for (f = .5f; f * width > limit && f > .1f; f *= .5f)
+			;
+		for (float i = 0; i < 1; i += f)
+			snaps.add(this.startX + (int) (i * width));
+		snaps.add(this.startX + width + 1);
 		return snaps;
 	}
 
 	public LinkedList<Integer> getVSnaps() {
 		LinkedList<Integer> snaps = new LinkedList<Integer>();
 		int height = this.height();
-		for (float f : snapRatios)
-			snaps.add((int) (f * height) + this.startY);
-		snaps.set(snapRatios.length - 1, snaps.get(snapRatios.length - 1) + 1);
+		int limit = 20;
+		float f;
+		for (f = .5f; f * height > limit && f > .1f; f *= .5f)
+			;
+		for (float i = 0; i < 1; i += f)
+			snaps.add(this.startY + (int) (i * height));
+		snaps.add(this.startY + height + 1);
 		return snaps;
 	}
 
@@ -234,7 +239,7 @@ public class Box {
 		obj.add("style", style.toJsonObj());
 		return obj;
 	}
-	
+
 	public void fromJsonObj(JsonObject obj) {
 		this.startX = obj.get("x1").getAsInt();
 		this.endX = obj.get("x2").getAsInt();
