@@ -119,9 +119,9 @@ public class Box {
 	public LinkedList<Integer> getHSnaps() {
 		LinkedList<Integer> snaps = new LinkedList<Integer>();
 		int width = this.width();
-		int limit = 20;
+		int limit = 50;
 		float f;
-		for (f = .5f; f * width > limit && f > .1f; f *= .5f)
+		for (f = 1f; f * width > limit && f > .1f; f *= .5f)
 			;
 		for (float i = 0; i < 1; i += f)
 			snaps.add(this.startX + (int) (i * width));
@@ -132,9 +132,9 @@ public class Box {
 	public LinkedList<Integer> getVSnaps() {
 		LinkedList<Integer> snaps = new LinkedList<Integer>();
 		int height = this.height();
-		int limit = 20;
+		int limit = 50;
 		float f;
-		for (f = .5f; f * height > limit && f > .1f; f *= .5f)
+		for (f = 1f; f * height > limit && f > .1f; f *= .5f)
 			;
 		for (float i = 0; i < 1; i += f)
 			snaps.add(this.startY + (int) (i * height));
