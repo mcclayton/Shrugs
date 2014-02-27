@@ -15,6 +15,10 @@ public class TextAreaBox extends Box {
 		super(startX, startY, endX, endY);
 		this.text = text;
 	}
+	
+	public TextAreaBox() {
+		this("",0,0,0,0);
+	}
 
 	public String toString() {
 		return "text";
@@ -76,5 +80,11 @@ public class TextAreaBox extends Box {
 		obj.addProperty("text", getText());
 		
 		return obj;
+	}
+	
+	@Override
+	public void fromJsonObj(JsonObject obj) {
+		super.fromJsonObj(obj);
+		this.text = obj.get("text").getAsString();
 	}
 }
