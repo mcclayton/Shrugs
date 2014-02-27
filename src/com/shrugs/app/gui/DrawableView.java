@@ -38,6 +38,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 	public static BodyBox bodyBox; // The main body box of the web page
 	private Box targetBox; // The box to draw new boxes into (set on
+
 	// mousePressed)
 
 	public DrawableView(int width, int height) {
@@ -62,13 +63,14 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 			@Override
 			public void mouseReleased(MouseEvent evt) {
-				if (!isDragging) { // REQ1: Mouse must have been dragged
+				// REQ1: Mouse must have been dragged
+				if (!isDragging) {
 					repaint();
 					return;
 				}
 
-				if (!(targetBox instanceof DivBox)) { // REQ2: target must be
-					// DivBox
+				// REQ2: target must be DivBox
+				if (!(targetBox instanceof DivBox)) {
 					isDragging = false;
 					repaint();
 					return;
@@ -80,8 +82,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				endX = targetBox.getNearestHSnap(evt.getX());
 				endY = targetBox.getNearestVSnap(evt.getY());
 
-				if ((endX == startX) || (endY == startY)) { // REQ3: Box must
-					// not be 0x0
+				// REQ3: Box must not be 0x0
+				if ((endX == startX) || (endY == startY)) {
 					repaint();
 					return;
 				}
@@ -104,16 +106,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				endX--;
 				endY--;
 
-				if (bodyBox.youngestBoxContainingPoint(endX, endY) != targetBox) { // REQ4:
-					// Both
-					// primary
-					// corners
-					// must
-					// be
-					// in
-					// the
-					// same
-					// box
+				// REQ4: Both primary corners must be in the same box
+				if (bodyBox.youngestBoxContainingPoint(endX, endY) != targetBox) {
 					repaint();
 					return;
 				}
@@ -122,15 +116,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				if (OptionsToolBar.getBoxMode().equals("Div")) {
 					DivBox newBox = new DivBox(startX, startY, endX, endY);
 
-					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
-						// new
-						// box
-						// must
-						// not
-						// overlap
-						// with
-						// pre-existing
-						// children
+					// REQ5: new box must not overlap with pre-existing children
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) {
 						repaint();
 						return;
 					}
@@ -139,34 +126,21 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					((DivBox) targetBox).addChild(newBox);
 				} else if (OptionsToolBar.getBoxMode().equals("Image")) {
 					ImageBox newBox;
-					newBox = new ImageBox(OptionsToolBar.getBoxImagePath(), startX, startY, endX, endY);
+					newBox = new ImageBox(OptionsToolBar.getBoxImagePath(),
+							startX, startY, endX, endY);
 
-					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
-						// new
-						// box
-						// must
-						// not
-						// overlap
-						// with
-						// pre-existing
-						// children
+					// REQ5: new box must not overlap with pre-existing children
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) {
 						repaint();
 						return;
 					}
 					((DivBox) targetBox).addChild(newBox);
 				} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 					TextAreaBox newBox;
-					newBox = new TextAreaBox(OptionsToolBar.getBoxText(), startX, startY, endX, endY);
+					newBox = new TextAreaBox(OptionsToolBar.getBoxText(),
+							startX, startY, endX, endY);
 
-					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
-						// new
-						// box
-						// must
-						// not
-						// overlap
-						// with
-						// pre-existing
-						// children
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) {
 						repaint();
 						return;
 					}
@@ -182,7 +156,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					startY = evt.getY();
 
 					bodyBox.youngestBoxContainingPoint(startX, startY)
-					.showAttributesMenu();
+							.showAttributesMenu();
 				}
 
 				repaint();
@@ -262,18 +236,20 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 		Color boxBackground;
 		for (Box b : bodyBox.flatten()) {
 
-			if (b instanceof ImageBox) {	// Case 1: Box is ImageBox
+			if (b instanceof ImageBox) { // Case 1: Box is ImageBox
 				// Draw the image
-				g2.drawImage(((ImageBox) b).getImage(), b.getStartX(), b.getStartY(), b.width(), b.height(), null);
-			} else if (b instanceof TextAreaBox) {	// Case 2: Box is TextAreaBox
+				g2.drawImage(((ImageBox) b).getImage(), b.getStartX(),
+						b.getStartY(), b.width(), b.height(), null);
+			} else if (b instanceof TextAreaBox) { // Case 2: Box is TextAreaBox
 				g2.setColor(Color.black);
 				g2.setStroke(solidStroke);
 				// Draw Box foreground (border)
 				g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
-				
+
 				// Draw the text area
-				TextAreaBox.drawString(g2, ((TextAreaBox) b).getText(), b.getStartX(), b.getStartY(), b.width(), b.height());							
-			} else if (b instanceof DivBox) {	// Case 3: Box is DivBox
+				TextAreaBox.drawString(g2, ((TextAreaBox) b).getText(),
+						b.getStartX(), b.getStartY(), b.width(), b.height());
+			} else if (b instanceof DivBox) { // Case 3: Box is DivBox
 				// Draw Box Background
 				g2.setStroke(solidStroke);
 				boxBackground = b.getStyle().getBoxColorValue();
@@ -282,7 +258,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 				if (b.gethighlight()) {
 
-					// Make sure the grid is a color that won't blend in with the
+					// Make sure the grid is a color that won't blend in with
+					// the
 					// boxes background color
 					double luminance = 0.2126 * boxBackground.getRed() + 0.7152
 							* boxBackground.getGreen() + 0.0722
@@ -300,8 +277,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 								b.getStartX() + b.width(), vSnap);
 					}
 					for (Integer hSnap : b.getHSnaps()) {
-						g2.drawLine(hSnap, b.getStartY(), hSnap,
-								b.getStartY() + b.height());
+						g2.drawLine(hSnap, b.getStartY(), hSnap, b.getStartY()
+								+ b.height());
 					}
 
 					g2.setStroke(solidStroke);
@@ -323,9 +300,11 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				// Draw the image
 				Image image;
 				try {
-					image = ImageIO.read(new File(OptionsToolBar.getBoxImagePath()));
-					g2.drawImage(image, Math.min(startX, endX), Math.min(startY, endY),
-							Math.abs(startX - endX), Math.abs(startY - endY), null);
+					image = ImageIO.read(new File(OptionsToolBar
+							.getBoxImagePath()));
+					g2.drawImage(image, Math.min(startX, endX),
+							Math.min(startY, endY), Math.abs(startX - endX),
+							Math.abs(startY - endY), null);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -333,7 +312,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 			} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 				g2.setStroke(solidStroke);
 				g2.setColor(Color.black);
-				TextAreaBox.drawString(g2, OptionsToolBar.getBoxText(), Math.min(startX, endX), Math.min(startY, endY),
+				TextAreaBox.drawString(g2, OptionsToolBar.getBoxText(),
+						Math.min(startX, endX), Math.min(startY, endY),
 						Math.abs(startX - endX), Math.abs(startY - endY));
 			} else if (OptionsToolBar.getBoxMode().equals("Div")) {
 				// Drawn Box Background
@@ -353,6 +333,6 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 	public static void Load(BodyBox b) {
 		bodyBox = b;
-		//TODO repaint
+		// TODO repaint
 	}
 }
