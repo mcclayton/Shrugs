@@ -24,6 +24,12 @@ public class ImageBox extends Box {
 			e.printStackTrace();
 		}
 	}
+	
+	public ImageBox() {
+		super();
+		this.boxImageFilePath = null;
+		this.boxImage = null;
+	}
 
 	public String toString() {
 		return "div";
@@ -40,8 +46,20 @@ public class ImageBox extends Box {
 	@Override
 	public JsonObject toJsonObj() {
 		JsonObject obj = super.toJsonObj();
-		obj.addProperty("img", "michael.png"); //TODO: get image name
+		obj.addProperty("img", boxImageFilePath); //TODO: get image name
 		
 		return obj;
+	}
+	
+	@Override
+	public void fromJsonObj(JsonObject obj) {
+		super.fromJsonObj(obj);
+		this.boxImageFilePath = obj.get("img").getAsString();
+		try {
+			this.boxImage = ImageIO.read(new File(boxImageFilePath));
+		} catch (IOException e) {
+			System.err.println("Image " + boxImageFilePath +" not found.");
+			e.printStackTrace();
+		}
 	}
 }
