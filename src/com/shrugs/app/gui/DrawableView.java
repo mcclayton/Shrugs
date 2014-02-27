@@ -272,7 +272,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
 				
 				// Draw the text area
-				((TextAreaBox) b).drawString(g2, ((TextAreaBox) b).getText(), b.getStartX(), b.getStartY(), b.width(), b.height());							
+				TextAreaBox.drawString(g2, ((TextAreaBox) b).getText(), b.getStartX(), b.getStartY(), b.width(), b.height());							
 			} else if (b instanceof DivBox) {	// Case 3: Box is DivBox
 				// Draw Box Background
 				g2.setStroke(solidStroke);
