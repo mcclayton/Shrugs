@@ -29,6 +29,7 @@ public class OptionsToolBar extends JToolBar {
 		"Image"		//2
 	};
 	private static String boxMode = BOX_TYPES[0];	// Used to tell what box mode the user is in.
+	private static final JTextField textField = new JTextField("Enter text...");;
 
 	public OptionsToolBar(JFrame jFrame) {
 		this.setFloatable(true);
@@ -37,7 +38,6 @@ public class OptionsToolBar extends JToolBar {
 		this.setVisible(true);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addButtons(final JToolBar jtbToolBar) {
 
 		// Image selector
@@ -63,7 +63,7 @@ public class OptionsToolBar extends JToolBar {
 				}
 			}
 		});
-
+		
 
 		// Box background selector
 		final JButton backgroundColorButton = new JButton("Paint Color");
@@ -104,7 +104,7 @@ public class OptionsToolBar extends JToolBar {
 					// Update the toolbar components
 					jtbToolBar.removeAll();
 					jtbToolBar.add(backgroundColorButton);
-					jtbToolBar.add(new JTextField("Enter text..."));
+					jtbToolBar.add(textField);
 					jtbToolBar.add(boxTypeCombo);
 					jtbToolBar.repaint();
 				} else if (boxType.equals("Image")) {
@@ -129,6 +129,10 @@ public class OptionsToolBar extends JToolBar {
 			return DEFAULT_IMAGE_PATH;
 		}
 		return imagePath;
+	}
+	
+	public static String getBoxText() {
+		return textField.getText();
 	}
 
 	public static Color getBoxBackgroundColor() {
