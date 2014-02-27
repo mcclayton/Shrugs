@@ -18,6 +18,7 @@ import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.Box;
 import com.shrugs.app.components.DivBox;
 import com.shrugs.app.components.ImageBox;
+import com.shrugs.app.components.TextAreaBox;
 
 public class DrawableView extends JPanel implements MouseMotionListener {
 	private static final long serialVersionUID = 1L;
@@ -152,8 +153,23 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 						repaint();
 						return;
 					}
-					newBox.getStyle().setBoxColor(
-							OptionsToolBar.getBoxBackgroundColor());
+					((DivBox) targetBox).addChild(newBox);
+				} else if (OptionsToolBar.getBoxMode().equals("Text")) {
+					TextAreaBox newBox;
+					newBox = new TextAreaBox(OptionsToolBar.getBoxText(), startX, startY, endX, endY);
+
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
+						// new
+						// box
+						// must
+						// not
+						// overlap
+						// with
+						// pre-existing
+						// children
+						repaint();
+						return;
+					}
 					((DivBox) targetBox).addChild(newBox);
 				}
 			}
@@ -249,7 +265,15 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 			if (b instanceof ImageBox) {	// Case 1: Box is ImageBox
 				// Draw the image
 				g2.drawImage(((ImageBox) b).getImage(), b.getStartX(), b.getStartY(), b.width(), b.height(), null);
-			} else if (b instanceof DivBox) {	// Case 2: Box is DivBox
+			} else if (b instanceof TextAreaBox) {	// Case 2: Box is TextAreaBox
+				g2.setColor(Color.black);
+				g2.setStroke(solidStroke);
+				// Draw Box foreground (border)
+				g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
+				
+				// Draw the text area
+				((TextAreaBox) b).drawString(g2, ((TextAreaBox) b).getText(), b.getStartX(), b.getStartY(), b.width(), b.height());							
+			} else if (b instanceof DivBox) {	// Case 3: Box is DivBox
 				// Draw Box Background
 				g2.setStroke(solidStroke);
 				boxBackground = b.getStyle().getBoxColorValue();
@@ -306,7 +330,12 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else {
+			} else if (OptionsToolBar.getBoxMode().equals("Text")) {
+				g2.setStroke(solidStroke);
+				g2.setColor(Color.black);
+				TextAreaBox.drawString(g2, OptionsToolBar.getBoxText(), Math.min(startX, endX), Math.min(startY, endY),
+						Math.abs(startX - endX), Math.abs(startY - endY));
+			} else if (OptionsToolBar.getBoxMode().equals("Div")) {
 				// Drawn Box Background
 				g2.setStroke(solidStroke);
 				g2.setColor(OptionsToolBar.getBoxBackgroundColor());
