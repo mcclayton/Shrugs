@@ -138,27 +138,23 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					((DivBox) targetBox).addChild(newBox);
 				} else if (OptionsToolBar.getBoxMode().equals("Image")) {
 					ImageBox newBox;
-					try {
-						newBox = new ImageBox(ImageIO.read(new File(OptionsToolBar.getBoxImagePath())), startX, startY, endX, endY);
+					newBox = new ImageBox(OptionsToolBar.getBoxImagePath(), startX, startY, endX, endY);
 
-						if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
-							// new
-							// box
-							// must
-							// not
-							// overlap
-							// with
-							// pre-existing
-							// children
-							repaint();
-							return;
-						}
-						newBox.getStyle().setBoxColor(
-								OptionsToolBar.getBoxBackgroundColor());
-						((DivBox) targetBox).addChild(newBox);
-					} catch (IOException e) {
-						e.printStackTrace();
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) { // REQ5:
+						// new
+						// box
+						// must
+						// not
+						// overlap
+						// with
+						// pre-existing
+						// children
+						repaint();
+						return;
 					}
+					newBox.getStyle().setBoxColor(
+							OptionsToolBar.getBoxBackgroundColor());
+					((DivBox) targetBox).addChild(newBox);
 				}
 			}
 
