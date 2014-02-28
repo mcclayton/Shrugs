@@ -210,21 +210,25 @@ public class Box {
 	public void showAttributesMenu() {
 		// TODO: This method needs to display a dialogue of attributes.
 		
-		Object[] options = {"Delete","Cancel"};
+		Object[] options = {"Delete","Recolor","Cancel"};
+		String details = this.tagName.toString() + " Box {" + this.startX + "," + this.startY + "}"; 
+		
 		int n = JOptionPane.showOptionDialog(null,
-			"Delete Box?",					//pane text
+			details
+			+ "\nDelete Box?",					
 			"Attributes Menu",				//pane label
 			JOptionPane.YES_NO_OPTION,		//default dialoge for buttons
 			JOptionPane.QUESTION_MESSAGE,	//type of box object
 			null,     						//do not use a custom Icon
 			options,  						//the titles of buttons
 			options[0]); 					//default button title
-
-		//call delete box		
 		
 		if (n == 0)
 			((DivBox) this.parent).removeChild(this);
 
+		//if (n == 1)
+			
+			
 	}
 
 	public boolean containsPoint(int x, int y) {
