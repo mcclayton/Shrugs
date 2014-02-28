@@ -1,5 +1,6 @@
 package com.shrugs.app.components;
 
+import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
@@ -10,14 +11,16 @@ public class TextAreaBox extends Box {
 
 	@Expose
 	private String text = "Enter text...";
+	private Color textColor = Color.black;
 
-	public TextAreaBox(String text, int startX, int startY, int endX, int endY) {
+	public TextAreaBox(String text, Color textColor, int startX, int startY, int endX, int endY) {
 		super(startX, startY, endX, endY);
 		this.text = text;
+		this.textColor = textColor;
 	}
 	
 	public TextAreaBox() {
-		this("",0,0,0,0);
+		this("",Color.black,0,0,0,0);
 	}
 
 	public String toString() {
@@ -72,6 +75,10 @@ public class TextAreaBox extends Box {
 			// Move over to the right for next word.
 			curX += wordWidth;
 		}
+	}
+	
+	public Color getTextColor() {
+		return textColor;
 	}
 	
 	@Override

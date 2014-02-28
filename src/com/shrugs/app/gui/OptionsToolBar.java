@@ -21,6 +21,7 @@ public class OptionsToolBar extends JToolBar {
 	private static final long serialVersionUID = 1L;
 	private static JFrame mainFrame; // Main JFrame, used to attach a color chooser to it
 	private static Color boxBackgroundColor = Color.WHITE; // Color used to remember last chosen color from color picker
+	private static Color textColor = Color.BLACK; // Color used to remember last chosen color from color picker
 	private static final String DEFAULT_IMAGE_PATH = "./img/placeholder.png";
 	private static String imagePath = DEFAULT_IMAGE_PATH; // Path of image to be drawn
 	private static final String[] BOX_TYPES = {
@@ -79,6 +80,20 @@ public class OptionsToolBar extends JToolBar {
 		});
 		jtbToolBar.add(backgroundColorButton);
 		
+		// Box text color selector
+		final JButton textColorButton = new JButton("Font Color");
+
+		textColorButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Color newColor = null;
+				newColor = JColorChooser.showDialog(mainFrame, "Choose Location Color", (textColor==null)?Color.BLACK:textColor);
+				if (newColor != null) {
+					textColor = newColor;
+				}
+			}
+		});
+		jtbToolBar.add(backgroundColorButton);
+		
 		//Create the combo box, select the item at index 0 by default
 		final JComboBox boxTypeCombo = new JComboBox(BOX_TYPES);
 		boxTypeCombo.setSelectedIndex(0);
@@ -103,7 +118,7 @@ public class OptionsToolBar extends JToolBar {
 
 					// Update the toolbar components
 					jtbToolBar.removeAll();
-					jtbToolBar.add(backgroundColorButton);
+					jtbToolBar.add(textColorButton);
 					jtbToolBar.add(textField);
 					jtbToolBar.add(boxTypeCombo);
 					jtbToolBar.repaint();
@@ -133,6 +148,10 @@ public class OptionsToolBar extends JToolBar {
 	
 	public static String getBoxText() {
 		return textField.getText();
+	}
+	
+	public static Color getBoxTextColor() {
+		return textColor;
 	}
 
 	public static Color getBoxBackgroundColor() {

@@ -43,7 +43,6 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 	public DrawableView(int width, int height) {
 		bodyBox = new BodyBox(0, 0, width - 1, height - 1);
-
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent evt) {
@@ -124,6 +123,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					newBox.getStyle().setBoxColor(
 							OptionsToolBar.getBoxBackgroundColor());
 					((DivBox) targetBox).addChild(newBox);
+					repaint();
 				} else if (OptionsToolBar.getBoxMode().equals("Image")) {
 					ImageBox newBox;
 					newBox = new ImageBox(OptionsToolBar.getBoxImagePath(),
@@ -135,9 +135,10 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 						return;
 					}
 					((DivBox) targetBox).addChild(newBox);
+					repaint();
 				} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 					TextAreaBox newBox;
-					newBox = new TextAreaBox(OptionsToolBar.getBoxText(),
+					newBox = new TextAreaBox(OptionsToolBar.getBoxText(), OptionsToolBar.getBoxTextColor(),
 							startX, startY, endX, endY);
 
 					if (((DivBox) targetBox).childrenCollideWith(newBox)) {
@@ -145,6 +146,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 						return;
 					}
 					((DivBox) targetBox).addChild(newBox);
+					repaint();
 				}
 			}
 
@@ -156,7 +158,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					startY = evt.getY();
 
 					bodyBox.youngestBoxContainingPoint(startX, startY)
-							.showAttributesMenu();
+					.showAttributesMenu();
 				}
 
 				repaint();
@@ -241,10 +243,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				g2.drawImage(((ImageBox) b).getImage(), b.getStartX(),
 						b.getStartY(), b.width(), b.height(), null);
 			} else if (b instanceof TextAreaBox) { // Case 2: Box is TextAreaBox
-				g2.setColor(Color.black);
+				g2.setColor(((TextAreaBox) b).getTextColor());
 				g2.setStroke(solidStroke);
-				// Draw Box foreground (border)
-				g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
 
 				// Draw the text area
 				TextAreaBox.drawString(g2, ((TextAreaBox) b).getText(),
@@ -286,10 +286,12 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				} else {
 					g2.setColor(Color.black);
 				}
-
-				// Draw Box foreground
-				g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
 			}
+			
+			// Draw Box foreground
+			g2.setStroke(solidStroke);
+			g2.setColor(Color.black);
+			g2.drawRect(b.getStartX(), b.getStartY(), b.width(), b.height());
 		}
 
 		// If the user is drawing a rectangle, draw it with a dashed stroke
@@ -311,7 +313,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				}
 			} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 				g2.setStroke(solidStroke);
-				g2.setColor(Color.black);
+				g2.setColor(OptionsToolBar.getBoxTextColor());
 				TextAreaBox.drawString(g2, OptionsToolBar.getBoxText(),
 						Math.min(startX, endX), Math.min(startY, endY),
 						Math.abs(startX - endX), Math.abs(startY - endY));
