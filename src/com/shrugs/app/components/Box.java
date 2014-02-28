@@ -209,8 +209,22 @@ public class Box {
 
 	public void showAttributesMenu() {
 		// TODO: This method needs to display a dialogue of attributes.
-		JOptionPane.showMessageDialog(null, this.toString()
-				+ "\nTODO: This will be an attributes setting dialogue.");
+		
+		Object[] options = {"Delete","Cancel"};
+		int n = JOptionPane.showOptionDialog(null,
+			"Delete Box?",					//pane text
+			"Attributes Menu",				//pane label
+			JOptionPane.YES_NO_OPTION,		//default dialoge for buttons
+			JOptionPane.QUESTION_MESSAGE,	//type of box object
+			null,     						//do not use a custom Icon
+			options,  						//the titles of buttons
+			options[0]); 					//default button title
+
+		//call delete box		
+		
+		if (n == 0)
+			((DivBox) this.parent).removeChild(this);
+
 	}
 
 	public boolean containsPoint(int x, int y) {
