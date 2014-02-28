@@ -226,8 +226,8 @@ public class Box {
 		if (n == 0)
 			((DivBox) this.parent).removeChild(this);
 
-		//if (n == 1)
-			
+		if (n == 1)
+			this.style.setBoxColor(0, 0, 0);
 			
 	}
 
