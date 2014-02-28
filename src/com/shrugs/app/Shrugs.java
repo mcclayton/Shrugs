@@ -13,8 +13,8 @@ import com.shrugs.app.gui.OptionsToolBar;
 
 
 public class Shrugs {
-	private static final int WINDOW_WIDTH = 612;
-	private static final int WINDOW_HEIGHT = 792;
+	private static final int WINDOW_WIDTH = 960;
+	private static final int WINDOW_HEIGHT = 800;
 	
 	public static void main(String[] args) {  
 		// Build the Shrugs GUI and then set it

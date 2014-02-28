@@ -70,4 +70,23 @@ public class BodyBox extends DivBox {
 			queue.addAll(db.getChildren());
 		}
 	}
+	
+	@Override
+	public String toString() {
+		String str = "<!doctype html>"
+				+ "<!-- Created with Shrugs -->"
+				+ "<html>"
+				+ "<head>"
+				+ "<title>Home</title>"
+				+ "<style type='text/css'>* { margin:0; padding:0; }</style>"
+				+ "</head>"
+				+ "<body>"
+				+ "<div id='wrapper' style='width:"+width()+";height:"+height()+"px;position:relative;margin:0 auto;"+style+"'>";
+		for(Box child : children)
+			str += child;
+		str += "</div>"
+				+ "</body>"
+				+ "</html>";
+		return str;
+	}
 }

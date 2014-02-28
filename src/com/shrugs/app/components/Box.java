@@ -271,5 +271,9 @@ public class Box {
 		this.style = new BoxStyle();
 		this.style.fromJsonObj(obj.get("style").getAsJsonObject());
 	}
+	
+	public String toString() {
+		return "<span></span>";
+	}
 
 }

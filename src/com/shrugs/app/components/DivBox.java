@@ -26,10 +26,6 @@ public class DivBox extends Box {
 		return children;
 	}
 
-	public String toString() {
-		return "div";
-	}
-
 	public void addChild(Box box) {
 		children.add(box);
 		box.setParent(this);
@@ -125,5 +121,13 @@ public class DivBox extends Box {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public String toString() {
+		String str = "<div style=\"position:absolute;left:"+getXOffset()+"px;top:"+getYOffset()+"px;width:"+width()+"px;height:"+height()+"px;"+style+"\">";
+		for(Box child : children)
+			str+=child;
+		str+="</div>";
+		return str;
 	}
 }

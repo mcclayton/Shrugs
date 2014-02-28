@@ -32,7 +32,7 @@ public class ImageBox extends Box {
 	}
 
 	public String toString() {
-		return "div";
+		return null;
 	}
 
 	public Image getImage() {

@@ -43,7 +43,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	// mousePressed)
 
 	public DrawableView(int width, int height) {
-		bodyBox = new BodyBox(0, 0, width - 1, height - 1);
+		bodyBox = new BodyBox(0, 0, width, height);
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent evt) {

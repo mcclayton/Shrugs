@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.shrugs.app.components.Box;
+import com.shrugs.app.components.DivBox;
+import com.shrugs.app.components.TextAreaBox;
+import com.shrugs.app.gui.DrawableView;
 
 
 
@@ -41,37 +44,8 @@ public class Export {
 		File indexFile = new File(outputDir+"/index.html");
 		indexFile.createNewFile();
 		writer = new BufferedWriter(new FileWriter(indexFile));
-		writer.append("<!doctype html>"
-					+ "<html>"
-					+ "<head>"
-					+ "<title>Shrugs Webpage</title>"
-					+ "</head>"
-					+ "<body style=\"margin:0;\">");
-		DFS(box);
-		writer.append("</body>"
-					+ "</html>");
+		writer.append(DrawableView.bodyBox.toString());
 		writer.close();
-	}
-	
-	private static void DFS(Box box) throws IOException {
-		writer.append("<"+box.toString()+" style=\""+getStyle(box)+"\">");
-		for(Box child : box.getChildren()) {
-			DFS(child);
-		}
-		writer.append("</"+box.toString()+">");
-	}
-	
-	private static String getStyle(Box box) {
-		String style = 
-				"position:absolute;"
-				+ "left:"+box.getXOffset()+"px;"
-				+ "top:"+box.getYOffset()+"px;"
-				+ "width:"+(box.width())+"px;"
-				+ "height:" +(box.height())+"px;"
-				+ "margin:0;padding:0;";
-		if(box.getStyle()!=null)
-			style+=box.getStyle();
-		return style;
 	}
 
 }
