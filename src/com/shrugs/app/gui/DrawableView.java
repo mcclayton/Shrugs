@@ -2,6 +2,7 @@ package com.shrugs.app.gui;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -138,7 +139,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					repaint();
 				} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 					TextAreaBox newBox;
-					newBox = new TextAreaBox(OptionsToolBar.getBoxText(), OptionsToolBar.getBoxTextColor(),
+					newBox = new TextAreaBox(OptionsToolBar.getBoxText(), OptionsToolBar.getBoxTextColor(), OptionsToolBar.getBoxTextSize(),
 							startX, startY, endX, endY);
 
 					if (((DivBox) targetBox).childrenCollideWith(newBox)) {
@@ -245,6 +246,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 			} else if (b instanceof TextAreaBox) { // Case 2: Box is TextAreaBox
 				g2.setColor(((TextAreaBox) b).getTextColor());
 				g2.setStroke(solidStroke);
+				// Set the custom font
+				g2.setFont(new Font("CustomFont", Font.PLAIN, ((TextAreaBox) b).getTextSize()));
 
 				// Draw the text area
 				TextAreaBox.drawString(g2, ((TextAreaBox) b).getText(),
@@ -314,6 +317,9 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 			} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 				g2.setStroke(solidStroke);
 				g2.setColor(OptionsToolBar.getBoxTextColor());
+				// Set the custom font
+				g2.setFont(new Font("CustomFont", Font.PLAIN, OptionsToolBar.getBoxTextSize()));
+				
 				TextAreaBox.drawString(g2, OptionsToolBar.getBoxText(),
 						Math.min(startX, endX), Math.min(startY, endY),
 						Math.abs(startX - endX), Math.abs(startY - endY));

@@ -29,8 +29,12 @@ public class OptionsToolBar extends JToolBar {
 		"Text",		//1
 		"Image"		//2
 	};
+	private static final String[] FONT_SIZES = {
+		"8", "9", "10", "11", "12", "14", "16", "18", "20", "22", "24", "26", "28", "36", "48", "72"
+	};
 	private static String boxMode = BOX_TYPES[0];	// Used to tell what box mode the user is in.
-	private static final JTextField textField = new JTextField("Enter text...");;
+	private static final JTextField textField = new JTextField("Enter text...");
+	final static JComboBox fontSizesCombo = new JComboBox(FONT_SIZES);
 
 	public OptionsToolBar(JFrame jFrame) {
 		this.setFloatable(true);
@@ -40,7 +44,9 @@ public class OptionsToolBar extends JToolBar {
 	}
 
 	public void addButtons(final JToolBar jtbToolBar) {
-
+		// Set the default font size to 12
+		fontSizesCombo.setSelectedIndex(4);
+		
 		// Image selector
 		final JButton imageButton = new JButton("Choose Image");
 
@@ -119,6 +125,7 @@ public class OptionsToolBar extends JToolBar {
 					// Update the toolbar components
 					jtbToolBar.removeAll();
 					jtbToolBar.add(textColorButton);
+					jtbToolBar.add(fontSizesCombo);
 					jtbToolBar.add(textField);
 					jtbToolBar.add(boxTypeCombo);
 					jtbToolBar.repaint();
@@ -148,6 +155,10 @@ public class OptionsToolBar extends JToolBar {
 	
 	public static String getBoxText() {
 		return textField.getText();
+	}
+	
+	public static int getBoxTextSize() {
+		return Integer.parseInt((String)fontSizesCombo.getSelectedItem());
 	}
 	
 	public static Color getBoxTextColor() {
