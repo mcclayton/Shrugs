@@ -1,11 +1,14 @@
 package com.shrugs.app.components;
 
+import java.awt.Color;
 import java.util.LinkedList;
 
+import javax.swing.JColorChooser;
 import javax.swing.JOptionPane;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
+import com.shrugs.app.gui.OptionsToolBar;
 
 public class Box {
 	@Expose
@@ -215,7 +218,7 @@ public class Box {
 		
 		int n = JOptionPane.showOptionDialog(null,
 			details
-			+ "\nDelete Box?",					
+			+ "\nTemp Text. change when all button functionality inplace",					
 			"Attributes Menu",				//pane label
 			JOptionPane.YES_NO_OPTION,		//default dialoge for buttons
 			JOptionPane.QUESTION_MESSAGE,	//type of box object
@@ -226,9 +229,11 @@ public class Box {
 		if (n == 0)
 			((DivBox) this.parent).removeChild(this);
 
-		if (n == 1)
-			this.style.setBoxColor(0, 0, 0);
-			
+		if (n == 1){
+			Color newColor = null;
+			newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
+			this.style.setBoxColor(newColor);
+		}
 	}
 
 	public boolean containsPoint(int x, int y) {
