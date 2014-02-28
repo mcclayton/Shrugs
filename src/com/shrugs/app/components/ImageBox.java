@@ -32,7 +32,7 @@ public class ImageBox extends Box {
 	}
 
 	public String toString() {
-		return null;
+		return "<img src=\""+boxImageFilePath+"\" style=\"position:absolute;left:"+getXOffset()+"px;top:"+getYOffset()+"px;width:"+width()+"px;height:"+height()+"px;"+style+"\">";
 	}
 
 	public Image getImage() {
