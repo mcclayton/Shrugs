@@ -63,6 +63,12 @@ public class BoxStyle implements Comparable<BoxStyle> {
 						+ ")");
 		return;
 	}
+	
+	public void makeBackgroundTransparent() {
+		this.attr.put("background-color",
+				"rgba(0,0,0,0)");
+		return;
+	}
 
 	public void setBoxColor(int r, int g, int b) {
 		this.attr.put("background-color", "rgb(" + r + "," + g + "," + b + ")");

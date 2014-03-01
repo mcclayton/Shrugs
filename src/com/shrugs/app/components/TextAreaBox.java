@@ -20,6 +20,7 @@ public class TextAreaBox extends Box {
 		this.text = text;
 		this.textColor = textColor;
 		this.textSize = textSize;
+		this.style.makeBackgroundTransparent();
 	}
 
 	public TextAreaBox() {
