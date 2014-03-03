@@ -3,5 +3,6 @@
 	<classpathentry excluding="com/shrugs/app/serializers/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="C:/Users/Billy/git/Shrugs/lib/google-gson/gson.jar" sourcepath="lib/google-gson/gson-sources.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.4/commons-io-2.4.jar" sourcepath="lib/commons-io-2.4/commons-io-2.4-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
