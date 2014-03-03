@@ -23,6 +23,7 @@ public class ImageBox extends Box {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		this.tagName = "img";
 	}
 	
 	public ImageBox() {

@@ -282,8 +282,6 @@ public class Box {
 			case 3: //Cancel
 					break;
 		}
-		
-
 	}
 
 	public boolean containsPoint(int x, int y) {
