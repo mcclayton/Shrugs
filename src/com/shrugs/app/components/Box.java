@@ -131,15 +131,21 @@ public class Box {
 
 	public String boxDetailsString() {
 		String details;		
+		
 		details = 	"Name: " + this.boxName + "\n" +
 				"Type: " + this.tagName + "\n" +
-				"Top Left Box Point: " + "{" + this.startX + "," + this.startY + "}";
+				"Top Left Box Point: " + "{" + this.startX + "," + this.startY + "}\n";
+		
 		if (this.tagName=="div")
-			details += '\n' + this.style.getBoxColor();
-		else if (this.tagName=="txt")
-			;//details += '\n' + this.style.getBoxColor();
-		else if (this.tagName=="img")
-			;//details += '\n' + this.style.getBoxColor();
+			details += "Color: " + this.style.getBoxColor();
+		else if (this.tagName=="txt") {
+			TextAreaBox txt = (TextAreaBox) this;
+			details += "Text: " + txt.getText();
+		}else if (this.tagName=="img"){
+			ImageBox img = (ImageBox) this;
+			details += "Image: " + img.getImageFilePath();
+		}
+		
 		return details;		
 	}
 	
