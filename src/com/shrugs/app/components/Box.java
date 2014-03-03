@@ -129,6 +129,20 @@ public class Box {
 		return startY - parent.getStartY();
 	}
 
+	public String boxDetailsString() {
+		String details;		
+		details = 	"Name: " + this.boxName + "\n" +
+				"Type: " + this.tagName + "\n" +
+				"Top Left Box Point: " + "{" + this.startX + "," + this.startY + "}";
+		if (this.tagName=="div")
+			details += '\n' + this.style.getBoxColor();
+		else if (this.tagName=="txt")
+			;//details += '\n' + this.style.getBoxColor();
+		else if (this.tagName=="img")
+			;//details += '\n' + this.style.getBoxColor();
+		return details;		
+	}
+	
 	public LinkedList<Integer> getHSnaps() {
 		LinkedList<Integer> snaps = new LinkedList<Integer>();
 		int width = this.width();
@@ -221,14 +235,16 @@ public class Box {
 	}
 
 	public void showAttributesMenu() {
-		// TODO: This method needs to display a dialogue of attributes.
-		
 		Object[] options = {"Delete","Recolor", "Rename" ,"Cancel"};
-		String details = this.tagName.toString() + " Box {" + this.startX + "," + this.startY + "}"; 
+		String details = this.boxDetailsString();
+							 
+		if (this.tagName=="txt")
+			options[1] = "Different Text";
+		else if (this.tagName=="img")
+			options[1] = "Different Image";	
 		
 		int n = JOptionPane.showOptionDialog(null,
-			details
-			+ "\nTemp Text. change when all button functionality inplace",					
+			details,					
 			this.boxName,				//pane label
 			JOptionPane.YES_NO_OPTION,		//default dialoge for buttons
 			JOptionPane.QUESTION_MESSAGE,	//type of box object
@@ -240,10 +256,17 @@ public class Box {
 			case 0:	//Delete
 					((DivBox) this.parent).removeChild(this);
 					break;
-			case 1:	//Recolor
-					Color newColor = null;
-					newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
-					this.style.setBoxColor(newColor);
+			case 1:	//Change Content of box
+					if (this.tagName=="div") {
+						//Change the color
+						Color newColor = null;
+						newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
+						this.style.setBoxColor(newColor);
+					} else if (this.tagName=="text") {
+						//Rename the text
+					} else if (this.tagName=="img"){
+						//Change Image
+					}				
 					break;
 			case 2:	//Rename
 					String newName = (String)JOptionPane.showInputDialog(
@@ -301,6 +324,6 @@ public class Box {
 	
 	public String toString() {
 		return "<span></span>";
-	}
+	}	
 
 }
