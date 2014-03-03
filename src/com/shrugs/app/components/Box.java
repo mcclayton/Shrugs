@@ -24,6 +24,7 @@ public class Box {
 	@Expose
 	protected BoxStyle style;
 	protected String tagName = "div";
+	protected String boxName;
 
 	public Box() {
 		this(0, 0, 0, 0, null);
@@ -41,6 +42,7 @@ public class Box {
 		this.parent = parent;
 		this.highlight = false;
 		this.style = new BoxStyle();
+		this.boxName = this.tagName.toString() + " Box {" + this.startX + "," + this.startY + "}"; 
 	}
 
 	public LinkedList<Box> getChildren() {
@@ -61,6 +63,10 @@ public class Box {
 
 	public int getEndY() {
 		return this.endY;
+	}
+	
+	public String getBoxName() {
+		return this.boxName;
 	}
 
 	public Box getParent() {
@@ -97,6 +103,10 @@ public class Box {
 
 	public void setEndY(int endY) {
 		this.endY = endY;
+	}
+	
+	public void setBoxName(String boxName) {
+		this.boxName = boxName;
 	}
 
 	public void setParent(Box parent) {
@@ -213,27 +223,44 @@ public class Box {
 	public void showAttributesMenu() {
 		// TODO: This method needs to display a dialogue of attributes.
 		
-		Object[] options = {"Delete","Recolor","Cancel"};
+		Object[] options = {"Delete","Recolor", "Rename" ,"Cancel"};
 		String details = this.tagName.toString() + " Box {" + this.startX + "," + this.startY + "}"; 
 		
 		int n = JOptionPane.showOptionDialog(null,
 			details
 			+ "\nTemp Text. change when all button functionality inplace",					
-			"Attributes Menu",				//pane label
+			this.boxName,				//pane label
 			JOptionPane.YES_NO_OPTION,		//default dialoge for buttons
 			JOptionPane.QUESTION_MESSAGE,	//type of box object
 			null,     						//do not use a custom Icon
 			options,  						//the titles of buttons
 			options[0]); 					//default button title
 		
-		if (n == 0)
-			((DivBox) this.parent).removeChild(this);
-
-		if (n == 1){
-			Color newColor = null;
-			newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
-			this.style.setBoxColor(newColor);
+		switch (n) {
+			case 0:	//Delete
+					((DivBox) this.parent).removeChild(this);
+					break;
+			case 1:	//Recolor
+					Color newColor = null;
+					newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
+					this.style.setBoxColor(newColor);
+					break;
+			case 2:	//Rename
+					String newName = (String)JOptionPane.showInputDialog(
+					                    null,
+					                    "New Box Name",
+					                    "New Box Name Dialog ",
+					                    JOptionPane.PLAIN_MESSAGE,
+					                    null,
+					                    null,
+					                    "Type a new name here");
+					this.setBoxName(newName);
+					break;
+			case 3: //Cancel
+					break;
 		}
+		
+
 	}
 
 	public boolean containsPoint(int x, int y) {
