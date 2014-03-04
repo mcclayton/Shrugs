@@ -64,12 +64,13 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			if (itemClicked==openMenuItem){ //TODO: Add "Loading File" popup and disable input
 				try {
 					JFileChooser inputFileChooser = new JFileChooser();
-					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Project Files", "shrug");
+					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Files (*.shrug)", "shrug");
 					inputFileChooser.addChoosableFileFilter(shrugsFileFilter);
 					inputFileChooser.setFileFilter(shrugsFileFilter);
 					inputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
 					int retval = inputFileChooser.showDialog(null, "Open");
-					if(retval == JFileChooser.APPROVE_OPTION){
+					
+					if(retval == JFileChooser.APPROVE_OPTION) {
 						output = inputFileChooser.getSelectedFile().getAbsolutePath();
 					}
 					else if(retval == JFileChooser.CANCEL_OPTION){
@@ -84,13 +85,18 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
 				try {
 					JFileChooser outputFileChooser = new JFileChooser();
-					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Project Files", "shrug");
+					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Files (*.shrug)", "shrug");
 					outputFileChooser.addChoosableFileFilter(shrugsFileFilter);
 					outputFileChooser.setFileFilter(shrugsFileFilter);
 					outputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
 					int retval = outputFileChooser.showDialog(null, "Save");
-					if(retval == JFileChooser.APPROVE_OPTION){
-						savepath = outputFileChooser.getSelectedFile().getAbsolutePath();
+					
+					if(retval == JFileChooser.APPROVE_OPTION) {
+						if(!outputFileChooser.getSelectedFile().getAbsolutePath().endsWith(".shrug")) {
+							savepath = (outputFileChooser.getSelectedFile().getAbsolutePath()+".shrug");
+						} else {
+							savepath = outputFileChooser.getSelectedFile().getAbsolutePath();
+						}
 					}
 					else if(retval == JFileChooser.CANCEL_OPTION){
 						return;
