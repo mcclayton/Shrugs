@@ -22,7 +22,6 @@ public class BoxStyle implements Comparable<BoxStyle> {
 	// System.out.println(style.toString());
 	// }
 
-	@Expose
 	private Map<String, String> attr;
 
 	public BoxStyle() {

@@ -16,7 +16,8 @@ import com.shrugs.app.gui.DrawableView;
 public class IOManager {
 
 	public static void Save(String path) throws IOException {
-		File file = new File("data.shrug");
+		System.out.println(path);
+		File file = new File(path);
 		file.createNewFile();
 		FileWriter fw = new FileWriter(file);
 		BufferedWriter bw = new BufferedWriter(fw);
@@ -28,7 +29,7 @@ public class IOManager {
 	}
 	
 	public static BodyBox Load(String path) throws IOException {
-		File file = new File("data.shrug");
+		File file = new File(path);
 		if(!file.exists())
 			throw new IOException();
 		FileReader fr = new FileReader(file);

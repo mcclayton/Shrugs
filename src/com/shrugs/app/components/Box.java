@@ -11,17 +11,12 @@ import com.google.gson.annotations.Expose;
 import com.shrugs.app.gui.OptionsToolBar;
 
 public class Box {
-	@Expose
-	protected int startX; // Coordinates of box that is currently being drawn
-	@Expose
+	protected int startX;
 	protected int startY;
-	@Expose
 	protected int endX;
-	@Expose
 	protected int endY = 0;
 	protected Box parent;
 	protected boolean highlight;
-	@Expose
 	protected BoxStyle style;
 	protected String tagName = "div";
 	protected String boxName;

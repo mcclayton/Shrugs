@@ -9,9 +9,9 @@ import com.google.gson.annotations.Expose;
 
 public class TextAreaBox extends Box {
 
-	@Expose
 	private String text = "Enter text...";
-	private Color textColor = Color.black; //TODO: move this to style (attr "color")
+	private Color textColor = Color.black; // TODO: move this to style (attr
+											// "color")
 	private int textSize = 12;
 
 	public TextAreaBox(String text, Color textColor, int textSize, int startX,
@@ -31,7 +31,10 @@ public class TextAreaBox extends Box {
 	public String toString() {
 		String str = "<div style=\"position:absolute;left:" + getXOffset()
 				+ "px;top:" + getYOffset() + "px;width:" + width()
-				+ "px;height:" + height() + "px;" + style + "\">";
+				+ "px;height:" + height() + "px;color:rgba("
+				+ textColor.getRed() + "," + textColor.getGreen() + ","
+				+ textColor.getBlue() + "," + textColor.getAlpha()
+				+ ");font-family:sans-serif;font-size:" + textSize + "px;" + style + "\">";
 		str += text;
 		str += "</div>";
 		return str;
@@ -96,7 +99,8 @@ public class TextAreaBox extends Box {
 	public JsonObject toJsonObj() {
 		JsonObject obj = super.toJsonObj();
 		obj.addProperty("text", getText());
-
+		obj.addProperty("font-size", textSize);
+		obj.addProperty("color", textColor.getRGB());
 		return obj;
 	}
 
@@ -104,5 +108,7 @@ public class TextAreaBox extends Box {
 	public void fromJsonObj(JsonObject obj) {
 		super.fromJsonObj(obj);
 		this.text = obj.get("text").getAsString();
+		this.textColor = new Color(obj.get("color").getAsInt());
+		this.textSize = obj.get("font-size").getAsInt();
 	}
 }

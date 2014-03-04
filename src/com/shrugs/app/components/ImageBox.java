@@ -23,8 +23,14 @@ public class ImageBox extends Box {
 		if (ImageList == null)
 			ImageList = new HashMap<String, Image>();
 
-		this.boxImageFilePath = imageFilePath.replace('\\', '/'); //make Windows paths consistent
-		
+		this.tagName = "img";
+
+		setImage(imageFilePath);
+	}
+
+	private void setImage(String path) {
+		this.boxImageFilePath = path.replace('\\', '/');
+
 		if (ImageList.containsKey(boxImageFilePath))
 			this.boxImage = ImageList.get(boxImageFilePath);
 		else {
@@ -35,14 +41,14 @@ public class ImageBox extends Box {
 				e.printStackTrace();
 			}
 		}
-
-		this.tagName = "img";
 	}
 
 	public ImageBox() {
 		super();
 		this.boxImageFilePath = null;
 		this.boxImage = null;
+		if (ImageList == null)
+			ImageList = new HashMap<String, Image>();
 	}
 
 	public String toString() {
@@ -72,12 +78,6 @@ public class ImageBox extends Box {
 	@Override
 	public void fromJsonObj(JsonObject obj) {
 		super.fromJsonObj(obj);
-		this.boxImageFilePath = obj.get("img").getAsString();
-		try {
-			this.boxImage = ImageIO.read(new File(boxImageFilePath));
-		} catch (IOException e) {
-			System.err.println("Image " + boxImageFilePath + " not found.");
-			e.printStackTrace();
-		}
+		setImage(obj.get("img").getAsString());
 	}
 }

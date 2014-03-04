@@ -86,7 +86,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					outputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
 					int retval = outputFileChooser.showDialog(null, "open");
 					if(retval == outputFileChooser.APPROVE_OPTION){
-						output = outputFileChooser.getSelectedFile().getAbsolutePath();
+						savepath = outputFileChooser.getSelectedFile().getAbsolutePath();
 					}
 					else if(retval == outputFileChooser.CANCEL_OPTION){
 						return;
