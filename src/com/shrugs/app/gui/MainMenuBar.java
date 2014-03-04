@@ -64,13 +64,15 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			if (itemClicked==openMenuItem){ //TODO: Add "Loading File" popup and disable input
 				try {
 					JFileChooser inputFileChooser = new JFileChooser();
-					inputFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Shrugs Files", "shrug"));
+					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Project Files", "shrug");
+					inputFileChooser.addChoosableFileFilter(shrugsFileFilter);
+					inputFileChooser.setFileFilter(shrugsFileFilter);
 					inputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
-					int retval = inputFileChooser.showDialog(null, "open");
-					if(retval == inputFileChooser.APPROVE_OPTION){
+					int retval = inputFileChooser.showDialog(null, "Open");
+					if(retval == JFileChooser.APPROVE_OPTION){
 						output = inputFileChooser.getSelectedFile().getAbsolutePath();
 					}
-					else if(retval == inputFileChooser.CANCEL_OPTION){
+					else if(retval == JFileChooser.CANCEL_OPTION){
 						return;
 					}
 					DrawableView.Load(IOManager.Load(output));
@@ -82,13 +84,15 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
 				try {
 					JFileChooser outputFileChooser = new JFileChooser();
-					outputFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Shrugs Files", "shrug"));
+					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Project Files", "shrug");
+					outputFileChooser.addChoosableFileFilter(shrugsFileFilter);
+					outputFileChooser.setFileFilter(shrugsFileFilter);
 					outputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
-					int retval = outputFileChooser.showDialog(null, "open");
-					if(retval == outputFileChooser.APPROVE_OPTION){
+					int retval = outputFileChooser.showDialog(null, "Save");
+					if(retval == JFileChooser.APPROVE_OPTION){
 						savepath = outputFileChooser.getSelectedFile().getAbsolutePath();
 					}
-					else if(retval == outputFileChooser.CANCEL_OPTION){
+					else if(retval == JFileChooser.CANCEL_OPTION){
 						return;
 					}
 					IOManager.Save(savepath);
