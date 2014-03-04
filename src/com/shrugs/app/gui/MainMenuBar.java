@@ -15,8 +15,8 @@ import com.shrugs.app.IOManager;
 public class MainMenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu fileMenu, editMenu;
-	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem;
+	private JMenu fileMenu, editMenu, helpMenu;
+	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem, helpMenuItem, aboutMenuItem;
 	
 	public MainMenuBar()
 	{
@@ -33,14 +33,20 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		exportMenuItem = new JMenuItem("Export");
 		fileMenu.add(exportMenuItem);
 		
-		//Build the edit menu.
-		editMenu = new JMenu("Edit");
-		this.add(editMenu);
+		helpMenu = new JMenu("Help");
+		this.add(helpMenu);
+		helpMenuItem = new JMenuItem("How-To");
+		helpMenu.add(helpMenuItem);
+		aboutMenuItem = new JMenuItem("About Shrugs");
+		helpMenu.add(aboutMenuItem);
+		
 		
 		//Add action listeners to menu items
 		openMenuItem.addActionListener(this);
 		saveMenuItem.addActionListener(this);
 		exportMenuItem.addActionListener(this);
+		helpMenuItem.addActionListener(this);
+		aboutMenuItem.addActionListener(this);
 	}
 	
 	//Handle menu item clicks
@@ -71,6 +77,12 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Error during export.");
 					e1.printStackTrace();
 				}
+			}
+			else if(itemClicked == aboutMenuItem){
+					JOptionPane.showMessageDialog(null, "Shrugs: Shrugs Helps Regular Users Generate Sites \n A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
+			}
+			else if(itemClicked == helpMenuItem){
+					JOptionPane.showMessageDialog(null, "To draw an element, click and drag as desired in the main grid.\nA selector for the type of element is located at the top of the application. \nColors are available from the 'Paint' menu.");
 			}
 		}
 	}
