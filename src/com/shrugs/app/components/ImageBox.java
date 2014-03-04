@@ -1,11 +1,8 @@
 package com.shrugs.app.components;
 
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -21,6 +18,7 @@ public class ImageBox extends Box {
 	public ImageBox(String imageFilePath, int startX, int startY, int endX,
 			int endY) {
 		super(startX, startY, endX, endY);
+		this.style.makeBackgroundTransparent();
 
 		if (ImageList == null)
 			ImageList = new HashMap<String, Image>();
