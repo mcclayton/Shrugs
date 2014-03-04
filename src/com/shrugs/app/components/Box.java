@@ -24,6 +24,7 @@ public class Box {
 	@Expose
 	protected BoxStyle style;
 	protected String tagName = "div";
+	protected String boxName;
 
 	public Box() {
 		this(0, 0, 0, 0, null);
@@ -41,6 +42,7 @@ public class Box {
 		this.parent = parent;
 		this.highlight = false;
 		this.style = new BoxStyle();
+		this.boxName = this.tagName.toString() + " Box {" + this.startX + "," + this.startY + "}"; 
 	}
 
 	public LinkedList<Box> getChildren() {
@@ -61,6 +63,10 @@ public class Box {
 
 	public int getEndY() {
 		return this.endY;
+	}
+	
+	public String getBoxName() {
+		return this.boxName;
 	}
 
 	public Box getParent() {
@@ -98,6 +104,10 @@ public class Box {
 	public void setEndY(int endY) {
 		this.endY = endY;
 	}
+	
+	public void setBoxName(String boxName) {
+		this.boxName = boxName;
+	}
 
 	public void setParent(Box parent) {
 		this.parent = parent;
@@ -119,6 +129,26 @@ public class Box {
 		return startY - parent.getStartY();
 	}
 
+	public String boxDetailsString() {
+		String details;		
+		
+		details = 	"Name: " + this.boxName + "\n" +
+				"Type: " + this.tagName + "\n" +
+				"Top Left Box Point: " + "{" + this.startX + "," + this.startY + "}\n";
+		
+		if (this.tagName=="div")
+			details += "Color: " + this.style.getBoxColor();
+		else if (this.tagName=="txt") {
+			TextAreaBox txt = (TextAreaBox) this;
+			details += "Text: " + txt.getText();
+		}else if (this.tagName=="img"){
+			ImageBox img = (ImageBox) this;
+			details += "Image: " + img.getImageFilePath();
+		}
+		
+		return details;		
+	}
+	
 	public LinkedList<Integer> getHSnaps() {
 		LinkedList<Integer> snaps = new LinkedList<Integer>();
 		int width = this.width();
@@ -211,28 +241,52 @@ public class Box {
 	}
 
 	public void showAttributesMenu() {
-		// TODO: This method needs to display a dialogue of attributes.
-		
-		Object[] options = {"Delete","Recolor","Cancel"};
-		String details = this.tagName.toString() + " Box {" + this.startX + "," + this.startY + "}"; 
+		Object[] options = {"Delete","Recolor", "Rename" ,"Cancel"};
+		String details = this.boxDetailsString();
+							 
+		if (this.tagName=="txt")
+			options[1] = "Different Text";
+		else if (this.tagName=="img")
+			options[1] = "Different Image";	
 		
 		int n = JOptionPane.showOptionDialog(null,
-			details
-			+ "\nTemp Text. change when all button functionality inplace",					
-			"Attributes Menu",				//pane label
+			details,					
+			this.boxName,				//pane label
 			JOptionPane.YES_NO_OPTION,		//default dialoge for buttons
 			JOptionPane.QUESTION_MESSAGE,	//type of box object
 			null,     						//do not use a custom Icon
 			options,  						//the titles of buttons
 			options[0]); 					//default button title
 		
-		if (n == 0)
-			((DivBox) this.parent).removeChild(this);
-
-		if (n == 1){
-			Color newColor = null;
-			newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
-			this.style.setBoxColor(newColor);
+		switch (n) {
+			case 0:	//Delete
+					((DivBox) this.parent).removeChild(this);
+					break;
+			case 1:	//Change Content of box
+					if (this.tagName=="div") {
+						//Change the color
+						Color newColor = null;
+						newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
+						this.style.setBoxColor(newColor);
+					} else if (this.tagName=="text") {
+						//Rename the text
+					} else if (this.tagName=="img"){
+						//Change Image
+					}				
+					break;
+			case 2:	//Rename
+					String newName = (String)JOptionPane.showInputDialog(
+					                    null,
+					                    "New Box Name",
+					                    "New Box Name Dialog ",
+					                    JOptionPane.PLAIN_MESSAGE,
+					                    null,
+					                    null,
+					                    "Type a new name here");
+					this.setBoxName(newName);
+					break;
+			case 3: //Cancel
+					break;
 		}
 	}
 
@@ -274,6 +328,6 @@ public class Box {
 	
 	public String toString() {
 		return "<span></span>";
-	}
+	}	
 
 }

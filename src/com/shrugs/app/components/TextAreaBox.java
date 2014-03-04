@@ -21,6 +21,7 @@ public class TextAreaBox extends Box {
 		this.textColor = textColor;
 		this.textSize = textSize;
 		this.style.makeBackgroundTransparent();
+		this.tagName = "txt";
 	}
 
 	public TextAreaBox() {

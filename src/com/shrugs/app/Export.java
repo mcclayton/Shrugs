@@ -6,9 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.shrugs.app.components.Box;
-import com.shrugs.app.components.DivBox;
-import com.shrugs.app.components.TextAreaBox;
+import com.shrugs.app.components.ImageBox;
 import com.shrugs.app.gui.DrawableView;
+import org.apache.commons.io.FileUtils;
 
 
 
@@ -46,6 +46,12 @@ public class Export {
 		writer = new BufferedWriter(new FileWriter(indexFile));
 		writer.append(DrawableView.bodyBox.toString());
 		writer.close();
+		for(String imgpath : ImageBox.ImageList.keySet()) {
+			String[] patharr = imgpath.split("/");
+			String name = patharr[patharr.length-1];
+			System.out.println("Saving file: " + outputDir+"/img/"+name);
+			FileUtils.copyFile(new File(imgpath), new File(outputDir+"/img/"+name));
+		}
 	}
 
 }
