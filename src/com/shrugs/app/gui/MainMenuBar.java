@@ -2,12 +2,15 @@ package com.shrugs.app.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.shrugs.app.Export;
 import com.shrugs.app.IOManager;
@@ -15,8 +18,10 @@ import com.shrugs.app.IOManager;
 public class MainMenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
-	private JMenu fileMenu, editMenu, helpMenu;
+	private JMenu fileMenu, helpMenu;
 	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem, helpMenuItem, aboutMenuItem;
+	private String output;
+	private String savepath;
 	
 	public MainMenuBar()
 	{
@@ -58,14 +63,35 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			JMenuItem itemClicked = (JMenuItem) source;
 			if (itemClicked==openMenuItem){ //TODO: Add "Loading File" popup and disable input
 				try {
-					DrawableView.Load(IOManager.Load("output.shrug"));
+					JFileChooser inputFileChooser = new JFileChooser();
+					inputFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Shrugs Files", "shrug"));
+					inputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
+					int retval = inputFileChooser.showDialog(null, "open");
+					if(retval == inputFileChooser.APPROVE_OPTION){
+						output = inputFileChooser.getSelectedFile().getAbsolutePath();
+					}
+					else if(retval == inputFileChooser.CANCEL_OPTION){
+						return;
+					}
+					DrawableView.Load(IOManager.Load(output));
+					
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "Error during load.");
 					e1.printStackTrace();
 				}
 			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
 				try {
-					IOManager.Save("output.shrug");
+					JFileChooser outputFileChooser = new JFileChooser();
+					outputFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Shrugs Files", "shrug"));
+					outputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
+					int retval = outputFileChooser.showDialog(null, "open");
+					if(retval == outputFileChooser.APPROVE_OPTION){
+						output = outputFileChooser.getSelectedFile().getAbsolutePath();
+					}
+					else if(retval == outputFileChooser.CANCEL_OPTION){
+						return;
+					}
+					IOManager.Save(savepath);
 				} catch(Exception e1) {
 					JOptionPane.showMessageDialog(null, "Error during save.");
 					e1.printStackTrace();
