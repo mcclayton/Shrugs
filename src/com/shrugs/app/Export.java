@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
+
 import com.shrugs.app.components.Box;
 import com.shrugs.app.components.ImageBox;
 import com.shrugs.app.gui.DrawableView;
@@ -52,6 +54,7 @@ public class Export {
 			System.out.println("Saving file: " + outputDir+"/img/"+name);
 			FileUtils.copyFile(new File(imgpath), new File(outputDir+"/img/"+name));
 		}
+		JOptionPane.showMessageDialog(null, "Export to:\n'"+outputDir+"'\nSuccessful.");
 	}
 
 }

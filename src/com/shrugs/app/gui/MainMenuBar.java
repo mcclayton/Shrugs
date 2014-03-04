@@ -22,7 +22,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem, helpMenuItem, aboutMenuItem;
 	private String output;
 	private String savepath;
-	
+
 	public MainMenuBar()
 	{
 		//Build the file menu.
@@ -37,15 +37,15 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		fileMenu.addSeparator();
 		exportMenuItem = new JMenuItem("Export");
 		fileMenu.add(exportMenuItem);
-		
+
 		helpMenu = new JMenu("Help");
 		this.add(helpMenu);
 		helpMenuItem = new JMenuItem("How-To");
 		helpMenu.add(helpMenuItem);
 		aboutMenuItem = new JMenuItem("About Shrugs");
 		helpMenu.add(aboutMenuItem);
-		
-		
+
+
 		//Add action listeners to menu items
 		openMenuItem.addActionListener(this);
 		saveMenuItem.addActionListener(this);
@@ -53,7 +53,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		helpMenuItem.addActionListener(this);
 		aboutMenuItem.addActionListener(this);
 	}
-	
+
 	//Handle menu item clicks
 	public void actionPerformed(ActionEvent e)
 	{
@@ -69,7 +69,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					inputFileChooser.setFileFilter(shrugsFileFilter);
 					inputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
 					int retval = inputFileChooser.showDialog(null, "Open");
-					
+
 					if(retval == JFileChooser.APPROVE_OPTION) {
 						output = inputFileChooser.getSelectedFile().getAbsolutePath();
 					}
@@ -77,7 +77,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 						return;
 					}
 					DrawableView.Load(IOManager.Load(output));
-					
+
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "Error during load.");
 					e1.printStackTrace();
@@ -90,7 +90,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					outputFileChooser.setFileFilter(shrugsFileFilter);
 					outputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
 					int retval = outputFileChooser.showDialog(null, "Save");
-					
+
 					if(retval == JFileChooser.APPROVE_OPTION) {
 						if(!outputFileChooser.getSelectedFile().getAbsolutePath().endsWith(".shrug")) {
 							savepath = (outputFileChooser.getSelectedFile().getAbsolutePath()+".shrug");
@@ -108,17 +108,28 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 				}
 			} else if (itemClicked==exportMenuItem){
 				try {
-					Export.export(DrawableView.bodyBox);
+					JFileChooser exportDirectoryChooser = new JFileChooser();
+					exportDirectoryChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
+					exportDirectoryChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
+
+					int retval = exportDirectoryChooser.showDialog(null, "Export");
+
+					if(retval == JFileChooser.APPROVE_OPTION) {
+						Export.export(DrawableView.bodyBox, exportDirectoryChooser.getSelectedFile().getAbsolutePath());
+					}
+					else if(retval == JFileChooser.CANCEL_OPTION){
+						return;
+					}
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "Error during export.");
 					e1.printStackTrace();
 				}
 			}
 			else if(itemClicked == aboutMenuItem){
-					JOptionPane.showMessageDialog(null, "Shrugs: Shrugs Helps Regular Users Generate Sites \n A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
+				JOptionPane.showMessageDialog(null, "Shrugs: Shrugs Helps Regular Users Generate Sites \n A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
 			}
 			else if(itemClicked == helpMenuItem){
-					JOptionPane.showMessageDialog(null, "To draw an element, click and drag as desired in the main grid.\nA selector for the type of element is located at the top of the application. \nColors are available from the 'Paint' menu.");
+				JOptionPane.showMessageDialog(null, "To draw an element, click and drag as desired in the main grid.\nA selector for the type of element is located at the top of the application. \nColors are available from the 'Paint' menu.");
 			}
 		}
 	}
