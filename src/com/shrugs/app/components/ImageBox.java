@@ -28,7 +28,7 @@ public class ImageBox extends Box {
 		setImage(imageFilePath);
 	}
 
-	private void setImage(String path) {
+	public void setImage(String path) {
 		this.boxImageFilePath = path.replace('\\', '/');
 
 		if (ImageList.containsKey(boxImageFilePath))

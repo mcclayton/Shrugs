@@ -1,10 +1,15 @@
 package com.shrugs.app.components;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
+import javax.imageio.ImageIO;
 import javax.swing.JColorChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.Expose;
@@ -328,7 +333,23 @@ public class Box {
 				txt.setText(newText);			
 			}
 		} else if (this.tagName=="img"){
-			//Change Image
+			// Change Box Content
+			JFileChooser imageFileChooser = new JFileChooser();
+			imageFileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes()));
+			try {
+				//Set the chooser directory to be the current directory
+				imageFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			int returnVal = imageFileChooser.showDialog(null, "Open");
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) 
+			{
+				ImageBox img = (ImageBox) this;
+				img.setImage(imageFileChooser.getSelectedFile().getAbsolutePath());
+			}				
 		}		
 	}
 	
