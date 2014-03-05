@@ -94,6 +94,10 @@ public class TextAreaBox extends Box {
 	public int getTextSize() {
 		return textSize;
 	}
+	
+	public void setText(String newText) {
+		this.text = newText;
+	}
 
 	@Override
 	public JsonObject toJsonObj() {

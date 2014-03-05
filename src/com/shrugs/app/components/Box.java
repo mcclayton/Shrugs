@@ -288,16 +288,7 @@ public class Box {
 					((DivBox) this.parent).removeChild(this);
 					break;
 			case 1:	//Change Content of box
-					if (this.tagName=="div") {
-						//Change the color
-						Color newColor = null;
-						newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
-						this.style.setBoxColor(newColor);
-					} else if (this.tagName=="text") {
-						//Rename the text
-					} else if (this.tagName=="img"){
-						//Change Image
-					}				
+					changeBoxContent();
 					break;
 			case 2:	//Rename
 					String newName = (String)JOptionPane.showInputDialog(
@@ -315,6 +306,32 @@ public class Box {
 		}
 	}
 
+	
+	public void changeBoxContent() {
+		if (this.tagName=="div") {
+			//Change the color
+			Color newColor = null;
+			newColor = JColorChooser.showDialog(null, "Choose Location Color", Color.white);
+			this.style.setBoxColor(newColor);
+		} else if (this.tagName=="txt") {
+			//Change Text
+			String newText = (String)JOptionPane.showInputDialog(
+                    null,
+                    "Enter the new text you would like to be displayed below",
+                    "New Text Dialog ",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    null,
+                    "Type new Text here");
+			if (newText != null) {
+				TextAreaBox txt = (TextAreaBox) this;
+				txt.setText(newText);			
+			}
+		} else if (this.tagName=="img"){
+			//Change Image
+		}		
+	}
+	
 	public boolean containsPoint(int x, int y) {
 		return !(this.startX > x || this.endX < x || this.startY > y || this.endY < y);
 	}
