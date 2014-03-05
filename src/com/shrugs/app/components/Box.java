@@ -124,6 +124,15 @@ public class Box {
 		return startY - parent.getStartY();
 	}
 
+    /**
+     * Builds a string based on existing parametes of the box object
+     * The String differs depending on the type of box it is
+     *
+     * @param
+     *             
+     * @return
+     *             A string contating all the information of the box
+     */
 	public String boxDetailsString() {
 		String details;		
 		
@@ -170,7 +179,7 @@ public class Box {
 		return snaps;
 	}
 
-	/*
+	/**
 	 * Finds the nearestHSnap to the given x coordinate.
 	 * 
 	 * @param xCoord The X coordinate to find the nearest hSnap to.
@@ -192,7 +201,7 @@ public class Box {
 		return closestHSnap;
 	}
 
-	/*
+	/**
 	 * Finds the nearestVSnap to the given y coordinate.
 	 * 
 	 * @param yCoord The Y coordinate to find the nearest vSnap to.
@@ -214,6 +223,19 @@ public class Box {
 		return closestVSnap;
 	}
 
+    /**
+     * This method indicates where in corilation to the box a coordinate is
+     *   2
+     * 3 _ 1
+     * 4|_|8
+     * 5 6 7
+     *
+     * @param
+     *             x: the x coordinate of the point to check
+     *            y: the y coordinate of the point to check
+     * @return
+     *             Returns an int to indicate relative location based on the diagram above
+     */
 	public int locationRelativeToBox(int x, int y) {
 		if (x >= (endX) && y <= startY)
 			return 1;
@@ -235,6 +257,14 @@ public class Box {
 			return 0;
 	}
 
+    /**
+     * When a box is double clicked, will show a diologe box for details of the box
+     * Depending on the type of box the diologe will differ
+     *
+     * @param
+     *        
+     * @return
+     */
 	public void showAttributesMenu() {
 		Object[] options = {"Delete","Recolor", "Rename" ,"Cancel"};
 		String details = this.boxDetailsString();
