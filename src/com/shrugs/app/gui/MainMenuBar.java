@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -129,7 +131,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Shrugs: Shrugs Helps Regular Users Generate Sites \n A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
 			}
 			else if(itemClicked == helpMenuItem){
-				JOptionPane.showMessageDialog(null, "To draw an element, click and drag as desired in the main grid.\nA selector for the type of element is located at the top of the application. \nColors are available from the 'Paint' menu.");
+				Icon icon = new ImageIcon("./img/clippy.png"); 
+				JOptionPane.showMessageDialog(null, "To draw an element, click and drag as desired in the main grid.\nA selector for the type of element is located at the top of the application. \nColors are available from the 'Paint' menu.", "Help", JOptionPane.INFORMATION_MESSAGE, icon);
 			}
 		}
 	}
