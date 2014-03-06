@@ -16,13 +16,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.shrugs.app.Export;
 import com.shrugs.app.IOManager;
+import com.shrugs.app.components.BodyBox;
+import com.shrugs.app.components.ImageBox;
 
 public class MainMenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private JMenu fileMenu, helpMenu;
-	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem, helpMenuItem,
-			aboutMenuItem;
+	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem, helpMenuItem, aboutMenuItem, newMenuItem;
 	private String output;
 	private String savepath;
 
@@ -36,6 +37,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		fileMenu.add(openMenuItem);
 		saveMenuItem = new JMenuItem("Save Project");
 		fileMenu.add(saveMenuItem);
+		newMenuItem = new JMenuItem("New");
+		fileMenu.add(newMenuItem);
 		fileMenu.addSeparator();
 		exportMenuItem = new JMenuItem("Export");
 		fileMenu.add(exportMenuItem);
@@ -53,6 +56,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		exportMenuItem.addActionListener(this);
 		helpMenuItem.addActionListener(this);
 		aboutMenuItem.addActionListener(this);
+		newMenuItem.addActionListener(this);
 	}
 
 	// Handle menu item clicks
@@ -86,9 +90,24 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					JOptionPane.showMessageDialog(null, "Error during load.");
 					e1.printStackTrace();
 				}
-			} else if (itemClicked == saveMenuItem) { // TODO: Add "Saving File"
-														// popup and disable
-														// input
+			} else if (itemClicked==newMenuItem) { 
+				//Create new project
+				int result = JOptionPane.showConfirmDialog(this,"Are you sure you wish to create a new Shrugs project?\nAny unsaved data will be lost.","New Project",JOptionPane.YES_NO_CANCEL_OPTION);
+	            switch(result){
+	                case JOptionPane.YES_OPTION:
+	                	if (ImageBox.ImageList != null) {
+	                		ImageBox.ImageList.clear();
+	                	}
+	                	DrawableView.bodyBox = new BodyBox(0, 0, DrawableView.getViewWidth(), DrawableView.getViewHeight());
+	                    return;
+	                case JOptionPane.NO_OPTION:
+	                    return;
+	                case JOptionPane.CLOSED_OPTION:
+	                    return;
+	                case JOptionPane.CANCEL_OPTION:
+	                    return;
+	            }
+			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
 				try {
 					JFileChooser outputFileChooser = new JFileChooser() {
 						private static final long serialVersionUID = 1L;
