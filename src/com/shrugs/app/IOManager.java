@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.shrugs.app.adapters.BodyBoxAdapter;
 import com.shrugs.app.components.BodyBox;
+import com.shrugs.app.components.ImageBox;
 import com.shrugs.app.gui.DrawableView;
 
 public class IOManager {
@@ -32,6 +33,7 @@ public class IOManager {
 		File file = new File(path);
 		if(!file.exists())
 			throw new IOException();
+		ImageBox.ImageList.clear();
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
 		Gson gson = new GsonBuilder().registerTypeAdapter(BodyBox.class, new BodyBoxAdapter()).setPrettyPrinting().create();
