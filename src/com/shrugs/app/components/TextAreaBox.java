@@ -5,14 +5,13 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 
 import com.google.gson.JsonObject;
-import com.google.gson.annotations.Expose;
 
 public class TextAreaBox extends Box {
 
-	private String text = "Enter text...";
-	private Color textColor = Color.black; // TODO: move this to style (attr
-											// "color")
-	private int textSize = 12;
+	protected String text = "Enter text...";
+	protected Color textColor = Color.black; // TODO: move this to style (attr
+												// "color")
+	protected int textSize = 12;
 
 	public TextAreaBox(String text, Color textColor, int textSize, int startX,
 			int startY, int endX, int endY) {
@@ -30,11 +29,12 @@ public class TextAreaBox extends Box {
 
 	public String toString() {
 		String str = "<div style=\"position:absolute;left:" + getXOffset()
-				+ "px;top:" + getYOffset() + "px;width:" + (width()+1)
-				+ "px;height:" + (height()+1) + "px;color:rgba("
+				+ "px;top:" + getYOffset() + "px;width:" + (width() + 1)
+				+ "px;height:" + (height() + 1) + "px;color:rgba("
 				+ textColor.getRed() + "," + textColor.getGreen() + ","
 				+ textColor.getBlue() + "," + textColor.getAlpha()
-				+ ");font-family:sans-serif;font-size:" + textSize + "px;" + style + "\">";
+				+ ");font-family:sans-serif;font-size:" + textSize + "px;"
+				+ style + "\">";
 		str += text;
 		str += "</div>";
 		return str;
@@ -94,7 +94,7 @@ public class TextAreaBox extends Box {
 	public int getTextSize() {
 		return textSize;
 	}
-	
+
 	public void setText(String newText) {
 		this.text = newText;
 	}

@@ -19,6 +19,7 @@ import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.Box;
 import com.shrugs.app.components.DivBox;
 import com.shrugs.app.components.ImageBox;
+import com.shrugs.app.components.LinkBox;
 import com.shrugs.app.components.TextAreaBox;
 
 public class DrawableView extends JPanel implements MouseMotionListener {
@@ -139,8 +140,24 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					repaint();
 				} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 					TextAreaBox newBox;
-					newBox = new TextAreaBox(OptionsToolBar.getBoxText(), OptionsToolBar.getBoxTextColor(), OptionsToolBar.getBoxTextSize(),
-							startX, startY, endX, endY);
+					newBox = new TextAreaBox(OptionsToolBar.getBoxText(),
+							OptionsToolBar.getBoxTextColor(),
+							OptionsToolBar.getBoxTextSize(), startX, startY,
+							endX, endY);
+
+					if (((DivBox) targetBox).childrenCollideWith(newBox)) {
+						repaint();
+						return;
+					}
+					((DivBox) targetBox).addChild(newBox);
+					repaint();
+				} else if (OptionsToolBar.getBoxMode().equals("Link")) {
+					LinkBox newBox;
+					newBox = new LinkBox(OptionsToolBar.getBoxText(),
+							OptionsToolBar.getBoxLink(),
+							OptionsToolBar.getBoxTextColor(),
+							OptionsToolBar.getBoxTextSize(), startX, startY,
+							endX, endY);
 
 					if (((DivBox) targetBox).childrenCollideWith(newBox)) {
 						repaint();
@@ -159,7 +176,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					startY = evt.getY();
 
 					bodyBox.youngestBoxContainingPoint(startX, startY)
-					.showAttributesMenu();
+							.showAttributesMenu();
 				}
 
 				repaint();
@@ -247,7 +264,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				g2.setColor(((TextAreaBox) b).getTextColor());
 				g2.setStroke(solidStroke);
 				// Set the custom font
-				g2.setFont(new Font("CustomFont", Font.PLAIN, ((TextAreaBox) b).getTextSize()));
+				g2.setFont(new Font("CustomFont", (b instanceof LinkBox) ? Font.BOLD : Font.PLAIN, ((TextAreaBox) b)
+						.getTextSize()));
 
 				// Draw the text area
 				TextAreaBox.drawString(g2, ((TextAreaBox) b).getText(),
@@ -290,7 +308,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					g2.setColor(Color.black);
 				}
 			}
-			
+
 			// Draw Box foreground
 			g2.setStroke(solidStroke);
 			g2.setColor(Color.black);
@@ -314,12 +332,14 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			} else if (OptionsToolBar.getBoxMode().equals("Text")) {
+			} else if (OptionsToolBar.getBoxMode().equals("Text") || OptionsToolBar.getBoxMode().equals("Link")) {
+				String type = OptionsToolBar.getBoxMode();
 				g2.setStroke(solidStroke);
 				g2.setColor(OptionsToolBar.getBoxTextColor());
 				// Set the custom font
-				g2.setFont(new Font("CustomFont", Font.PLAIN, OptionsToolBar.getBoxTextSize()));
-				
+				g2.setFont(new Font("CustomFont", type.equals("Link") ? Font.BOLD : Font.PLAIN, OptionsToolBar
+						.getBoxTextSize()));
+
 				TextAreaBox.drawString(g2, OptionsToolBar.getBoxText(),
 						Math.min(startX, endX), Math.min(startY, endY),
 						Math.abs(startX - endX), Math.abs(startY - endY));
