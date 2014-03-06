@@ -56,7 +56,7 @@ public class ImageBox extends Box {
 		String name = imagearr[imagearr.length - 1];
 		return "<img src=\"img/" + name + "\" style=\"position:absolute;left:"
 				+ getXOffset() + "px;top:" + getYOffset() + "px;width:"
-				+ width() + "px;height:" + height() + "px;" + style + "\">";
+				+ (width()+1) + "px;height:" + (height()+1) + "px;" + style + "\">";
 	}
 
 	public Image getImage() {
