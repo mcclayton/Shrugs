@@ -27,13 +27,12 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 	private String output;
 	private String savepath;
 
-	public MainMenuBar()
-	{
-		//Build the file menu.
+	public MainMenuBar() {
+		// Build the file menu.
 		fileMenu = new JMenu("File");
 		this.add(fileMenu);
 
-		//Build the group of file menu's JMenuItems
+		// Build the group of file menu's JMenuItems
 		openMenuItem = new JMenuItem("Load Project");
 		fileMenu.add(openMenuItem);
 		saveMenuItem = new JMenuItem("Save Project");
@@ -51,8 +50,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		aboutMenuItem = new JMenuItem("About Shrugs");
 		helpMenu.add(aboutMenuItem);
 
-
-		//Add action listeners to menu items
+		// Add action listeners to menu items
 		openMenuItem.addActionListener(this);
 		saveMenuItem.addActionListener(this);
 		exportMenuItem.addActionListener(this);
@@ -61,26 +59,29 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 		newMenuItem.addActionListener(this);
 	}
 
-	//Handle menu item clicks
-	public void actionPerformed(ActionEvent e)
-	{
+	// Handle menu item clicks
+	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
 
-		if (source instanceof JMenuItem){  //checks to see if a menu item was pressed
+		if (source instanceof JMenuItem) { // checks to see if a menu item was
+											// pressed
 			JMenuItem itemClicked = (JMenuItem) source;
-			if (itemClicked==openMenuItem){ //TODO: Add "Loading File" popup and disable input
+			if (itemClicked == openMenuItem) { // TODO: Add "Loading File" popup
+												// and disable input
 				try {
 					JFileChooser inputFileChooser = new JFileChooser();
-					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Files (*.shrug)", "shrug");
+					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter(
+							"Shrugs Files (*.shrug)", "shrug");
 					inputFileChooser.addChoosableFileFilter(shrugsFileFilter);
 					inputFileChooser.setFileFilter(shrugsFileFilter);
-					inputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
+					inputFileChooser.setCurrentDirectory(new File(new File(".")
+							.getCanonicalPath()));
 					int retval = inputFileChooser.showDialog(null, "Open");
 
-					if(retval == JFileChooser.APPROVE_OPTION) {
-						output = inputFileChooser.getSelectedFile().getAbsolutePath();
-					}
-					else if(retval == JFileChooser.CANCEL_OPTION){
+					if (retval == JFileChooser.APPROVE_OPTION) {
+						output = inputFileChooser.getSelectedFile()
+								.getAbsolutePath();
+					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
 					DrawableView.Load(IOManager.Load(output));
@@ -108,101 +109,131 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 	            }
 			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
 				try {
-					JFileChooser outputFileChooser = new JFileChooser(){
+					JFileChooser outputFileChooser = new JFileChooser() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-					    public void approveSelection(){
-					        File f = getSelectedFile();
-					        if(f.exists()){
-					            int result = JOptionPane.showConfirmDialog(this,"The shrugs file exists, do you want to overwrite?","Existing file",JOptionPane.YES_NO_CANCEL_OPTION);
-					            switch(result){
-					                case JOptionPane.YES_OPTION:
-					                    super.approveSelection();
-					                    return;
-					                case JOptionPane.NO_OPTION:
-					                    return;
-					                case JOptionPane.CLOSED_OPTION:
-					                    return;
-					                case JOptionPane.CANCEL_OPTION:
-					                    cancelSelection();
-					                    return;
-					            }
-					        }
-					        super.approveSelection();
-					    }        
+						public void approveSelection() {
+							File f = getSelectedFile();
+							if (f.exists()) {
+								int result = JOptionPane
+										.showConfirmDialog(
+												this,
+												"The shrugs file exists, do you want to overwrite?",
+												"Existing file",
+												JOptionPane.YES_NO_CANCEL_OPTION);
+								switch (result) {
+								case JOptionPane.YES_OPTION:
+									super.approveSelection();
+									return;
+								case JOptionPane.NO_OPTION:
+									return;
+								case JOptionPane.CLOSED_OPTION:
+									return;
+								case JOptionPane.CANCEL_OPTION:
+									cancelSelection();
+									return;
+								}
+							}
+							super.approveSelection();
+						}
 					};
-					
-					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter("Shrugs Files (*.shrug)", "shrug");
+
+					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter(
+							"Shrugs Files (*.shrug)", "shrug");
 					outputFileChooser.addChoosableFileFilter(shrugsFileFilter);
 					outputFileChooser.setFileFilter(shrugsFileFilter);
-					outputFileChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
+					outputFileChooser.setCurrentDirectory(new File(
+							new File(".").getCanonicalPath()));
 					int retval = outputFileChooser.showDialog(null, "Save");
 
-					if(retval == JFileChooser.APPROVE_OPTION) {
-						if(!outputFileChooser.getSelectedFile().getAbsolutePath().endsWith(".shrug")) {
-							savepath = (outputFileChooser.getSelectedFile().getAbsolutePath()+".shrug");
+					if (retval == JFileChooser.APPROVE_OPTION) {
+						if (!outputFileChooser.getSelectedFile()
+								.getAbsolutePath().endsWith(".shrug")) {
+							savepath = (outputFileChooser.getSelectedFile()
+									.getAbsolutePath() + ".shrug");
 						} else {
-							savepath = outputFileChooser.getSelectedFile().getAbsolutePath();
+							savepath = outputFileChooser.getSelectedFile()
+									.getAbsolutePath();
 						}
-					}
-					else if(retval == JFileChooser.CANCEL_OPTION){
+					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
 					IOManager.Save(savepath);
-				} catch(Exception e1) {
+				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Error during save.");
 					e1.printStackTrace();
 				}
-			} else if (itemClicked==exportMenuItem){
+			} else if (itemClicked == exportMenuItem) {
 				try {
-					JFileChooser exportDirectoryChooser = new JFileChooser(){
+					JFileChooser exportDirectoryChooser = new JFileChooser() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
-					    public void approveSelection(){
-					        File fIndexHTML = new File(getSelectedFile().getAbsolutePath()+"/index.html");
-					        if(fIndexHTML.exists()){
-					            int result = JOptionPane.showConfirmDialog(this,"A website named 'index.html' exists in this directory, do you want to overwrite?","Existing file",JOptionPane.YES_NO_CANCEL_OPTION);
-					            switch(result){
-					                case JOptionPane.YES_OPTION:
-					                    super.approveSelection();
-					                    return;
-					                case JOptionPane.NO_OPTION:
-					                    return;
-					                case JOptionPane.CLOSED_OPTION:
-					                    return;
-					                case JOptionPane.CANCEL_OPTION:
-					                    cancelSelection();
-					                    return;
-					            }
-					        }
-					        super.approveSelection();
-					    }        
+						public void approveSelection() {
+							File fIndexHTML = new File(getSelectedFile()
+									.getAbsolutePath() + "/index.html");
+							if (fIndexHTML.exists()) {
+								int result = JOptionPane
+										.showConfirmDialog(
+												this,
+												"A website named 'index.html' exists in this directory, do you want to overwrite?",
+												"Existing file",
+												JOptionPane.YES_NO_CANCEL_OPTION);
+								switch (result) {
+								case JOptionPane.YES_OPTION:
+									super.approveSelection();
+									return;
+								case JOptionPane.NO_OPTION:
+									return;
+								case JOptionPane.CLOSED_OPTION:
+									return;
+								case JOptionPane.CANCEL_OPTION:
+									cancelSelection();
+									return;
+								}
+							}
+							super.approveSelection();
+						}
 					};
-					
-					exportDirectoryChooser.setFileSelectionMode( JFileChooser.DIRECTORIES_ONLY);
-					exportDirectoryChooser.setCurrentDirectory(new File(new File(".").getCanonicalPath()));
 
-					int retval = exportDirectoryChooser.showDialog(null, "Export");
+					exportDirectoryChooser
+							.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+					exportDirectoryChooser.setCurrentDirectory(new File(
+							new File(".").getCanonicalPath()));
 
-					if(retval == JFileChooser.APPROVE_OPTION) {
-						Export.export(DrawableView.bodyBox, exportDirectoryChooser.getSelectedFile().getAbsolutePath());
-					}
-					else if(retval == JFileChooser.CANCEL_OPTION){
+					int retval = exportDirectoryChooser.showDialog(null,
+							"Export");
+
+					if (retval == JFileChooser.APPROVE_OPTION) {
+						Export.export(DrawableView.bodyBox,
+								exportDirectoryChooser.getSelectedFile()
+										.getAbsolutePath());
+					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "Error during export.");
 					e1.printStackTrace();
 				}
-			}
-			else if(itemClicked == aboutMenuItem){
-				JOptionPane.showMessageDialog(null, "Shrugs: Shrugs Helps Regular Users Generate Sites \n A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
-			}
-			else if(itemClicked == helpMenuItem){
-				Icon icon = new ImageIcon("./img/clippy.png"); 
-				JOptionPane.showMessageDialog(null, "To draw an element, click and drag as desired in the main grid.\nA selector for the type of element is located at the top of the application. \nColors are available from the 'Paint' menu.", "Help", JOptionPane.INFORMATION_MESSAGE, icon);
+			} else if (itemClicked == aboutMenuItem) {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Shrugs Helps Regular Users Generate Sites \n"
+										+ "A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
+			} else if (itemClicked == helpMenuItem) {
+				Icon icon = new ImageIcon("./img/clippy.png");
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"To draw an element, click and drag as desired in the main grid.\n"
+								+ "A selector for the type of element is located at the top of the application. \n"
+								+ "-- Element Types --\n"
+								+ "Div: A basic container. Can contain child elements. Color can be changed using the \"color\" button.\n"
+								+ "Image: A graphic. The source can be chosen using the \"Choose Photo\" button.\n"
+								+ "Text: A text area. Size and color can be configured.",
+								"Help", JOptionPane.INFORMATION_MESSAGE, icon);
 			}
 		}
 	}

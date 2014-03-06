@@ -124,7 +124,7 @@ public class DivBox extends Box {
 	}
 	
 	public String toString() {
-		String str = "<div style=\"position:absolute;left:"+getXOffset()+"px;top:"+getYOffset()+"px;width:"+width()+"px;height:"+height()+"px;"+style+"\">";
+		String str = "<div style=\"position:absolute;left:"+getXOffset()+"px;top:"+getYOffset()+"px;width:"+(width()+1)+"px;height:"+(height()+1)+"px;"+style+"\">";
 		for(Box child : children)
 			str+=child;
 		str+="</div>";

@@ -81,7 +81,7 @@ public class BodyBox extends DivBox {
 				+ "<style type='text/css'>* { margin:0; padding:0; }</style>"
 				+ "</head>"
 				+ "<body>"
-				+ "<div id='wrapper' style='width:"+width()+";height:"+height()+"px;position:relative;margin:0 auto;"+style+"'>";
+				+ "<div id='wrapper' style='width:"+(width()+1)+"px;height:"+(height()+1)+"px;position:relative;margin:0 auto;"+style+"'>";
 		for(Box child : children)
 			str += child;
 		str += "</div>"
