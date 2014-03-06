@@ -39,11 +39,15 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 	public static BodyBox bodyBox; // The main body box of the web page
 	private Box targetBox; // The box to draw new boxes into (set on
+	
+	private static int viewWidth, viewHeight = 0;
 
 	// mousePressed)
 
-	public DrawableView(int width, int height) {
+	public DrawableView(final int width, final int height) {
 		bodyBox = new BodyBox(0, 0, width, height);
+		this.viewWidth = width;
+		this.viewHeight = height;
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent evt) {
@@ -57,6 +61,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 
 				endX = startX;
 				endY = startY;
+				
 				isDragging = true;
 				repaint();
 			}
@@ -342,5 +347,13 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 	public static void Load(BodyBox b) {
 		bodyBox = b;
 		// TODO repaint
+	}
+	
+	public static int getViewWidth() {
+		return viewWidth;
+	}
+	
+	public static int getViewHeight() {
+		return viewHeight;
 	}
 }
