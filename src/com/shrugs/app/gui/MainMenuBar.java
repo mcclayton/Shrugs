@@ -127,36 +127,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 				}
 			} else if (itemClicked == exportMenuItem) {
 				try {
-					JFileChooser exportDirectoryChooser = new JFileChooser() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void approveSelection() {
-							File fIndexHTML = new File(getSelectedFile()
-									.getAbsolutePath() + "/index.html");
-							if (fIndexHTML.exists()) {
-								int result = JOptionPane
-										.showConfirmDialog(
-												this,
-												"A website named 'index.html' exists in this directory, do you want to overwrite?",
-												"Existing file",
-												JOptionPane.YES_NO_CANCEL_OPTION);
-								switch (result) {
-								case JOptionPane.YES_OPTION:
-									super.approveSelection();
-									return;
-								case JOptionPane.NO_OPTION:
-									return;
-								case JOptionPane.CLOSED_OPTION:
-									return;
-								case JOptionPane.CANCEL_OPTION:
-									cancelSelection();
-									return;
-								}
-							}
-							super.approveSelection();
-						}
-					};
+					JFileChooser exportDirectoryChooser = new JFileChooser();
 
 					exportDirectoryChooser
 							.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
