@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.shrugs.app.Export;
+import com.shrugs.app.Shrugs;
 import com.shrugs.app.IOManager;
 import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.ImageBox;
@@ -201,6 +202,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					if (retval == JFileChooser.APPROVE_OPTION) {
 						Export.export(DrawableView.bodyBox,
 								".");
+						String[] args = {};
+						Shrugs.main(args);
 					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
