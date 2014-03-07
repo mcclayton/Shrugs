@@ -99,7 +99,7 @@ public class BoxStyle implements Comparable<BoxStyle> {
 	public String toString() {
 		String out = "";
 		for (String key : attr.keySet()) {
-			out += key + ":" + attr.get(key) + ";";
+			out += key + ":" + attr.get(key) + "";
 		}
 		return out;
 	}

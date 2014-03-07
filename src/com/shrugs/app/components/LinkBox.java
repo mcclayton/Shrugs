@@ -36,7 +36,7 @@ public class LinkBox extends TextAreaBox {
 				+ "\" style=\"display:block;position:absolute;width:"
 				+ (width() + 1) + "px;height:" + (height() + 1)
 				+ "px;color:rgba(" + textColor.getRed() + ","
-				+ textColor.getGreen() + "," + textColor.getBlue() + ","
+				+ textColor.getBlue() + "," + textColor.getGreen() + ","
 				+ textColor.getAlpha() + ");fontfamily:sans-serif;font-size:"
 				+ textSize + "px;" + style + "\">";
 		str += text;
