@@ -17,7 +17,6 @@ import com.shrugs.app.gui.DrawableView;
 public class IOManager {
 
 	public static void Save(String path) throws IOException {
-		System.out.println(path);
 		File file = new File(path);
 		file.createNewFile();
 		FileWriter fw = new FileWriter(file);

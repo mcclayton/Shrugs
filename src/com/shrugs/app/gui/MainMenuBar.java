@@ -84,7 +84,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
-					DrawableView.Load(IOManager.Load(output));
+					DrawableView.Load(IOManager.Load("project.shrug"));
 
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null, "Error during load.");
@@ -159,7 +159,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
-					IOManager.Save(savepath);
+					IOManager.Save("project.shrug");
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(null, "Error during save.");
 					e1.printStackTrace();
@@ -207,8 +207,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 
 					if (retval == JFileChooser.APPROVE_OPTION) {
 						Export.export(DrawableView.bodyBox,
-								exportDirectoryChooser.getSelectedFile()
-										.getAbsolutePath());
+								".");
 					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
