@@ -167,7 +167,7 @@ public class Box {
 			;
 		for (float i = 0; i < 1; i += f)
 			snaps.add(this.startX + (int) (i * width));
-		snaps.add(this.startX + width + 1);
+		snaps.add(this.startX + width);
 		return snaps;
 	}
 
@@ -180,7 +180,7 @@ public class Box {
 			;
 		for (float i = 0; i < 1; i += f)
 			snaps.add(this.startY + (int) (i * height));
-		snaps.add(this.startY + height + 1);
+		snaps.add(this.startY + height);
 		return snaps;
 	}
 
