@@ -85,8 +85,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				isDragging = false;
 				make = true;
 
-				endX = targetBox.getNearestHSnap(evt.getX());
-				endY = targetBox.getNearestVSnap(evt.getY());
+				endX = targetBox.getNearestHSnap(evt.getX()) + 50;
+				endY = targetBox.getNearestVSnap(evt.getY()) + 50;
 
 				// REQ3: Box must not be 0x0
 				if ((endX == startX) || (endY == startY)) {
