@@ -98,9 +98,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 								"New Project", JOptionPane.YES_NO_CANCEL_OPTION);
 				switch (result) {
 				case JOptionPane.YES_OPTION:
-					if (ImageBox.ImageList != null) {
-						ImageBox.ImageList.clear();
-					}
 					DrawableView.bodyBox = new BodyBox(0, 0,
 							DrawableView.getViewWidth(),
 							DrawableView.getViewHeight());

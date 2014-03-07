@@ -32,8 +32,6 @@ public class IOManager {
 		File file = new File(path);
 		if(!file.exists())
 			throw new IOException();
-		if(ImageBox.ImageList != null)
-			ImageBox.ImageList.clear();
 		FileReader fr = new FileReader(file);
 		BufferedReader br = new BufferedReader(fr);
 		Gson gson = new GsonBuilder().registerTypeAdapter(BodyBox.class, new BodyBoxAdapter()).setPrettyPrinting().create();

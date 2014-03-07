@@ -68,7 +68,7 @@ public class ImageBox extends Box {
 	public JsonObject toJsonObj() {
 		JsonObject obj = super.toJsonObj();
 		obj.addProperty("img", boxImageFilePath);
-
+		obj.addProperty("y2",height());
 		return obj;
 	}
 

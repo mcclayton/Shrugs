@@ -34,7 +34,7 @@ public class LinkBox extends TextAreaBox {
 	public String toString() {
 		String str = "<a href=\"" + link
 				+ "\" style=\"display:block;position:absolute;width:"
-				+ (width() + 1) + "px;height:" + (height() + 1)
+				+ endX + "px;height:" + (height() + 1)
 				+ "px;color:rgba(" + textColor.getRed() + ","
 				+ textColor.getBlue() + "," + textColor.getGreen() + ","
 				+ textColor.getAlpha() + ");fontfamily:sans-serif;font-size:"
