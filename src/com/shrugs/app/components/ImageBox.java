@@ -18,7 +18,6 @@ public class ImageBox extends Box {
 	public ImageBox(String imageFilePath, int startX, int startY, int endX,
 			int endY) {
 		super(startX, startY, endX, endY);
-		this.style.makeBackgroundTransparent();
 
 		if (ImageList == null)
 			ImageList = new HashMap<String, Image>();
