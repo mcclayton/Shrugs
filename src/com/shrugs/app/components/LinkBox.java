@@ -32,7 +32,7 @@ public class LinkBox extends TextAreaBox {
 	}
 
 	public String toString() {
-		String str = "<a href=\"" + link
+		String str = "<div href=\"" + link
 				+ "\" style=\"display:block;position:absolute;width:"
 				+ endX + "px;height:" + (height() + 1)
 				+ "px;color:rgba(" + textColor.getRed() + ","
@@ -40,7 +40,7 @@ public class LinkBox extends TextAreaBox {
 				+ textColor.getAlpha() + ");fontfamily:sans-serif;font-size:"
 				+ textSize + "px;" + style + "\">";
 		str += text;
-		str += "</a>";
+		str += "</div>";
 		return str;
 	}
 }
