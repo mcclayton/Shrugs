@@ -4,13 +4,15 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import javax.swing.JOptionPane;
+
+import org.apache.commons.io.FileUtils;
 
 import com.shrugs.app.components.Box;
 import com.shrugs.app.components.ImageBox;
 import com.shrugs.app.gui.DrawableView;
-import org.apache.commons.io.FileUtils;
 
 public class Export {
 
@@ -34,11 +36,11 @@ public class Export {
 				String name = patharr[patharr.length - 1];
 				System.out
 						.println("Saving file: " + outputDir + "/img/" + name);
+				if(!(Paths.get(imgpath).equals(Paths.get(outputDir+"/img/"+name))))
 				FileUtils.copyFile(new File(imgpath), new File(outputDir
 						+ "/img/" + name));
 			}
 		JOptionPane.showMessageDialog(null, "Export to:\n'" + outputDir
 				+ "'\nSuccessful.");
 	}
-
 }
