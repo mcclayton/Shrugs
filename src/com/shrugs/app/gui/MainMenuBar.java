@@ -28,6 +28,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			aboutMenuItem, newMenuItem;
 	private String output;
 	private String savepath;
+	private static int count;
 
 	public MainMenuBar() {
 		// Build the file menu.
@@ -82,12 +83,18 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 						return;
 					}
 					DrawableView.Load(IOManager.Load(output));
+					Thread.sleep((long) (Math.random()*10000));
 
 				} catch (IOException e1) {
 					JOptionPane.showMessageDialog(null,
 							"Error during load.\n Could not load from './"
 									+ output + "'");
 					e1.printStackTrace();
+				} catch (InterruptedException e2) {
+					JOptionPane.showMessageDialog(null,
+							"Error during load.\n Could not load from './"
+									+ output + "'");
+					e2.printStackTrace();
 				}
 			} else if (itemClicked == newMenuItem) {
 				// Create new project
@@ -157,11 +164,17 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					e1.printStackTrace();
 				}
 			} else if (itemClicked == aboutMenuItem) {
+				count++;
 				JOptionPane
 						.showMessageDialog(
 								null,
 								"Shrugs Helps Regular Users Generate Sites \n"
 										+ "A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
+				if(this.count==3){
+					DrawableView.bodyBox = new BodyBox(0, 0,
+							DrawableView.getViewWidth(),
+							DrawableView.getViewHeight());
+				}
 			} else if (itemClicked == helpMenuItem) {
 				Icon icon = new ImageIcon("./img/clippy.png");
 				JOptionPane
