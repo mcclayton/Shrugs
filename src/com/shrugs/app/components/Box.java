@@ -35,10 +35,10 @@ public class Box {
 	}
 
 	public Box(int startX, int startY, int endX, int endY, Box parent) {
-		this.startX = startX;
-		this.startY = startY;
-		this.endX = endX;
-		this.endY =endY;
+		this.startX = Math.min(startX,endX);
+		this.startY = Math.min(startY,endY);
+		this.endX = Math.max(startX,endX);
+		this.endY = Math.max(startY,endY);
 		this.parent = parent;
 		this.highlight = false;
 		this.style = new BoxStyle();

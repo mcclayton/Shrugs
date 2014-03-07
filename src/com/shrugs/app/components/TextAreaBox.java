@@ -30,7 +30,6 @@ public class TextAreaBox extends Box {
 		String str = "<div style=\"position:absolute;left:" + getXOffset()
 				+ "px;top:" + getYOffset() + "px;width:" + (width() + 1)
 				+ "px;height:" + (height() + 1) + "px;"
-				+ "font-family:sans-serif;"
 				+ style + "\">";
 		str += text;
 		str += "</div>";
