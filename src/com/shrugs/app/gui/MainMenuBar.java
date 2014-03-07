@@ -71,10 +71,6 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 												// and disable input
 				try {
 					JFileChooser inputFileChooser = new JFileChooser();
-					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter(
-							"Shrugs Files (*.shrug)", "shrug");
-					inputFileChooser.addChoosableFileFilter(shrugsFileFilter);
-					inputFileChooser.setFileFilter(shrugsFileFilter);
 					inputFileChooser.setCurrentDirectory(new File(new File(".")
 							.getCanonicalPath()));
 					int retval = inputFileChooser.showDialog(null, "Open");
