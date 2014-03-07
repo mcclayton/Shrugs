@@ -79,7 +79,6 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				if (!(targetBox instanceof DivBox)) {
 					isDragging = false;
 					repaint();
-					return;
 				}
 
 				isDragging = false;
