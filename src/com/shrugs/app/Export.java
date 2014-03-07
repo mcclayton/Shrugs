@@ -30,7 +30,6 @@ public class Export {
 		writer = new BufferedWriter(new FileWriter(indexFile));
 		writer.append(DrawableView.bodyBox.toString());
 		writer.close();
-		if (ImageBox.ImageList != null)
 			for (String imgpath : ImageBox.ImageList.keySet()) {
 				String[] patharr = imgpath.split("/");
 				String name = patharr[patharr.length - 1];
