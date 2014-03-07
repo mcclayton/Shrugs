@@ -15,8 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import com.shrugs.app.Export;
-import com.shrugs.app.Shrugs;
 import com.shrugs.app.IOManager;
+import com.shrugs.app.Shrugs;
 import com.shrugs.app.components.BodyBox;
 import com.shrugs.app.components.ImageBox;
 
@@ -106,36 +106,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 	            }
 			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
 				try {
-					JFileChooser outputFileChooser = new JFileChooser() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void approveSelection() {
-							File f = getSelectedFile();
-							if (f.exists()) {
-								int result = JOptionPane
-										.showConfirmDialog(
-												this,
-												"The shrugs file exists, do you want to overwrite?",
-												"Existing file",
-												JOptionPane.YES_NO_CANCEL_OPTION);
-								switch (result) {
-								case JOptionPane.YES_OPTION:
-									super.approveSelection();
-									return;
-								case JOptionPane.NO_OPTION:
-									return;
-								case JOptionPane.CLOSED_OPTION:
-									return;
-								case JOptionPane.CANCEL_OPTION:
-									cancelSelection();
-									return;
-								}
-							}
-							super.approveSelection();
-						}
-					};
-
+					JFileChooser outputFileChooser = new JFileChooser();
 					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter(
 							"Shrugs Files (*.shrug)", "shrug");
 					outputFileChooser.addChoosableFileFilter(shrugsFileFilter);
