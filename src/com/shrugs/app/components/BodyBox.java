@@ -33,10 +33,7 @@ public class BodyBox extends DivBox {
 	public Box youngestBoxContainingPoint(int x, int y) {
 		for (Box c : children) {
 			if (c.containsPoint(x, y)) {
-				if (c instanceof DivBox)
-					return ((DivBox) c).youngestBoxContainingPoint(x, y);
-				else
-					return c;
+				return c;
 			}
 		}
 		return this;
