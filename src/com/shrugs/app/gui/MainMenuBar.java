@@ -24,7 +24,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private JMenu fileMenu, helpMenu;
-	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem, helpMenuItem, aboutMenuItem, newMenuItem;
+	private JMenuItem openMenuItem, saveMenuItem, exportMenuItem, helpMenuItem,
+			aboutMenuItem, newMenuItem;
 	private String output;
 	private String savepath;
 
@@ -76,35 +77,44 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					int retval = inputFileChooser.showDialog(null, "Open");
 
 					if (retval == JFileChooser.APPROVE_OPTION) {
-						output = inputFileChooser.getSelectedFile()
-								.getName();
+						output = inputFileChooser.getSelectedFile().getName();
 					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
 					DrawableView.Load(IOManager.Load(output));
 
 				} catch (IOException e1) {
-					JOptionPane.showMessageDialog(null, "Error during load.\n Could not load from './"+output+"'");
+					JOptionPane.showMessageDialog(null,
+							"Error during load.\n Could not load from './"
+									+ output + "'");
 					e1.printStackTrace();
 				}
-			} else if (itemClicked==newMenuItem) { 
-				//Create new project
-				int result = JOptionPane.showConfirmDialog(this,"Are you sure you wish to create a new Shrugs project?\nAny unsaved data will be lost.","New Project",JOptionPane.YES_NO_CANCEL_OPTION);
-	            switch(result){
-	                case JOptionPane.YES_OPTION:
-	                	if (ImageBox.ImageList != null) {
-	                		ImageBox.ImageList.clear();
-	                	}
-	                	DrawableView.bodyBox = new BodyBox(0, 0, DrawableView.getViewWidth(), DrawableView.getViewHeight());
-	                    return;
-	                case JOptionPane.NO_OPTION:
-	                    return;
-	                case JOptionPane.CLOSED_OPTION:
-	                    return;
-	                case JOptionPane.CANCEL_OPTION:
-	                    return;
-	            }
-			} else if (itemClicked==saveMenuItem){ //TODO: Add "Saving File" popup and disable input
+			} else if (itemClicked == newMenuItem) {
+				// Create new project
+				int result = JOptionPane
+						.showConfirmDialog(
+								this,
+								"Are you sure you wish to create a new Shrugs project?\nAny unsaved data will be lost.",
+								"New Project", JOptionPane.YES_NO_CANCEL_OPTION);
+				switch (result) {
+				case JOptionPane.YES_OPTION:
+					if (ImageBox.ImageList != null) {
+						ImageBox.ImageList.clear();
+					}
+					DrawableView.bodyBox = new BodyBox(0, 0,
+							DrawableView.getViewWidth(),
+							DrawableView.getViewHeight());
+					return;
+				case JOptionPane.NO_OPTION:
+					return;
+				case JOptionPane.CLOSED_OPTION:
+					return;
+				case JOptionPane.CANCEL_OPTION:
+					return;
+				}
+			} else if (itemClicked == saveMenuItem) { // TODO: Add "Saving File"
+														// popup and disable
+														// input
 				try {
 					JFileChooser outputFileChooser = new JFileChooser();
 					FileNameExtensionFilter shrugsFileFilter = new FileNameExtensionFilter(
@@ -116,7 +126,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					int retval = outputFileChooser.showDialog(null, "Save");
 
 					if (retval == JFileChooser.APPROVE_OPTION) {
-							savepath = outputFileChooser.getSelectedFile().getName();
+						savepath = outputFileChooser.getSelectedFile()
+								.getName();
 					} else if (retval == JFileChooser.CANCEL_OPTION) {
 						return;
 					}
@@ -138,8 +149,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 							"Export");
 
 					if (retval == JFileChooser.APPROVE_OPTION) {
-						Export.export(DrawableView.bodyBox,
-								".");
+						Export.export(DrawableView.bodyBox, ".");
 						String[] args = {};
 						Shrugs.main(args);
 					} else if (retval == JFileChooser.CANCEL_OPTION) {
@@ -161,11 +171,21 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 						.showMessageDialog(
 								null,
 								"To draw an element, click and drag as desired in the main grid.\n"
-								+ "A selector for the type of element is located at the top of the application. \n"
-								+ "-- Element Types --\n"
-								+ "Div: A basic container. Can contain child elements. Color can be changed using the \"color\" button.\n"
-								+ "Image: A graphic. The source can be chosen using the \"Choose Photo\" button.\n"
-								+ "Text: A text area. Size and color can be configured.",
+										+ "A selector for the type of element is located at the top of the application. \n"
+										+ "-- Element Types --\n"
+										+ "Div: A basic container. Can contain child elements. Color can be changed using the \"color\" button.\n"
+										+ "Image: A graphic. The source can be chosen using the \"Choose Photo\" button.\n"
+										+ "Text: A text area. Size and color can be configured.",
+								"Help", JOptionPane.INFORMATION_MESSAGE, icon);
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"To draw an element, click and drag as desired in the main grid.\n"
+										+ "A selector for the type of element is located at the top of the application. \n"
+										+ "-- Element Types --\n"
+										+ "Div: A basic container. Can contain child elements. Color can be changed using the \"color\" button.\n"
+										+ "Image: A graphic. The source can be chosen using the \"Choose Photo\" button.\n"
+										+ "Text: A text area. Size and color can be configured.",
 								"Help", JOptionPane.INFORMATION_MESSAGE, icon);
 			}
 		}

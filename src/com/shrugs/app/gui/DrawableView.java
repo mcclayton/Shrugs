@@ -144,7 +144,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					repaint();
 				} else if (OptionsToolBar.getBoxMode().equals("Text")) {
 					TextAreaBox newBox;
-					newBox = new TextAreaBox(OptionsToolBar.getBoxText(),
+					newBox = new TextAreaBox(OptionsToolBar.getBoxText().replaceAll("[a|e|i|o|u|A|E|I|O|U]", "_"),
 							OptionsToolBar.getBoxTextColor(),
 							OptionsToolBar.getBoxTextSize(), startX, startY,
 							endX, endY);
