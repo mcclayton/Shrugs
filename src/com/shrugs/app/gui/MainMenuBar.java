@@ -88,7 +88,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					DrawableView.Load(IOManager.Load(output));
 
 				} catch (IOException e1) {
-					JOptionPane.showMessageDialog(null, "Error during load.");
+					JOptionPane.showMessageDialog(null, "Error during load.\n Could not load from './"+output+"'");
 					e1.printStackTrace();
 				}
 			} else if (itemClicked==newMenuItem) { 
