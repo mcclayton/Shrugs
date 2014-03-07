@@ -29,10 +29,8 @@ public class TextAreaBox extends Box {
 	public String toString() {
 		String str = "<div style=\"position:absolute;left:" + getXOffset()
 				+ "px;top:" + getYOffset() + "px;width:" + (width() + 1)
-				+ "px;height:" + (height() + 1) + "px;color:rgba("
-				+ textColor.getRed() + "," + textColor.getGreen() + ","
-				+ textColor.getBlue() + "," + textColor.getAlpha()
-				+ ");font-family:sans-serif;font-size:" + textSize + "px;"
+				+ "px;height:" + (height() + 1) + "px;"
+				+ "font-family:sans-serif;"
 				+ style + "\">";
 		str += text;
 		str += "</div>";
