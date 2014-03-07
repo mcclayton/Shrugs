@@ -131,7 +131,7 @@ public class OptionsToolBar extends JToolBar {
 					jtbToolBar.add(backgroundColorButton);
 					jtbToolBar.add(boxTypeCombo);
 					jtbToolBar.repaint();
-				} else if (boxType.equals("Text")) {
+				} else if (boxType.equals("Link")) {
 					// Set the box mode to text
 					boxMode = BOX_TYPES[1];
 
@@ -151,7 +151,7 @@ public class OptionsToolBar extends JToolBar {
 					jtbToolBar.add(imageButton);
 					jtbToolBar.add(boxTypeCombo);
 					jtbToolBar.repaint();
-				} else if (boxType.equals("Link")) {
+				} else if (boxType.equals("Text")) {
 					boxMode = BOX_TYPES[3];
 					jtbToolBar.removeAll();
 					jtbToolBar.add(textColorButton);
