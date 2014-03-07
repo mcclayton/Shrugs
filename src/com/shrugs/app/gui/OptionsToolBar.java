@@ -28,8 +28,7 @@ public class OptionsToolBar extends JToolBar {
 	private static Color textColor = Color.BLACK; // Color used to remember last
 													// chosen color from color
 													// picker
-	private static final String DEFAULT_IMAGE_PATH = "./img/placeholder.png";
-	private static String imagePath = DEFAULT_IMAGE_PATH; // Path of image to be
+	private static String imagePath = null; // Path of image to be
 															// drawn
 	private static final String[] BOX_TYPES = { "Div", // 0
 			"Text", // 1
@@ -169,9 +168,6 @@ public class OptionsToolBar extends JToolBar {
 	}
 
 	public static String getBoxImagePath() {
-		if (imagePath == null) {
-			return DEFAULT_IMAGE_PATH;
-		}
 		return imagePath;
 	}
 
