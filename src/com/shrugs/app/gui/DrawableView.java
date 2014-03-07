@@ -113,7 +113,7 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 				endY--;
 
 				// REQ4: Both primary corners must be in the same box
-				if (bodyBox.youngestBoxContainingPoint(endX, endY) != targetBox) {
+				if (bodyBox.youngestBoxContainingPoint(endX, endY) == null) {
 					repaint();
 					return;
 				}
