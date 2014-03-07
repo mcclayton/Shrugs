@@ -157,8 +157,8 @@ public class DrawableView extends JPanel implements MouseMotionListener {
 					repaint();
 				} else if (OptionsToolBar.getBoxMode().equals("Link")) {
 					LinkBox newBox;
-					newBox = new LinkBox(OptionsToolBar.getBoxText(),
-							OptionsToolBar.getBoxLink(),
+					newBox = new LinkBox(OptionsToolBar.getBoxLink(),
+							OptionsToolBar.getBoxText(),
 							OptionsToolBar.getBoxTextColor(),
 							OptionsToolBar.getBoxTextSize(), startX, startY,
 							endX, endY);

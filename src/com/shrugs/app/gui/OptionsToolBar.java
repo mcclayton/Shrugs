@@ -138,7 +138,6 @@ public class OptionsToolBar extends JToolBar {
 					// Update the toolbar components
 					jtbToolBar.removeAll();
 					jtbToolBar.add(textColorButton);
-					jtbToolBar.add(fontSizesCombo);
 					jtbToolBar.add(textField);
 					jtbToolBar.add(boxTypeCombo);
 					jtbToolBar.repaint();
