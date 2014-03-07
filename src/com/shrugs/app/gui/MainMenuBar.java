@@ -123,7 +123,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					outputFileChooser.setFileFilter(shrugsFileFilter);
 					outputFileChooser.setCurrentDirectory(new File(
 							new File(".").getCanonicalPath()));
-					int retval = outputFileChooser.showDialog(null, "Save");
+					int retval = outputFileChooser.showDialog(null, "Open");
 
 					if (retval == JFileChooser.APPROVE_OPTION) {
 						savepath = outputFileChooser.getSelectedFile()
@@ -146,7 +146,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 							new File(".").getCanonicalPath()));
 
 					int retval = exportDirectoryChooser.showDialog(null,
-							"Export");
+							"Open");
 
 					if (retval == JFileChooser.APPROVE_OPTION) {
 						Export.export(DrawableView.bodyBox, ".");
