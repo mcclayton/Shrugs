@@ -26,12 +26,6 @@ public class LinkBox extends TextAreaBox {
 		this.link = link;
 	}
 
-	public JsonObject toJsonObj() {
-		JsonObject obj = super.toJsonObj();
-		obj.addProperty("link", link);
-		return obj;
-	}
-
 	public void fromJsonObj(JsonObject obj) {
 		super.fromJsonObj(obj);
 		setLink(obj.get("link").getAsString());
@@ -39,12 +33,11 @@ public class LinkBox extends TextAreaBox {
 
 	public String toString() {
 		String str = "<a href=\"" + link
-				+ "\" style=\"display:block;position:absolute;left:"
-				+ getXOffset() + "px;top:" + getYOffset() + "px;width:"
+				+ "\" style=\"display:block;position:absolute;width:"
 				+ (width() + 1) + "px;height:" + (height() + 1)
 				+ "px;color:rgba(" + textColor.getRed() + ","
 				+ textColor.getGreen() + "," + textColor.getBlue() + ","
-				+ textColor.getAlpha() + ");font-family:sans-serif;font-size:"
+				+ textColor.getAlpha() + ");fontfamily:sans-serif;font-size:"
 				+ textSize + "px;" + style + "\">";
 		str += text;
 		str += "</a>";
