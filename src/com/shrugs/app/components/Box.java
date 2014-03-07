@@ -373,8 +373,8 @@ public class Box {
 		JsonObject obj = new JsonObject();
 		obj.addProperty("type", getClass().getName());
 		obj.addProperty("x1", startX);
-		obj.addProperty("x2", endX);
-		obj.addProperty("y1", startY);
+		obj.addProperty("y1", endX);
+		obj.addProperty("x2", startY);
 		obj.addProperty("y2", endY);
 		obj.add("style", style.toJsonObj());
 		return obj;
