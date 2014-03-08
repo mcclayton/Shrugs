@@ -33,10 +33,12 @@ public class Export {
 			String[] patharr = imgpath.split("/");
 			String name = patharr[patharr.length - 1];
 			System.out.println("Saving file: " + outputDir + "/img/" + name);
-			if (!(new File(imgpath).toPath().equals(new File(outputDir
-					+ "/img/" + name).toPath())))
+			try {
 				FileUtils.copyFile(new File(imgpath), new File(outputDir
 						+ "/img/" + name));
+			} catch (Exception e) {
+				// Gotta catch 'em all!
+			}
 		}
 		JOptionPane.showMessageDialog(null, "Export to:\n'" + outputDir
 				+ "'\nSuccessful.");
