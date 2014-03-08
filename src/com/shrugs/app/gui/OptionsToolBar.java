@@ -12,6 +12,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -43,6 +44,8 @@ public class OptionsToolBar extends JToolBar {
 	private static final JTextField linkField = new JTextField("http://example.com");
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	final static JComboBox fontSizesCombo = new JComboBox(FONT_SIZES);
+	
+	static int textColorCount = 0;
 
 	public OptionsToolBar(JFrame jFrame) {
 		this.setFloatable(true);
@@ -100,6 +103,14 @@ public class OptionsToolBar extends JToolBar {
 
 		textColorButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				textColorCount++;
+				if (textColorCount == 10) {
+					for (int i=0; i<10; i++) {
+						JOptionPane.showMessageDialog(null, 10-i);
+					}
+				}
+				
 				Color newColor = null;
 				newColor = JColorChooser.showDialog(mainFrame,
 						"Choose Location Color",

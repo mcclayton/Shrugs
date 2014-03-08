@@ -18,7 +18,6 @@ import com.shrugs.app.Export;
 import com.shrugs.app.IOManager;
 import com.shrugs.app.Shrugs;
 import com.shrugs.app.components.BodyBox;
-import com.shrugs.app.components.ImageBox;
 
 public class MainMenuBar extends JMenuBar implements ActionListener {
 	private static final long serialVersionUID = 1L;
@@ -28,7 +27,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 			aboutMenuItem, newMenuItem;
 	private String output;
 	private String savepath;
-	private static int count;
+	private static int aboutCount;
 
 	public MainMenuBar() {
 		// Build the file menu.
@@ -65,7 +64,7 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 	// Handle menu item clicks
 	public void actionPerformed(ActionEvent e) {
 		Object source = e.getSource();
-
+		
 		if (source instanceof JMenuItem) { // checks to see if a menu item was
 											// pressed
 			JMenuItem itemClicked = (JMenuItem) source;
@@ -164,13 +163,13 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 					e1.printStackTrace();
 				}
 			} else if (itemClicked == aboutMenuItem) {
-				count++;
+				aboutCount++;
 				JOptionPane
 						.showMessageDialog(
 								null,
 								"Shrugs Helps Regular Users Generate Sites \n"
 										+ "A CS 408 Project by Michael Clayton, William King, Brandan Miller, and Vipul Nataraj");
-				if(this.count==3){
+				if(this.aboutCount==3){
 					DrawableView.bodyBox = new BodyBox(0, 0,
 							DrawableView.getViewWidth(),
 							DrawableView.getViewHeight());
