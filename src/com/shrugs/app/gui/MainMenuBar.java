@@ -194,7 +194,8 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 										+ "-- Element Types --\n"
 										+ "Div: A basic container. Can contain child elements. Color can be changed using the \"color\" button.\n"
 										+ "Image: A graphic. The source can be chosen using the \"Choose Photo\" button.\n"
-										+ "Text: A text area. Size and color can be configured.",
+										+ "Text: A text area. Size and color can be configured."
+										+ "Link: A text area that becomes a hyperlink when exported to a web page.",
 								"Help", JOptionPane.INFORMATION_MESSAGE, icon);
 			}
 		}
