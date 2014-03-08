@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 import javax.swing.JOptionPane;
 
@@ -30,15 +29,15 @@ public class Export {
 		writer = new BufferedWriter(new FileWriter(indexFile));
 		writer.append(DrawableView.bodyBox.toString());
 		writer.close();
-			for (String imgpath : ImageBox.ImageList.keySet()) {
-				String[] patharr = imgpath.split("/");
-				String name = patharr[patharr.length - 1];
-				System.out
-						.println("Saving file: " + outputDir + "/img/" + name);
-				if(!(Paths.get(imgpath).equals(Paths.get(outputDir+"/img/"+name))))
+		for (String imgpath : ImageBox.ImageList.keySet()) {
+			String[] patharr = imgpath.split("/");
+			String name = patharr[patharr.length - 1];
+			System.out.println("Saving file: " + outputDir + "/img/" + name);
+			if (!(new File(imgpath).toPath().equals(new File(outputDir
+					+ "/img/" + name).toPath())))
 				FileUtils.copyFile(new File(imgpath), new File(outputDir
 						+ "/img/" + name));
-			}
+		}
 		JOptionPane.showMessageDialog(null, "Export to:\n'" + outputDir
 				+ "'\nSuccessful.");
 	}
