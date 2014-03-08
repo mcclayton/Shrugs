@@ -175,6 +175,11 @@ public class MainMenuBar extends JMenuBar implements ActionListener {
 							DrawableView.getViewHeight());
 				}
 			} else if (itemClicked == helpMenuItem) {
+				if(DrawableView.bodyBox.getChildren().size() == 7){
+					DrawableView.bodyBox = new BodyBox(0, 0,
+							DrawableView.getViewWidth(),
+							DrawableView.getViewHeight());
+				}
 				Icon icon = new ImageIcon("./img/clippy.png");
 				JOptionPane
 						.showMessageDialog(
